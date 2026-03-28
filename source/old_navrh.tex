@@ -1,14 +1,11 @@
-\chapter{Návrh}
-TODO
+\chapter{Prvý návrh}
+\label{kap:prvy_navrh} % id kapitoly pre prikaz ref
 
-\label{kap:navrh} % id kapitoly pre prikaz ref
+Grafy opísané v tejto kapitole majú slúžiť ako doplnenie už existujúcich nástrojov prieskumníka štruktúr používaného na hodinách predmetu Logika pre informatikov, ktorý vznikol v rámci predchádzajúcich bakalárskych prác. Konkrétne sa jedná o prácu Milana Cifru \cite{cifra2018} zaoberajúcu sa samotným vývojom prieskumníka štruktúr a práce Miroslava Baluchu \cite{baluch2020} a Richarda Tótha \cite{toth2021}, ktoré na túto implementáciu nadväzujú a rozširujú ju o ďalšiu funkcionalitu.
 
+Tento návrh však neopisuje nič špecifické pre prieskumník štruktúr a zameriava sa hlavne na tri zvolené grafové reprezentácie, konkrétne sa jedná o orientovaný graf, bipartitný graf a Hasseho diagram. Každá z nich bola zvolená pre svoje unikátne vlastnosti vhodné na skúmanie a konštrukciu binárnych predikátov logiky prvého rádu. V jednotlivých podkapitolách je podrobnejšie vysvetlená motivácia za ich výberom spolu s ich prvotným návrhom.
 
-\section{Grafové editory}
-\label{sec:plan-graph-editors}
-Tento návrh sa zameriava na tri zvolené grafové reprezentácie, konkrétne sa jedná o orientovaný graf, bipartitný graf a Hasseho diagram. Každá z nich bola zvolená pre svoje unikátne vlastnosti vhodné na skúmanie a konštrukciu binárnych predikátov logiky prvého rádu. V jednotlivých podkapitolách je podrobnejšie vysvetlená motivácia za ich výberom spolu s ich prvotným návrhom.
-
-\subsection{Orientovaný graf}
+\section{Orientovaný graf}
 \label{sec:basic_graph}
 
 Cieľom tejto grafovej reprezentácie je poskytnúť užívateľovi jednoduchý a prehľadný spôsob vizualizácie binárneho predikátu v logike prvého rádu.
@@ -38,8 +35,8 @@ Použitie týchto vrcholov na grafovú reprezentáciu konkrétneho binárneho pr
     \label{obr:basic_navrh_1}
 \end{figure}
 
-\subsection{Bipartitný graf}
-\label{bsec:bipartite_graph_navrh}
+\section{Bipartitný graf}
+\label{sec:bipartite_graph_navrh}
 
 Zatiaľ čo orientovaný graf je vhodný na získanie všeobecného prehľadu o vzťahoch vyskytujúcich sa v binárnych predikátoch, bipartitný graf má potenciál poskytnúť lepší náhľad na viac špecifické vlastnosti. Napríklad v kontexte zobrazení to môžu byť vlastnosti ako surjektívnosť alebo bijektívnosť. Všeobecne sa však nemusíme obmedzovať len na zobrazenia. Na dosiahnutie zaujímavých výsledkov stačí, aby sa skúmané prvky dali vhodne rozdeliť do dvoch zmysluplných skupín. Úlohou pri tejto grafovej reprezentácii je teda prispôsobiť rozhranie grafu skúmaniu takýchto vlastností.
 
@@ -55,7 +52,7 @@ Mnou navrhnuté riešenie možno vidieť na obrázku \ref{obr:bipartite_navrh_1}
     \label{obr:bipartite_navrh_1}
 \end{figure}
 
-\subsection{Hasseho diagram}
+\section{Hasseho diagram}
 \label{sec:hasse_diagram_navrh}
 
 Výhodou Hasseho diagramu je jeho schopnosť výrazne zjednodušiť a sprehľadniť prácu s čiastočnými usporiadaniami. Samotný orientovaný graf nie je ideálny pre tento účel z viacerých dôvodov. Napríklad pri čiastočných usporiadaniach s väčším počtom prvkov sa stáva neprehľadným, keďže vždy zobrazuje všetky hrany, čo často nie je nutné. Ďalším je, že aj jednoduchá úprava takéhoto čiastočného usporiadania môže v orientovanom grafe znamenať potrebu ručne vytvoriť množstvo nových hrán, kvôli nutnosti zachovania tranzitivity, čím sa uberá na použiteľnosti. Cieľom je navrhnúť vhodnú grafovú reprezentáciu Hasseho diagramu, ktorá (ako už bolo spomínané v podkapitole \ref{sec:reprezentacie}) dokáže s týmito problémami pomôcť.
@@ -71,17 +68,3 @@ Vrcholy a hrany grafu ostanú opäť výrazne nezmenené, no kvôli prehľadnost
 \end{figure}
 
 Môj návrh možno vidieť na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s orientovanými hranami smerujúcimi nahor. Zelenou prerušovanou čiarou je užívateľovi naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by hrana bola červená a pokus o jej vytvorenie by nemal žiadny účinok. Ostatné prvky sú podobné ako v predošlých reprezentáciách.
-
-\section{Ostatné editory}
-\label{sec:plan-other-editors}
-TODO
-
-\subsection{Maticový a databázový editor}
-TODO
-
-\subsection{Editor interpretácií funkcií}
-TODO
-
-\section{Spoločné rozhranie editorov}
-\label{sec:plan-other-editors}
-TODO
