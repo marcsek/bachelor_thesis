@@ -1,0 +1,18 @@
+\chapter*{Záver}  % chapter* je necislovana kapitola
+\addcontentsline{toc}{chapter}{Záver} % rucne pridanie do obsahu
+\markboth{Záver}{Záver} % vyriesenie hlaviciek
+
+Podarilo sa nám jasne stanoviť ciele a požiadavky na nové grafové editory pre prieskumník štruktúr logiky prvého rádu. Jednotlivé grafové reprezentácie sa zatiaľ ukázali byť vhodné a dobre sa navzájom dopĺňajúce na dosiahnutie zmysluplných, intuitívnych a vysoko informatívnych vizualizačných prostriedkov pre študentov.
+
+Ďalej sme sa v prvom návrhu zaoberali nápadmi, ako premeniť tieto reprezentácie do interaktívnej podoby a ešte lepšie využiť ich potenciál s ohľadom na naše špecifické požiadavky. Nakoniec sa ukázala byť prínosná aj pilotná implementácia, ktorá v mnohých ohľadoch utvrdila správnosť myšlienok predstavených v predchádzajúcich kapitolách, no zároveň odhalila nedostatky niektorých riešení a potrebu ich vylepšenia v ďalších iteráciách.
+
+%Na lepšie využitie ich potenciálu bolo taktiež potrebné doplniť niektoré špecifické funkcie, čomu sa podrobne venoval prvotný návrh. 
+
+%Nakoniec sa ukázala byť prínosná aj pilotná implementácia, ktorá v mnohých ohľadoch utvrdila správnosť myšlienky za nápadmi prezentovanými v predchádzajúcich kapitolách, no poukázala aj na neduhy niektorých návrhov a potrebu ich vylepšenia v ďalších iteráciách vývoja.
+
+Pri mojom vlastnom testovaní sa prejavila najmä slabá intuitívnosť častých úkonov, ako napríklad pridávania alebo mazania nových vrcholov grafov. K tomuto problému tiež prispieva fakt, že na vzor prvotného návrhu je táto funkcionalita implementovaná pre bipartitný graf inak, ako pre ostatné dve reprezentácie. Tento problém by som chcel vyriešiť kompletnou zmenou a zjednotením spôsobu ich pridávania, napríklad implementáciou mechanizmu filtrovania vrcholov, podobnému tomu pri volení unárnych predikátov v orientovanom grafe. V niektorých aspektoch je zas zrejmé, že vizuálna podoba pilotnej implementácie sa dostatočne nedrží prvotného návrhu, na čom bude ešte tiež potrebné zapracovať.
+
+Medzi menej viditeľné, no o nič menej zásadné problémy patrí nutnosť doladiť spôsob, akým jednotlivé grafy spolu komunikujú zmeny týkajúce sa ich spoločného stavu. Pri tejto miere interaktivity, ktorú knižnica React umožňuje, je dôležité dbať aj na efektívnosť implementovaných riešení. V opačnom prípade to môže viesť k zlému zážitku pri interakcii s aplikáciou, z dôvodu neresponzívneho používateľského rozhrania. Tento aspekt bude predstavovať jeden z mojich hlavných cieľov.
+
+
+

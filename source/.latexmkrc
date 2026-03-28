@@ -1,0 +1,1 @@
+$jobname = 'bp-marcek';

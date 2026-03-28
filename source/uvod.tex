@@ -1,0 +1,46 @@
+\chapter*{Úvod} % chapter* je necislovana kapitola
+\addcontentsline{toc}{chapter}{Úvod} % rucne pridanie do obsahu
+\markboth{Úvod}{Úvod} % vyriesenie hlaviciek
+
+Možnosti využitia elektronických nástrojov pri výučbe sú v dnešnej dobe široké a oproti konvenčným učebným metódam dokážu poskytnúť interaktívnejší a pútavejší pohľad na skúmanú problematiku. Ich tvorba však predstavuje výzvu, ktorá vyžaduje nielen znalosť danej témy, ale aj schopnosť hľadania kreatívnych a inovatívnych riešení s ňou spojených problémov. Úlohou mojej práce bude vytvorenie prvej verzie takéhoto nástroja, ktorý má slúžiť ako rozšírenie už existujúcich implementácií.
+
+Základ webovej aplikácie, z ktorej táto práca vychádza, vznikol v rámci bakalárskej práce Milana Cifru \cite{cifra2018}. Jej úlohou je ponúknuť študentom predmetu Logika pre informatikov interaktívny pohľad na štruktúry pre jazyky logiky prvého rádu. Neskôr sa rozšírením tohto nástroja o prieskumník grafových štruktúr logiky prvého rádu zaoberala bakalárska práca Miroslava Baluchu \cite{baluch2020}. Implementácia obsahuje jeden grafový editor, so zámerom poskytnúť študentom alternatívny spôsob vizualizácie a manipulácie týchto štruktúr oproti pôvodnej, menej prehľadnej verzii založenej na textových vstupoch.
+
+
+%Ten ponúka jeden grafový editor, ktorý poskytuje interaktívny pohľad na logické štruktúry. 
+
+%Táto práca ma za cieľ nahradiť už existujúci prieskumník grafových štruktúr prvého rádu, ktorý bol navrhnutý a implementovaný v rámci bakalárskej práce Miroslava Baluchu \cite{baluch2020}. Ten ponúka jeden grafový editor, ktorý poskytuje interaktívny pohľad na logické štruktúry. Jeho hlavným zámerom je poskytnúť študentom alternatívny spôsob vizualizácie a manipulácie, oproti menej intuitívnej alternatíve založenej na textových vstupoch ponúkanú samotným prieskumníkom štruktúr.
+
+Z dôvodu viacerých problémov tejto implementácie sa však ukázala byť medzi študentami málo využívaná. Azda najväčším nedostatkom je snaha samotného grafového editoru nahradiť takmer celú funkcionalitu prieskumníka štruktúr, čo žiaľ na niektorých miestach vedie ku kompromisom znižujúcich jeho prehľadnosť aj intuitívnosť. Ďalším problémom je nedostatok zaujímavých a unikátnych funkcií, v porovnaní s textovými vstupmi, ktoré by ho spravili pre študentov atraktívnejším.
+
+V tejto práci sa pozrieme na spôsoby, akými som sa rozhodol vyriešiť nedostatky predošlej implementácie, najprv navrhnutím a následným implementovaním predstavených riešení. Hlavným cieľom bude poskytnúť študentom rozhranie, ktoré je intuitívne, prehľadné a najmä jednoduché na použitie. Postupne tiež predstavíme niekoľko kľúčových rozdielov.
+Spomedzi nich najzásadnejším bude využitie troch rôznych grafových reprezentácií (orientovaný graf, bipartitný graf a Hasseho diagram), z ktorých každá dokáže ponúknuť študentovi unikátny pohľad na tú istú štruktúru.
+
+Na úvod zadefinujeme jednotlivé pojmy a technológie používané v ďalších kapitolách. Neskôr sa v prvom návrhu bližšie pozrieme na spôsoby, akými som sa rozhodol dosiahnuť stanovené ciele. Taktiež sa podrobnejšie zameriame na každú grafovú reprezentáciu, aby sme lepšie objasnili hlavnú myšlienku za jej výberom. V závere opíšeme pilotnú implementáciu a zhodnotíme jej prínosy pre nasledujúce verzie.
+
+%Zámerom tejto práce je napraviť nedostatky predošlej implementácie navrhnutím a implementovaním nových grafových editorov, ktoré budú intuitívne, prehľadné a najmä jednoduché na použitie.
+
+%Cieľom tejto práce je poskytnúť študentom posledného ročníka
+%bakalárskeho štúdia informatiky kostru práce v systéme LaTeX a ukážku
+%užitočných príkazov, ktoré pri písaní práce môžu potrebovať. Začneme
+%stručnou charakteristikou úvodu práce podľa smernice o záverečných
+%prácach \cite{smernica}, ktorú uvádzame ako doslovný citát.
+%
+%\begin{quote}
+%    Úvod je prvou komplexnou informáciou o práci, jej cieli, obsahu a štruktúre. Úvod sa
+%    vzťahuje na spracovanú tému konkrétne, obsahuje stručný a výstižný opis
+%    problematiky, charakterizuje stav poznania alebo praxe v oblasti, ktorá je predmetom
+%    školského diela a oboznamuje s významom, cieľmi a zámermi školského diela. Autor
+%    v úvode zdôrazňuje, prečo je práca dôležitá a prečo sa rozhodol spracovať danú tému.
+%    Úvod ako názov kapitoly sa nečísluje a jeho rozsah je spravidla 1 až 2 strany.
+%\end{quote}
+%
+%V nasledujúcej kapitole nájdete ukážku členenia kapitoly na menšie
+%časti a v kapitole \ref{kap:latex} nájdete príkazy na prácu s
+%tabuľkami, obrázkami a matematickými výrazmi. V kapitole
+%\ref{kap:lorem} uvádzame klasický text Lorem Ipsum a na koniec sa
+%budeme venovať záležitostiam záveru bakalárskej práce.
+
+
+%V rámci série predchádzajúcich bakalárskych prác (Cifra, 2018; Baluch, 2020; Tóth, 2021) vznikla interaktívna webová aplikácia, ktorá umožňuje skúmať pravdivosť formúl a hodnoty termov v konkrétnych konečných štruktúrach pre jazyky logiky prvého rádu. Vnútorný návrh aplikácie však vznikol v čase, keď použité frameworky neposkytovali súčasné prostriedky, je neprehľadný a ďalšie úpravy sú prácne a prinášajú riziko vzniku ťažko odhaliteľných chýb. Náš bakalársky študent v súčasnosti pracuje na reimplementácii. Ďalším krokom vo vývoji je poskytnúť možnosť editovať interpretácie predikátov a funkcií v grafovej forme (orientované a bipartitné grafy, Hasseho diagramy a pod.)
+
