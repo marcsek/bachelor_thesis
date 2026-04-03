@@ -3,7 +3,21 @@ TODO
 
 \label{kap:navrh} % id kapitoly pre prikaz ref
 
-\section{Požiadavky?}
+\section{Požiadavky}
+
+\subsection{Zámer rozšírenia aplikácie!}
+Hlavným cieľom tejto práce je zlepšiť použiteľnosť existujúcej aplikácie Prieskumník štruktúr používanej na predmete Logika pre informatikov. Ako bolo už bližšie spomenuté v podkapitole venovanej práve tomuto nástroju \ref{sec:explorer}, súčasná verzia poskytuje iba veľmi obmedzený spôsob vizualizácie a manipulácie s interpretáciami predikátových a funkčných symbolov.
+
+Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafové editory, ktoré používateľom pomôžu pri vizualizácií a vytváraní binárnych predikátov a unárnych funkcií logiky prvého rádu. Konkrétne sa jedná o Orientovaný graf, Bipartitný graf a Hasseho diagram. Každý z nich by mal z hľadiska funkčnosti slúžiť ako plnohodnotná alternatíva k už existujúcemu množinovému pohľadu. Musia teda zobrazovať jednotlivé usporiadané dvojice, resp. vzťahy, ktoré konkrétna interpretácia popisuje a prvky domény, medzi ktorými tieto vzťahy vznikajú.
+
+Oproti predošlému riešeniu tiež prinesú vylepšenia na sprehľadnenie aj iných vzťahov v štruktúre. Konkrétne umožnia vizualizáciu unárnych predikátov, keďže tie často vedia používateľovi poskytnúť nápomocnú informáciu o vlastnostiach jednotlivých prvkov. Taktiež zobrazia, ktorými konštantami sú jednotlivé prvky domény označené. Podľa príslušnosti prvkov domény do interpretácií unárnych predikátov sa majú dať prvky aj filtrovať. Teda používateľ si musí byť schopný zvoliť, ktoré unárne predikáty chce zobraziť a prvky domény, ktoré sa nevyskytujú v žiadnej z ich interpretácií by sa mali z grafu skryť.
+
+\subsection{Ďalšie požiadavky}
+
+Počas vývoja sa požiadavky postupne menili a rozširovali. Jednou z pridaných požiadaviek je reimplementácia Maticového a Databázového editora z predošlej verzie Prieskumníka štruktúr. Ich cieľ je podobný ako pri grafových reprezentáciách, no okrem poskytnutia ďalšieho alternatívneho pohľadu sú na rozdiel od nich schopné reprezentovať aj iné ako binárne predikáty a unárne funkcie. Aj pri týchto editoroch sa požaduje aby bolo v nich možné unárne predikáty zobraziť, ako aj pomocou nich filtrovať.
+
+Ďalším vylepšením má byť pridanie editora interpretácií funkcií.
+
 
 \section{Grafové editory}
 \label{sec:plan-graph-editors}
@@ -73,19 +87,23 @@ Vrcholy a hrany grafu ostanú opäť výrazne nezmenené, no kvôli prehľadnost
 
 Môj návrh možno vidieť na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s orientovanými hranami smerujúcimi nahor. Zelenou prerušovanou čiarou je užívateľovi naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by hrana bola červená a pokus o jej vytvorenie by nemal žiadny účinok. Ostatné prvky sú podobné ako v predošlých reprezentáciách.
 
-\section{Ostatné editory}
-\label{sec:plan-other-editors}
+\section{Tabuľkové editory}
+\label{sec:plan-table-editors}
+TODO
+\subsection{Maticový editor}
+TODO
+\subsection{Databázový editor}
 TODO
 
-\subsection{Maticový a databázový editor}
-TODO
-
-\subsection{Editor interpretácií funkcií}
+\section{Editor interpretácií funkcií}
 TODO
 
 \section{Spoločné rozhranie editorov}
-\label{sec:plan-other-editors}
+\label{sec:plan-editors-ui}
 TODO
 
 \section{Nový stav aplikácie}
 TODO
+
+\section{Queries}
+\label{sec:plan-queries}

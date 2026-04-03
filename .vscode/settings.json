@@ -1,4 +1,7 @@
 {
     "latex-workshop.latex.outDir": "../",
-    "latex-workshop.latex.jobname": "bp-marcek"
+    "latex-workshop.latex.jobname": "bp-marcek",
+    "cSpell.words": [
+        "vizualizovali"
+    ]
 }
