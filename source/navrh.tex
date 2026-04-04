@@ -5,30 +5,51 @@ TODO
 
 \section{Požiadavky}
 
-\subsection{Zámer rozšírenia aplikácie!}
+Požiadavky na rozšírenie aplikácie sa postupne vyvíjali a rozširovali, čo viedlo k pridaniu pomerne veľkého množstva novej funkcionality nad rámec grafových editorov. V tejto podkapitole opíšeme všetky požiadavky, spolu s priblížením motivácie, ktorá viedla k ich zaradeniu.
+
+\subsection{Zámer rozšírenia aplikácie}
 Hlavným cieľom tejto práce je zlepšiť použiteľnosť existujúcej aplikácie Prieskumník štruktúr používanej na predmete Logika pre informatikov. Ako bolo už bližšie spomenuté v podkapitole venovanej práve tomuto nástroju \ref{sec:explorer}, súčasná verzia poskytuje iba veľmi obmedzený spôsob vizualizácie a manipulácie s interpretáciami predikátových a funkčných symbolov.
 
-Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafové editory, ktoré používateľom pomôžu pri vizualizácií a vytváraní binárnych predikátov a unárnych funkcií logiky prvého rádu. Konkrétne sa jedná o Orientovaný graf, Bipartitný graf a Hasseho diagram. Každý z nich by mal z hľadiska funkčnosti slúžiť ako plnohodnotná alternatíva k už existujúcemu množinovému pohľadu. Musia teda zobrazovať jednotlivé usporiadané dvojice, resp. vzťahy, ktoré konkrétna interpretácia popisuje a prvky domény, medzi ktorými tieto vzťahy vznikajú.
+Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafové editory, ktoré používateľom pomôžu pri vizualizácií a vytváraní binárnych predikátov a unárnych funkcií logiky prvého rádu. Konkrétne sa jedná o Orientovaný graf, Bipartitný graf a Hasseho diagram. Každá z nich bola zvolená pre svoje unikátne vlastnosti, ktoré vedia byť nápomocné v rozličných situáciach.
 
-Oproti predošlému riešeniu tiež prinesú vylepšenia na sprehľadnenie aj iných vzťahov v štruktúre. Konkrétne umožnia vizualizáciu unárnych predikátov, keďže tie často vedia používateľovi poskytnúť nápomocnú informáciu o vlastnostiach jednotlivých prvkov. Taktiež zobrazia, ktorými konštantami sú jednotlivé prvky domény označené. Podľa príslušnosti prvkov domény do interpretácií unárnych predikátov sa majú dať prvky aj filtrovať. Teda používateľ si musí byť schopný zvoliť, ktoré unárne predikáty chce zobraziť a prvky domény, ktoré sa nevyskytujú v žiadnej z ich interpretácií by sa mali z grafu skryť.
+Aplikáciu by sme však radi posunuli ďalej aj v iných smeroch. Či už integráciou ďalších editorov, pridaním nových funkcionalít alebo vylepšením tých existujúcich.
+
+\subsection{Požiadavky na grafové editory}
+Každý z grafov by mal z hľadiska funkčnosti slúžiť ako plnohodnotná alternatíva k už existujúcemu množinovému pohľadu. Musia teda zobrazovať jednotlivé usporiadané dvojice, resp. vzťahy, ktoré konkrétna interpretácia popisuje a prvky domény, medzi ktorými tieto vzťahy vznikajú. Vzťahy sa tiež musia dať vytvárať a mazať.
+
+Vyobrazenie grafov by malo byť prispôsobené konkrétnym vlastnostiam každej reprezentácie. Bipartitný graf musí jasne znázorňovať rozdelenie prvkov do dvoch skupín, pričom vytváranie nových hrán je dovolené iba z jednej z nich. Hasseho diagram by zas mal poskytnúť možnosť automatického vytvorenia hierarchie, ktorá je pre túto reprezentáciu typická. Tiež by sa malo dbať na to, aby bol používateľ schopný vytvárať iba také vzťahy, ktoré neporušia podmienky čiastočného usporiadania.
+
+Oproti predošlému riešeniu pribudnú vylepšenia zamerané na prehľadnejšie zobrazenie ďalších vzťahov v štruktúre. Konkrétne by nejakým spôsobom mali byť vizualizované unárne predikáty, keďže tie vedia poskytnúť nápomocnú informáciu o vlastnostiach jednotlivých prvkov. Všetky unárne predikaty sa však vždy nemusia zobrazovať. Používateľ si z nich bude môcť vybrať a na základe príslušnosti prvkov domény k ich interpretáciám bude možnosť tieto prvky aj filtrovať. Teda prvky domény, ktoré sa nebudú vyskytovať v žiadnej z vybraných interpretácií sa v grafu skryjú. Okrem toho by sa mali vhodným spôsobom zobrazovať aj konštanty, ktorými sú jednotlivé prvky domény označené.
 
 \subsection{Ďalšie požiadavky}
 
-Počas vývoja sa požiadavky postupne menili a rozširovali. Jednou z pridaných požiadaviek je reimplementácia Maticového a Databázového editora z predošlej verzie Prieskumníka štruktúr. Ich cieľ je podobný ako pri grafových reprezentáciách, no okrem poskytnutia ďalšieho alternatívneho pohľadu sú na rozdiel od nich schopné reprezentovať aj iné ako binárne predikáty a unárne funkcie. Aj pri týchto editoroch sa požaduje aby bolo v nich možné unárne predikáty zobraziť, ako aj pomocou nich filtrovať.
+\textbf{Maticový a databázový editor:} Jednou z pridaných požiadaviek je reimplementácia Maticového a Databázového editora z predošlej verzie Prieskumníka štruktúr. Ich účel je podobný ako pri grafových reprezentáciách, no okrem poskytnutia alternatívneho pohľadu dokážu na rozdiel od nich reprezentovať aj iné než iba binárne predikáty a unárne funkcie. Pri týchto editoroch sa taktiež vyžaduje možnosť zobrazovať unárne predikáty a využívať ich na filtrovanie.
 
-Ďalším vylepšením má byť pridanie editora interpretácií funkcií.
+\textbf{Editor interpretácií funkcií:} Ďalšie vylepšenie má za cieľ uľahčiť tvorbu interpretácií funkčných symbolov.
+Ako už bolo uvedené v podkapitole \ref{sec:fol}, definičný obor takýchto funkcií predstavuje množina $D^n$, kde $D$ je doména a $n$ arita funkčného symbolu. Definovaním podmienok na vstupné $n$-tice a priradením hodnôt, ktoré má funkcia pri ich splnení nadobúdať, vieme jednoducho špecifikovať interpretácie funkčných symbolov aj s pomerne veľkou aritou. Požiadavkou je preto vytvorenie nástroja založeného na takomto princípe.
 
+\textbf{Queries:} Toto rozšírenie, na rozdiel od ostatných, neslúži na tvorbu interpretácií. Malo by predstavovať samostatnú sekciu aplikácie, v ktorej bude možné definovať otvorené formuly a následne získať všetky ohodnotenia, pri ktorých sú tieto formuly splniteľné. Výsledok takéhoto dopytu (angl. \textit{query}) by sa mal vhodne zobraziť v podobe tabuľky.
+
+\textbf{Refaktorizácia častí aplikácie:} Aplikácia si v aktuálnej verzii ukladá jednotlivé časti stavu primárne v textovej podobe, keďže to bol doteraz jediný spôsob reprezentácie dát. Pri našich nových požiadavkách je to však obmedzujúce a bude potrebné dáta ukladať štrukturovanejším spôsobom. Taktiež logika zodpovedná za generovanie Henkinovej-Hintikkovej hry by mala v určitých situáciach fungovať na náhodnom výbere, no v súčasnej verzii tomu tak nie je. Požaduje sa preto oprava aj tohto správania.
+
+\section{Spoločné rozhranie editorov}
+\label{sec:plan-editors-ui}
+OKNO KTORE NAHRADI TEXTOVY VSTUP, VYBER EDITOROV, FILTRE EDITOROV
 
 \section{Grafové editory}
 \label{sec:plan-graph-editors}
 Tento návrh sa zameriava na tri zvolené grafové reprezentácie, konkrétne sa jedná o orientovaný graf, bipartitný graf a Hasseho diagram. Každá z nich bola zvolená pre svoje unikátne vlastnosti vhodné na skúmanie a konštrukciu binárnych predikátov logiky prvého rádu. V jednotlivých podkapitolách je podrobnejšie vysvetlená motivácia za ich výberom spolu s ich prvotným návrhom.
 
+TIETO VERZIE SU ASI OK, DALSIE VERZIE STACI OPISAT SLOVNE PRIPADNE PRIDAT MALY OBRAZOK (HASSE ERROR)
+
 \subsection{Orientovaný graf}
 \label{sec:basic_graph}
 
-Cieľom tejto grafovej reprezentácie je poskytnúť užívateľovi jednoduchý a prehľadný spôsob vizualizácie binárneho predikátu v logike prvého rádu.
+NAVRH VIZUALU VRCHOLOV (ODZNACENY, HOVERNUTY, ZAZNACENY, CHYBNY)
 
-Od grafu sa požaduje, aby zobrazoval jednotlivé usporiadané dvojice, resp. vzťahy, ktoré interpretácia daného binárneho predikátu popisuje, prvky domény, medzi ktorými tieto vzťahy vznikajú, ako aj prípadné konštanty, ktoré sú týmito prvkami označené. Dôležité je tiež umožniť vizualizáciu unárnych predikátov, keďže tie často vedia užívateľovi poskytnúť nápomocnú informáciu o vlastnostiach jednotlivých prvkov.
+%Cieľom tejto grafovej reprezentácie je poskytnúť užívateľovi jednoduchý a prehľadný spôsob vizualizácie binárneho predikátu v logike prvého rádu.
+
+%Od grafu sa požaduje, aby zobrazoval jednotlivé usporiadané dvojice, resp. vzťahy, ktoré interpretácia daného binárneho predikátu popisuje, prvky domény, medzi ktorými tieto vzťahy vznikajú, ako aj prípadné konštanty, ktoré sú týmito prvkami označené. Dôležité je tiež umožniť vizualizáciu unárnych predikátov, keďže tie často vedia užívateľovi poskytnúť nápomocnú informáciu o vlastnostiach jednotlivých prvkov.
 
 V samotnom grafe prvky domény prirodzene predstavujú vrcholy, vzťahy sú zas reprezentované pomocou hrán. Konštanty a unárne predikáty som sa taktiež rozhodol zakomponovať ako súčasť vrcholov, keďže sú to informácie prislúchajúce prvkom domény. Výzva, ktorú takéto riešenie však prináša, je zachovať rovnováhu medzi množstvom informácií obsiahnutých vo vrcholoch a ich prehľadnosťou.
 
@@ -56,7 +77,9 @@ Použitie týchto vrcholov na grafovú reprezentáciu konkrétneho binárneho pr
 \subsection{Bipartitný graf}
 \label{bsec:bipartite_graph_navrh}
 
-Zatiaľ čo orientovaný graf je vhodný na získanie všeobecného prehľadu o vzťahoch vyskytujúcich sa v binárnych predikátoch, bipartitný graf má potenciál poskytnúť lepší náhľad na viac špecifické vlastnosti. Napríklad v kontexte zobrazení to môžu byť vlastnosti ako surjektívnosť alebo bijektívnosť. Všeobecne sa však nemusíme obmedzovať len na zobrazenia. Na dosiahnutie zaujímavých výsledkov stačí, aby sa skúmané prvky dali vhodne rozdeliť do dvoch zmysluplných skupín. Úlohou pri tejto grafovej reprezentácii je teda prispôsobiť rozhranie grafu skúmaniu takýchto vlastností.
+PRVY NAVRH A NASLEDNE DRUHY S NOVYMI VRCHOLMI, ZMENOU HRAN A OZNACENIA DOMENY/RANGU
+
+%Zatiaľ čo orientovaný graf je vhodný na získanie všeobecného prehľadu o vzťahoch vyskytujúcich sa v binárnych predikátoch, bipartitný graf má potenciál poskytnúť lepší náhľad na viac špecifické vlastnosti. Napríklad v kontexte zobrazení to môžu byť vlastnosti ako surjektívnosť alebo bijektívnosť. Všeobecne sa však nemusíme obmedzovať len na zobrazenia. Na dosiahnutie zaujímavých výsledkov stačí, aby sa skúmané prvky dali vhodne rozdeliť do dvoch zmysluplných skupín. Úlohou pri tejto grafovej reprezentácii je teda prispôsobiť rozhranie grafu skúmaniu takýchto vlastností.
 
 Základné prvky grafu, ako vrcholy a hrany, sú v zásade zhodné s tými z predošlej reprezentácie. V tomto prípade sa ale vyžaduje, aby boli prvky domény rozdelené do dvoch vizuálne odlíšiteľných celkov (neznamená to však, že musia byť disjunktné). Ďalším rozdielom je spôsob vytvárania hrán. Tie sa dajú vždy vytvárať iba z jednej, predom určenej skupiny, nikdy nie z oboch. Taktiež sa hrany nedajú vytvárať medzi prvkami v rovnakej skupine. Práve tieto obmedzenia robia graf vhodnejší na skúmanie vlastností zobrazení, keďže jeden celok si môžeme predstaviť ako definičný obor (z neho hrany vytvárame) a druhý ako obor hodnôt.
 
@@ -73,7 +96,9 @@ Mnou navrhnuté riešenie možno vidieť na obrázku \ref{obr:bipartite_navrh_1}
 \subsection{Hasseho diagram}
 \label{sec:hasse_diagram_navrh}
 
-Výhodou Hasseho diagramu je jeho schopnosť výrazne zjednodušiť a sprehľadniť prácu s čiastočnými usporiadaniami. Samotný orientovaný graf nie je ideálny pre tento účel z viacerých dôvodov. Napríklad pri čiastočných usporiadaniach s väčším počtom prvkov sa stáva neprehľadným, keďže vždy zobrazuje všetky hrany, čo často nie je nutné. Ďalším je, že aj jednoduchá úprava takéhoto čiastočného usporiadania môže v orientovanom grafe znamenať potrebu ručne vytvoriť množstvo nových hrán, kvôli nutnosti zachovania tranzitivity, čím sa uberá na použiteľnosti. Cieľom je navrhnúť vhodnú grafovú reprezentáciu Hasseho diagramu, ktorá (ako už bolo spomínané v podkapitole \ref{sec:reprezentacie}) dokáže s týmito problémami pomôcť.
+CHYBOVA HLASKA PRI ZLOM EDGE (DRUHA VERZIA?), FILTROVANIE V HASSE
+
+% Výhodou Hasseho diagramu je jeho schopnosť výrazne zjednodušiť a sprehľadniť prácu s čiastočnými usporiadaniami. Samotný orientovaný graf nie je ideálny pre tento účel z viacerých dôvodov. Napríklad pri čiastočných usporiadaniach s väčším počtom prvkov sa stáva neprehľadným, keďže vždy zobrazuje všetky hrany, čo často nie je nutné. Ďalším je, že aj jednoduchá úprava takéhoto čiastočného usporiadania môže v orientovanom grafe znamenať potrebu ručne vytvoriť množstvo nových hrán, kvôli nutnosti zachovania tranzitivity, čím sa uberá na použiteľnosti. Cieľom je navrhnúť vhodnú grafovú reprezentáciu Hasseho diagramu, ktorá (ako už bolo spomínané v podkapitole \ref{sec:reprezentacie}) dokáže s týmito problémami pomôcť.
 
 Vrcholy a hrany grafu ostanú opäť výrazne nezmenené, no kvôli prehľadnosti bude zásadné dodržať správnu vertikálnu hierarchiu vrcholov, ktorá je tiež súčasťou konštrukcie Hasseho diagramu. Zámerom však nie je užívateľa akokoľvek obmedzovať za účelom dodržiavania tejto hierarchie, ako tomu bolo v bipartitnom grafe, ale poskytnúť mu dobrý základ rozmiestnenia vrcholov, ktorý je ďalej prispôsobiteľný vlastným predstavám. Dôležitá bude tiež korektná implementácia zvyšných vlastností Hasseho diagramu, ako aj validácia nových hrán pridaných užívateľom. Dôraz na validáciu je kladený hlavne kvôli tomu, že pridaním nesprávnej hrany môže reprezentácia prestať dávať zmysel.
 
@@ -98,9 +123,6 @@ TODO
 \section{Editor interpretácií funkcií}
 TODO
 
-\section{Spoločné rozhranie editorov}
-\label{sec:plan-editors-ui}
-TODO
 
 \section{Nový stav aplikácie}
 TODO
