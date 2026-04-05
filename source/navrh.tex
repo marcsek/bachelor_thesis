@@ -10,7 +10,7 @@ Požiadavky na rozšírenie aplikácie sa postupne vyvíjali a rozširovali, čo
 \subsection{Zámer rozšírenia aplikácie}
 Hlavným cieľom tejto práce je zlepšiť použiteľnosť existujúcej aplikácie Prieskumník štruktúr používanej na predmete Logika pre informatikov. Ako bolo už bližšie spomenuté v podkapitole venovanej práve tomuto nástroju \ref{sec:explorer}, súčasná verzia poskytuje iba veľmi obmedzený spôsob vizualizácie a manipulácie s interpretáciami predikátových a funkčných symbolov.
 
-Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafové editory, ktoré používateľom pomôžu pri vizualizácií a vytváraní binárnych predikátov a unárnych funkcií logiky prvého rádu. Konkrétne sa jedná o Orientovaný graf, Bipartitný graf a Hasseho diagram. Každá z nich bola zvolená pre svoje unikátne vlastnosti, ktoré vedia byť nápomocné v rozličných situáciach.
+Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafové editory, ktoré používateľom pomôžu pri vizualizácií a vytváraní binárnych predikátov a unárnych funkcií logiky prvého rádu. Konkrétne sa má jednať o Orientovaný graf, Bipartitný graf a Hasseho diagram. Každý z nich bol zvolená pre svoje unikátne vlastnosti, ktoré vedia byť nápomocné v rozličných situáciach.
 
 Aplikáciu by sme však radi posunuli ďalej aj v iných smeroch. Či už integráciou ďalších editorov, pridaním nových funkcionalít alebo vylepšením tých existujúcich.
 
@@ -19,11 +19,11 @@ Každý z grafov by mal z hľadiska funkčnosti slúžiť ako plnohodnotná alte
 
 Vyobrazenie grafov by malo byť prispôsobené konkrétnym vlastnostiam každej reprezentácie. Bipartitný graf musí jasne znázorňovať rozdelenie prvkov do dvoch skupín, pričom vytváranie nových hrán je dovolené iba z jednej z nich. Hasseho diagram by zas mal poskytnúť možnosť automatického vytvorenia hierarchie, ktorá je pre túto reprezentáciu typická. Tiež by sa malo dbať na to, aby bol používateľ schopný vytvárať iba také vzťahy, ktoré neporušia podmienky čiastočného usporiadania.
 
-Oproti predošlému riešeniu pribudnú vylepšenia zamerané na prehľadnejšie zobrazenie ďalších vzťahov v štruktúre. Konkrétne by nejakým spôsobom mali byť vizualizované unárne predikáty, keďže tie vedia poskytnúť nápomocnú informáciu o vlastnostiach jednotlivých prvkov. Všetky unárne predikaty sa však vždy nemusia zobrazovať. Používateľ si z nich bude môcť vybrať a na základe príslušnosti prvkov domény k ich interpretáciám bude možnosť tieto prvky aj filtrovať. Teda prvky domény, ktoré sa nebudú vyskytovať v žiadnej z vybraných interpretácií sa v grafu skryjú. Okrem toho by sa mali vhodným spôsobom zobrazovať aj konštanty, ktorými sú jednotlivé prvky domény označené.
+Oproti množinovému pohľadu tiež pribudnú vylepšenia zamerané na prehľadnejšie zobrazenie ďalších vzťahov v štruktúre. Konkrétne by nejakým spôsobom mali byť vizualizované unárne predikáty, keďže tie vedia poskytnúť nápomocnú informáciu o vlastnostiach jednotlivých prvkov. Všetky unárne predikáty sa však vždy nemusia zobrazovať. Používateľ si z nich bude môcť vybrať a na základe príslušnosti prvkov domény k ich interpretáciám bude možnosť tieto prvky aj filtrovať. Teda prvky domény, ktoré sa nebudú vyskytovať v žiadnej z vybraných interpretácií sa v grafu skryjú. Okrem toho by sa mali vhodným spôsobom zobrazovať aj konštanty, ktorými sú jednotlivé prvky domény označené.
 
 \subsection{Ďalšie požiadavky}
 
-\textbf{Maticový a databázový editor:} Jednou z pridaných požiadaviek je reimplementácia Maticového a Databázového editora z predošlej verzie Prieskumníka štruktúr. Ich účel je podobný ako pri grafových reprezentáciách, no okrem poskytnutia alternatívneho pohľadu dokážu na rozdiel od nich reprezentovať aj iné než iba binárne predikáty a unárne funkcie. Pri týchto editoroch sa taktiež vyžaduje možnosť zobrazovať unárne predikáty a využívať ich na filtrovanie.
+\textbf{Maticový a databázový editor:} Jednou z pridaných požiadaviek je reimplementácia Maticového a Databázového editora z predošlej verzie Prieskumníka štruktúr. Ich účel je podobný ako pri grafových reprezentáciách, no okrem poskytnutia alternatívneho pohľadu dokážu reprezentovať aj iné než iba binárne predikáty a unárne funkcie. Pri týchto editoroch sa taktiež vyžaduje možnosť zobrazovať unárne predikáty a využívať ich na filtrovanie.
 
 \textbf{Editor interpretácií funkcií:} Ďalšie vylepšenie má za cieľ uľahčiť tvorbu interpretácií funkčných symbolov.
 Ako už bolo uvedené v podkapitole \ref{sec:fol}, definičný obor takýchto funkcií predstavuje množina $D^n$, kde $D$ je doména a $n$ arita funkčného symbolu. Definovaním podmienok na vstupné $n$-tice a priradením hodnôt, ktoré má funkcia pri ich splnení nadobúdať, vieme jednoducho špecifikovať interpretácie funkčných symbolov aj s pomerne veľkou aritou. Požiadavkou je preto vytvorenie nástroja založeného na takomto princípe.
@@ -70,9 +70,9 @@ Tento návrh sa zameriava na tri zvolené grafové reprezentácie, konkrétne sa
 
 Hlavnou úlohou pri návrhu tejto grafovej reprezentácie bolo určiť, akým spôsobom sa budú jednotlivé informácie zobrazovať a ako s nimi bude používateľ následne interagovať. Tieto rozhodnutia sú kľúčové, keďže budú tvoriť základ aj ostatných grafových editorov.
 
-V samotnom grafe prvky domény prirodzene predstavujú vrcholy, vzťahy sú zas reprezentované pomocou hrán. Konštanty a unárne predikáty som sa taktiež rozhodol zakomponovať ako súčasť vrcholov, keďže sú to informácie prislúchajúce prvkom domény. Výzva, ktorú takéto riešenie však prináša, je zachovať rovnováhu medzi množstvom informácií obsiahnutých vo vrcholoch a ich prehľadnosťou.
+V samotnom grafe prvky domény prirodzene predstavujú vrcholy, vzťahy sú zas reprezentované pomocou hrán. Konštanty a unárne predikáty som sa taktiež rozhodol zakomponovať ako súčasť vrcholov, keďže ide o informácie prislúchajúce prvkom domény. Výzva, ktorú takéto riešenie však prináša, je zachovať rovnováhu medzi množstvom informácií obsiahnutých vo vrcholoch a ich prehľadnosťou.
 
-Prístup, ktorý som pri návrhu vrcholov zvolil, možno vidieť na obrázku \ref{obr:vrch_navrh_1}. Najväčší typografický dôraz sa dáva na samotný prvok domény (na obrázku veľké písmeno A). Pod ním sa nachádzajú konštanty reprezentujúce tento prvok (na obrázku nápis Bob). Na prvom vrchole sprava zas možno vidieť panel predstavujúci unárne predikáty, do interpretácie ktorých daný prvok patrí, kde každá farba symbolizuje konkrétny predikát. Práve použitie farieb namiesto iných alternatív, ako napríklad nápisov s názvom unárneho predikátu, má pomôcť s celkovou prehľadnosťou vrcholov.
+Prístup, ktorý som pri návrhu vrcholov zvolil, možno vidieť na obrázku \ref{obr:vrch_navrh_1}. Najväčší typografický dôraz sa kladie na samotný prvok domény (na obrázku veľké písmeno A). Pod ním sa nachádzajú konštanty reprezentujúce tento prvok (na obrázku nápis Bob). Na prvom vrchole sprava zas možno vidieť panel predstavujúci unárne predikáty, do interpretácie ktorých daný prvok patrí, kde každá farba symbolizuje konkrétny predikát. Práve použitie farieb namiesto iných alternatív, ako napríklad nápisov s názvom unárneho predikátu, má pomôcť s celkovou prehľadnosťou vrcholov.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.9\textwidth]{images/nodes.png}}
@@ -82,9 +82,9 @@ Prístup, ktorý som pri návrhu vrcholov zvolil, možno vidieť na obrázku \re
     \label{obr:vrch_navrh_1}
 \end{figure}
 
-Pri takomto prístupe sme však narazili na problém s dostupnosťou. Totižto náš pôvodný výber obsahoval aj také kombinácie farieb, ktoré by pre ľudí s poruchami farebného videnia neboli dostatočne rozlíšiteľné. Na výber vhodnej palety aj pre takéto prípady sme sa inšpirovali článkom Qualitative Color Schemes \cite{tol2021}. Ten obsahuje niekoľko príkladov vhodných farebných paliet spolu s návodom, ako s nimi zaobchádzať.
+Pri takomto prístupe sme však narazili na problém s dostupnosťou. Moj pôvodný výber totižto obsahoval aj také kombinácie farieb, ktoré by pre ľudí s poruchami farebného videnia neboli dostatočne rozlíšiteľné. Pri výbere vhodnej palety aj pre takéto prípady sme sa inšpirovali článkom Qualitative Color Schemes \cite{tol2021}. Ten obsahuje niekoľko príkladov vhodných farebných paliet spolu s návodom, ako s nimi zaobchádzať.
 
-Ďalej sme sa rozhodli pomocou vrcholov vyjadriť aj určité chybové stavy. Tie môžu nastať v dvoch prípadoch. Jedným je keď interpretácia obsahuje prvok, ktorý nie je v doméne. Vrchol reprezentujúci takýto prvok je zobrazený v pravej časti obrázka \ref{obr:error_vrch}. Okrem vizuálnej informácie v podobe červeného orámovania a nápisu poskytuje aj možnosť chybný prvok odstrániť kliknutím na tlačidlo koša, čím sa interpretácia opraví. Druhý prípad nastáva pri interpretaciach funkčných symbolov. Vtedy je vrcholom v ľavej časti obrázka označený prvok, ktorý nemá priradenú hodnotu, alebo ich má priradených viac.
+Ďalej sme sa rozhodli pomocou vrcholov vyjadriť aj určité chybové stavy. Tie môžu nastať v dvoch prípadoch. Jedným z nich je keď interpretácia obsahuje prvok, ktorý nie je v doméne. Vrchol reprezentujúci takýto prvok je zobrazený v pravej časti obrázka \ref{obr:error_vrch}. Okrem vizuálnej informácie v podobe červeného orámovania a nápisu poskytuje aj možnosť chybný prvok odstrániť kliknutím na tlačidlo koša, čím sa interpretácia opraví. Druhý prípad nastáva pri interpretáciách funkčných symbolov. Vtedy je vrcholom v ľavej časti obrázka označený prvok, ktorý nemá priradenú hodnotu alebo ich má priradených viac.
 
 \begin{figure}
     \centerline{\includegraphics[width=0.5\textwidth]{images/error_nodes.png}}
@@ -94,7 +94,7 @@ Pri takomto prístupe sme však narazili na problém s dostupnosťou. Totižto n
     \label{obr:error_vrch}
 \end{figure}
 
-Dôležitou funkcionalitou grafu je aj spôsob vytvárania hrán. Na rozdiel od predošlej implementácie sme sa rozhodli nerozdeľovať ovládanie na dva režimy (pohybový a editovací). To si však vyžaduje, aby bola do vrcholu naraz zakomponovaná možnosť jeho presúvania, ako aj tvorby novej hrany. Žiadne z riešení ponúkaných knižnicou nám nevyhovovalo, preto sme sa rozhodli pre vlastný prístup, pri ktorom je vrchol rozdelený na dve časti – jednu určenú na vytváranie hrán a druhú na jeho presúvanie. Vytváranie hrany iniciujeme umiestení kurzora nad určitú oblasť po obvode vrchola. Používateľovi je táto oblasť naznačená jej stmavením a zmenou typu kurzora. Následným potiahnutím z tejto oblasti nad iný vrchol a pustením sa proces vytvárania ukončí. Počas vytvárania sa hrana zobrazuje červenou alebo zelenou farbou podľa toho, či je jej vytvorenie validné. Posúvanie vrcholom je umožnené na zvyšnej ploche, teda okolo jeho stredu.
+Dôležitou funkcionalitou grafu je aj spôsob vytvárania hrán. Na rozdiel od predošlej implementácie sme sa rozhodli nerozdeľovať ovládanie na dva režimy (pohybový a editovací). To si však vyžaduje, aby bola do vrcholu naraz zakomponovaná možnosť jeho presúvania, ako aj tvorby novej hrany. Žiadne z riešení ponúkaných knižnicou nám nevyhovovalo, preto sme sa rozhodli pre vlastný prístup, pri ktorom je vrchol rozdelený na dve časti – jednu určenú na vytváranie hrán a druhú na jeho presúvanie. Vytváranie hrany iniciujeme umiestením kurzora nad určitú oblasť po obvode vrchola. Používateľovi je táto oblasť naznačená jej stmavením a zmenou typu kurzora. Následným potiahnutím z tejto oblasti nad iný vrchol a pustením sa proces vytvárania ukončí. Počas vytvárania sa hrana zobrazuje červenou alebo zelenou farbou podľa toho, či je jej vytvorenie validné. Posúvanie vrcholu je umožnené na zvyšnej ploche, teda okolo jeho stredu.
 
 %Použitie týchto vrcholov na grafovú reprezentáciu konkrétneho binárneho predikátu znázorňuje obrázok \ref{obr:basic_navrh_1}. Hrany sú reprezentované šípkami, kde smer šípky upresňuje vzťah medzi prvkami. V pravej časti obrázka sa nachádza zoznam unárnych predikátov spolu s ich príslušnými farbami. Medzi predikátmi, ktoré sa majú zobraziť, je užívateľovi umožnené filtrovať zaškrtnutím k nemu prislúchajúceho políčka.
 
@@ -108,11 +108,11 @@ Dôležitou funkcionalitou grafu je aj spôsob vytvárania hrán. Na rozdiel od 
 
 \subsection{Bipartitný graf}
 \label{bsec:bipartite_graph_navrh}
-Prvý návrh fungovania tejto reprezentácie možno vidieť na obrázku \ref{obr:bipartite_navrh_1}. Hrany reprezentujú šípky smerujúce zľava doprava, čo je jediný smer v ktorom sa dajú vytvárať. Vrcholy sú rozdelené do dvoch stĺpcov, čo je naznačené aj ich rozdielnou farbou. Každý stĺpec reprezentuje ľubovoľnú podmnožinu prvkov danej domény. Používateľovi je tiež umožnené meniť poradie vrcholov, ale iba v rámci jeho skupiny, presúvanie medzi nimi nie je dovolené. Posledný, menej výrazný vrchol je iný od ostatných, pretože slúži ako tlačidlo na pridávanie ďalších prvkov do príslušného stĺpca.
+Prvý návrh tejto reprezentácie možno vidieť na obrázku \ref{obr:bipartite_navrh_1}. Hrany reprezentujú šípky smerujúce zľava doprava, pričom ide o jediný smer, v ktorom sa dajú vytvárať. Vrcholy sú rozdelené do dvoch stĺpcov, čo je naznačené aj ich rozdielnou farbou. Každý stĺpec reprezentuje ľubovoľnú podmnožinu prvkov danej domény. Používateľovi je tiež umožnené meniť poradie vrcholov, ale iba v rámci jeho skupiny, presúvanie medzi nimi nie je dovolené. Posledný, menej výrazný vrchol sa líši od ostatných, pretože slúži ako tlačidlo na pridávanie ďalších prvkov do príslušného stĺpca.
 
-Toto riešenie nám však nevyhovovalo a rozhodli sme sa na ňom ešte zapracovať pri druhom, finálnom návrhu, ktorý je vyobrazený na obrázku \ref{obr:bipartite_navrh_2}.
+Toto riešenie nám však nevyhovovalo, a preto sme sa rozhodli na ňom ešte zapracovať v druhom, finálnom návrhu, ktorý je vyobrazený na obrázku \ref{obr:bipartite_navrh_2}.
 
-Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov na vzor Orientovaného grafu. Príslušnosť vrcholov do skupiny je naznačená pomocou dvoch kontajnerov s rozdielnou farbou a názvom danej skupiny. Pre jednoduchosť som sa tiež rozhodol odstrániť tlačidlá na pridávanie ďalších prvkov do skupiny, tým pádom obe časti vždy obsahujú rovnakú podmnožinu domény. Všetky ostatné funkcie sme ponechali.
+Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru Orientovaného grafu. Príslušnosť vrcholov do skupiny je naznačená pomocou dvoch kontajnerov s rozdielnou farbou a názvom danej skupiny. Pre jednoduchosť som sa tiež rozhodol odstrániť tlačidlá na pridávanie ďalších prvkov do skupiny, tým pádom obe časti vždy obsahujú rovnakú podmnožinu domény. Všetky ostatné funkcie sme ponechali.
 
 \begin{figure}
     \centerline{\includegraphics[width=0.7\textwidth]{images/bipartite_1.png}}
@@ -136,9 +136,9 @@ Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov na vzor Oriento
 
 % Výhodou Hasseho diagramu je jeho schopnosť výrazne zjednodušiť a sprehľadniť prácu s čiastočnými usporiadaniami. Samotný orientovaný graf nie je ideálny pre tento účel z viacerých dôvodov. Napríklad pri čiastočných usporiadaniach s väčším počtom prvkov sa stáva neprehľadným, keďže vždy zobrazuje všetky hrany, čo často nie je nutné. Ďalším je, že aj jednoduchá úprava takéhoto čiastočného usporiadania môže v orientovanom grafe znamenať potrebu ručne vytvoriť množstvo nových hrán, kvôli nutnosti zachovania tranzitivity, čím sa uberá na použiteľnosti. Cieľom je navrhnúť vhodnú grafovú reprezentáciu Hasseho diagramu, ktorá (ako už bolo spomínané v podkapitole \ref{sec:reprezentacie}) dokáže s týmito problémami pomôcť.
 
-Spôsob fungovania vrcholov a hrán grafu zostal v zásade nezmenený. Pri tejto reprezentácii sme sa však zamerali najmä na overovanie, či interpretácia binárneho predikátu skutočne tvorí čiastočné usporiadanie, čo je nevyhnutná podmienka pre zmysluplnosť tejto reprezentácie.
+Spôsob fungovania vrcholov a hrán grafu zostal v zásade nezmenený. Pri tejto reprezentácii sme sa však zamerali najmä na overovanie, či interpretácia binárneho predikátu skutočne tvorí čiastočné usporiadanie, čo je nevyhnutný predpoklad pre zmysluplnosť tejto reprezentácie.
 
-Pri vytvárania nových hrán sa preto kontroluje, či by ich pridaním ostali zachované všetky podmienky čiastočného usporiadania. Ak by tomu tak nebolo, užívateľ je už počas vytvárania hrany upozornený varovnou správa spolu s vysvetlením, akú vlastnosť by danou hranou porušil. Príklad takejto správy možno vidieť na obrázku \ref{obr:hasse_error}.
+Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali zachované všetky podmienky čiastočného usporiadania. Ak by tomu tak nebolo, používateľ je už počas vytvárania hrany upozornený varovnou správou spolu s vysvetlením, akú vlastnosť by danou hranou porušil. Príklad takejto správy možno vidieť na obrázku \ref{obr:hasse_error}.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.6\textwidth]{images/hasse_error.png}}
@@ -148,7 +148,7 @@ Pri vytvárania nových hrán sa preto kontroluje, či by ich pridaním ostali z
     \label{obr:hasse_error}
 \end{figure}
 
-Ďalšou požiadavkou je automatické generovanie vertikálnej hierarchie vrcholov, typickej pre túto reprezentáciu. Rozhodli sme sa však, že nebudeme užívateľa akokoľvek obmedzovať za účelom dodržiavania tejto hierarchie, ako tomu bolo v bipartitnom grafe, ale poskytneme mu dobrý základ rozmiestnenia vrcholov, ktorý je ďalej prispôsobiteľný vlastným predstavám. Samotné generovanie preto prebieha iba pri prvom otvorení grafu, alebo na vyžiadanie od používateľa, stlačením tlačidla na paneli nástrojov.
+Ďalšou požiadavkou bolo automatické generovanie vertikálnej hierarchie vrcholov, typickej pre túto reprezentáciu. Rozhodli sme sa však, že nebudeme používateľa akokoľvek obmedzovať za účelom dodržiavania tejto hierarchie, ako tomu bolo v bipartitnom grafe, ale poskytneme mu dobrý základ rozmiestnenia vrcholov, ktorý si môže ďalej prispôsobiť podľa vlastných predstáv. Samotné generovanie preto prebieha iba pri prvom otvorení grafu alebo na vyžiadanie od používateľa, stlačením tlačidla na paneli nástrojov.
 
 
 
@@ -160,7 +160,7 @@ Pri vytvárania nových hrán sa preto kontroluje, či by ich pridaním ostali z
     \label{obr:hasse_navrh_1}
 \end{figure}
 
-Môj návrh je zobrazený na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s orientovanými hranami smerujúcimi nahor. Zelenou prerušovanou čiarou je užívateľovi naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by hrana bola červená a používateľovi by sa zobrazila varovná správa.
+Môj návrh je zobrazený na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s orientovanými hranami smerujúcimi nahor. Zelenou prerušovanou čiarou je užívateľovi naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by bola hrana zvýraznená červenou farbou a používateľovi by sa zobrazila varovná správa.
 
 \section{Tabuľkové editory}
 \label{sec:plan-table-editors}
