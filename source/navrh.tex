@@ -10,7 +10,7 @@ Požiadavky na rozšírenie aplikácie sa postupne vyvíjali a rozširovali, čo
 \subsection{Zámer rozšírenia aplikácie}
 Hlavným cieľom tejto práce je zlepšiť použiteľnosť existujúcej aplikácie Prieskumník štruktúr používanej na predmete Logika pre informatikov. Ako bolo už bližšie spomenuté v podkapitole venovanej práve tomuto nástroju \ref{sec:explorer}, súčasná verzia poskytuje iba veľmi obmedzený spôsob vizualizácie a manipulácie s interpretáciami predikátových a funkčných symbolov.
 
-Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafové editory, ktoré používateľom pomôžu pri vizualizácií a vytváraní binárnych predikátov a unárnych funkcií logiky prvého rádu. Konkrétne sa má jednať o Orientovaný graf, Bipartitný graf a Hasseho diagram. Každý z nich bol zvolená pre svoje unikátne vlastnosti, ktoré vedia byť nápomocné v rozličných situáciach.
+Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafové editory, ktoré používateľom pomôžu pri vizualizácií a vytváraní binárnych predikátov a unárnych funkcií logiky prvého rádu. Konkrétne sa má jednať o Orientovaný graf, Bipartitný graf a Hasseho diagram. Každý z nich bol zvolený pre svoje unikátne vlastnosti, ktoré vedia byť nápomocné v rozličných situáciach.
 
 Aplikáciu by sme však radi posunuli ďalej aj v iných smeroch. Či už integráciou ďalších editorov, pridaním nových funkcionalít alebo vylepšením tých existujúcich.
 
@@ -37,18 +37,6 @@ Ako už bolo uvedené v podkapitole \ref{sec:fol}, definičný obor takýchto fu
 
 Na obrázku \ref{obr:rozhranie} možno vidieť návrh rozhrania, do ktorého sú jednotlivé editory vkladané. Dokopy sa skladá z nasledujúcich komponentov:
 
-\textbf{Hlavička editora:} Hlavička obsahuje v ľavej časti informácie o názve predikátové alebo funkčného symbolu, pre ktorý je daný editor otvorený spolu s jeho názvom. V pravej časti sa nachádza tlačidlo, po ktorého stlačení sa zobrazí ponuka všetkých kompatibilných editorov. Kliknutím na konkrétny editor sa zobrazenie prepne.
-
-\textbf{Panel unárnych predikátov:}
-
-\textbf{Filter prvkov domény:}
-
-\textbf{Chybový banner:} Tento komponent sa zobrazí iba v prípade, že v interpretácií nastala chyba. V ľavej časti sa vypíše chybová správa. Ak sa navyše jedná o chybu, ktorá sa dá opraviť, na pravej strane sa zobrazí aj tlačidlo na opravu.
-
-\textbf{Zobrazenie editora:} Do tejto časti sa vkladá komponent zvoleného editora.
-
-
-
 \begin{figure}
     \centerline{\includegraphics[width=1\textwidth]{images/editor_rozhranie.png}}
     %popis obrazku
@@ -57,9 +45,26 @@ Na obrázku \ref{obr:rozhranie} možno vidieť návrh rozhrania, do ktorého sú
     \label{obr:rozhranie}
 \end{figure}
 
+\textbf{Hlavička editora:} V ľavej časti hlavičky sa zobrazuje názov predikátové alebo funkčného symbolu spolu s názvom aktuálneho editora. V pravej časti sa nachádza tlačidlo, po ktorého stlačení sa zobrazí zoznam všetkých kompatibilných editorov. Výberom konkrétneho editora z ponuky sa zobrazenie automaticky prepne.
+
+\textbf{Panel unárnych predikátov:} Tento komponent tvorí najdôležitejšiu časť celého rozhrania. Jeho dominantou je horizontálny zoznam zaškrtávacích tlačidiel reprezentujúcich jednotlivé unárne predikáty, pričom každému z nich je priradená vlastná farba. Ako aj neskôr v návrhu uvidíme, kompatibilné editory túto farbu rôzne využívajú pri ich vizualizácii. Tlačidlo s dvoma fajkami, umiestnené naľavo, slúži na hromadné zaškrtnutie všetkých unárnych predikátov. Úplne vľavo sa nachádza zaškrtávacie tlačidlo označené písmenom „D“, tzv. doménové, ktorého funkcia je podrobnejšie vysvetlená v časti venovanej filtrovaniu.
+
+\textbf{Filter prvkov domény:}
+Tlačidlo na rozbalenie filtrov sa nachádza napravo od panelu unárnych predikátov. Po jeho stlačení sa zobrazia zaškrtávacie tlačidlá reprezentujúce prvky domény. Odškrtnutím konkrétneho prvku sa indikuje, že daný prvok sa nemá nachádzať v zobrazení editora.
+
+\textbf{Chybový banner:} Tento komponent sa zobrazí iba v prípade, že v interpretácií nastala chyba. V ľavej časti sa vypíše chybová správa. Ak sa navyše jedná o chybu, ktorú je možné opraviť, na pravej strane sa zároveň zobrazí tlačidlo na jej opravu.
+
+\textbf{Zobrazenie editora:} Do tejto časti sa vkladá komponent zvoleného editora.
+
+\subsection{Filtrovanie}
+Každý editor, ktorý podporuje filtrovanie, nejakým spôsobom zobrazuje prvky domény. To, ktoré prvky sa zobrazia, ovplyvňuje viacero faktorov, ktoré sme počas vývoja menili. V jednom z prvých návrhov sa vždy zobrazovala celá doména. Neskôr sme toto správanie zmenili tak, aby sa zobrazovali iba tie prvky, ktoré sa zároveň nachádzajú v interpretáciách zvolených unárnych predikátov. Videli sme však potenciálne využitie v oboch prístupoch a preto sme sa ich rozhodli skombinovať pridaním tlačidla domény. Po jeho zaškrtnutí sa vždy zobrazuje celá doména, v opačnom prípade sa zobrazenie riadi interpretáciami unárnych predikátov.
+
+Komponent filtra prvkov domény je separátny. Ideou za ním je umožniť viac selektívne filtrovanie domény. Výsledná zobrazená doména predstavuje prienik prvkov vybraných pomocou unárnych predikátov a prvkov zvolených vo filtri domény.
+
+
 \section{Grafové editory}
 \label{sec:plan-graph-editors}
-Tento návrh sa zameriava na tri zvolené grafové reprezentácie, konkrétne sa jedná o orientovaný graf, bipartitný graf a Hasseho diagram. Každá z nich bola zvolená pre svoje unikátne vlastnosti vhodné na skúmanie a konštrukciu binárnych predikátov logiky prvého rádu. V jednotlivých podkapitolách je podrobnejšie vysvetlená motivácia za ich výberom spolu s ich prvotným návrhom.
+Táto podkapitola sa zameriava na návrh editorov pre tri zvolené grafové reprezentácie, konkrétne sa jedná o orientovaný graf, bipartitný graf a Hasseho diagram. Okrem opisu navrhnutých riešenie sa budeme zároveň snažiť vysvetliť súvislosti, ktoré stáli za ich vznikom.
 
 \subsection{Orientovaný graf}
 \label{sec:basic_graph}
@@ -72,7 +77,11 @@ Hlavnou úlohou pri návrhu tejto grafovej reprezentácie bolo určiť, akým sp
 
 V samotnom grafe prvky domény prirodzene predstavujú vrcholy, vzťahy sú zas reprezentované pomocou hrán. Konštanty a unárne predikáty som sa taktiež rozhodol zakomponovať ako súčasť vrcholov, keďže ide o informácie prislúchajúce prvkom domény. Výzva, ktorú takéto riešenie však prináša, je zachovať rovnováhu medzi množstvom informácií obsiahnutých vo vrcholoch a ich prehľadnosťou.
 
-Prístup, ktorý som pri návrhu vrcholov zvolil, možno vidieť na obrázku \ref{obr:vrch_navrh_1}. Najväčší typografický dôraz sa kladie na samotný prvok domény (na obrázku veľké písmeno A). Pod ním sa nachádzajú konštanty reprezentujúce tento prvok (na obrázku nápis Bob). Na prvom vrchole sprava zas možno vidieť panel predstavujúci unárne predikáty, do interpretácie ktorých daný prvok patrí, kde každá farba symbolizuje konkrétny predikát. Práve použitie farieb namiesto iných alternatív, ako napríklad nápisov s názvom unárneho predikátu, má pomôcť s celkovou prehľadnosťou vrcholov.
+Prístup, ktorý som pri návrhu vrcholov zvolil, možno vidieť na obrázku \ref{obr:vrch_navrh_1}. Najväčší typografický dôraz sa kladie na samotný prvok domény (na obrázku veľké písmeno A). Pod ním sa nachádzajú konštanty reprezentujúce tento prvok (na obrázku nápis Bob). Na druhom vrchole zlava zas možno vidieť panel predstavujúci unárne predikáty, do interpretácie ktorých daný prvok patrí, kde každá farba symbolizuje konkrétny predikát. Práve použitie farieb namiesto iných alternatív, ako napríklad nápisov s názvom unárneho predikátu, má pomôcť s celkovou prehľadnosťou vrcholov.
+
+Pri takomto prístupe sme však narazili na problém s dostupnosťou. Moj pôvodný výber totižto obsahoval aj také kombinácie farieb, ktoré by pre ľudí s poruchami farebného videnia neboli dostatočne rozlíšiteľné. Pri výbere vhodnej palety aj pre takéto prípady sme sa inšpirovali článkom Qualitative Color Schemes \cite{tol2021}. Ten obsahuje niekoľko príkladov vhodných farebných paliet spolu s návodom, ako s nimi zaobchádzať.
+
+Posledné dva vrcholy na obrázku \ref{obr:vrch_navrh_1} sa aktivujú iba v prípade, keď používateľ prejde kurzorom na zaškrtávacie tlačidlo unárneho predikátu. Ak by zaškrtnutie tohto tlačidla znamenalo pridanie vrcholu do zobrazenia, zobrazí sa jeho čiastočne priehľadná verzia (druhá sprava). Ak by naopak zaškrtnutie viedlo k odobraniu daného vrcholu, zobrazí sa jeho vyšrafovaná verzia (prvý sprava). Cieľom je používateľovi jasnejšie naznačiť, aký vplyv bude mať jeho voľba na výsledné zobrazenie grafu.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.9\textwidth]{images/nodes.png}}
@@ -81,8 +90,6 @@ Prístup, ktorý som pri návrhu vrcholov zvolil, možno vidieť na obrázku \re
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:vrch_navrh_1}
 \end{figure}
-
-Pri takomto prístupe sme však narazili na problém s dostupnosťou. Moj pôvodný výber totižto obsahoval aj také kombinácie farieb, ktoré by pre ľudí s poruchami farebného videnia neboli dostatočne rozlíšiteľné. Pri výbere vhodnej palety aj pre takéto prípady sme sa inšpirovali článkom Qualitative Color Schemes \cite{tol2021}. Ten obsahuje niekoľko príkladov vhodných farebných paliet spolu s návodom, ako s nimi zaobchádzať.
 
 Ďalej sme sa rozhodli pomocou vrcholov vyjadriť aj určité chybové stavy. Tie môžu nastať v dvoch prípadoch. Jedným z nich je keď interpretácia obsahuje prvok, ktorý nie je v doméne. Vrchol reprezentujúci takýto prvok je zobrazený v pravej časti obrázka \ref{obr:error_vrch}. Okrem vizuálnej informácie v podobe červeného orámovania a nápisu poskytuje aj možnosť chybný prvok odstrániť kliknutím na tlačidlo koša, čím sa interpretácia opraví. Druhý prípad nastáva pri interpretáciách funkčných symbolov. Vtedy je vrcholom v ľavej časti obrázka označený prvok, ktorý nemá priradenú hodnotu alebo ich má priradených viac.
 
@@ -114,7 +121,7 @@ Toto riešenie nám však nevyhovovalo, a preto sme sa rozhodli na ňom ešte za
 
 Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru Orientovaného grafu. Príslušnosť vrcholov do skupiny je naznačená pomocou dvoch kontajnerov s rozdielnou farbou a názvom danej skupiny. Pre jednoduchosť som sa tiež rozhodol odstrániť tlačidlá na pridávanie ďalších prvkov do skupiny, tým pádom obe časti vždy obsahujú rovnakú podmnožinu domény. Všetky ostatné funkcie sme ponechali.
 
-\begin{figure}
+\begin{figure}[h]
     \centerline{\includegraphics[width=0.7\textwidth]{images/bipartite_1.png}}
     %popis obrazku
     \caption[Prvý návrh vizuálu pre bipartitný graf.]{Prvý návrh vizuálu pre bipartitný graf.}
@@ -122,7 +129,7 @@ Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru Or
     \label{obr:bipartite_navrh_1}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
     \centerline{\includegraphics[width=0.8\textwidth]{images/bipartite_2.png}}
     %popis obrazku
     \caption[Druhý návrh vizuálu pre bipartitný graf.]{Druhý návrh vizuálu pre bipartitný graf.}
@@ -164,18 +171,55 @@ Môj návrh je zobrazený na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je ja
 
 \section{Tabuľkové editory}
 \label{sec:plan-table-editors}
-TODO
+V tejto podkapitole opíšeme návrh ďalších dvoch typov editorov. Oba sú unikátne tým, že svoje zobrazenie prispôsobujú jednak tomu, či reprezentujú interpretáciu predikátového alebo funkčného symbolu, ako aj arite daného symbolu.
+
 \subsection{Maticový editor}
-TODO
+Návrh editora reprezentujúceho konkrétny binárny predikát je znázornený na obrázku \ref{obr:matrix}. Horizontálnu aj vertikálnu hlavičku tabuľky tvoria prvky domény, v tomto prípade sú to veľké písmena. Príslušnosť prvkov k interpretáciám unárnych predikátov je vizualizovaná podobne ako pri grafoch, teda tiež pomocou farieb. Pre malú veľkosť dostupného priestoru bolo však v tomto prípade potrebné zvoliť kompaktnejšie riešenie, v podobe krúžkov.
+
+Každá usporiadaná dvojica prvkov domény je reprezentovaná zaškrtávacím políčkom, ktorým ju možno jednoducho zaznačiť či patrí, alebo nepatrí do interpretácie. Editor tiež podporuje zobrazenie interpretácií unárnych predikátov, v takom prípade sa zobrazí iba horizontálna hlavička.
+
+Pri reprezentáciách unárnych a binárnych funkčných symbolov sú zaškrtávacie políčka nahradené textovými vstupmi. Inak je jeho rozloženie v zásade identické. Obsah týchto textových vstupov je potrebné aj validovať, aby sa overilo, že používateľ skutočne zadáva výhradne prvky domény. V prípade chyby sa príslušné pole zvýrazní červenou farbu a používateľovi sa na chybovom bannery zobrazí vysvetlenie problému.
+
 \subsection{Databázový editor}
-TODO
+Príklad editora reprezentujúceho konkrétny ternárny predikát možno vidieť na obrázku \ref{obr:database}. V tejto reprezentácii sú jednotlivé trojice prvkov zoskupené do riadkov. Na rozdiel od predošlého editora funguje vždy na báze textových vstupov. Príslušnosť prvkov k interpretáciám unárnych predikátov je vyznačená priamo pri nich. Posledný riadok slúži na pridávanie nových trojíc. K pridaniu však dôjde iba vtedy, ak sú správne vyplnené všetky vstupy v riadku. Tlačidlo s ikonou koša slúži na odstránenie príslušnej trojice.
+
+Pri reprezentáciách unárnych a binárnych funkčných symbolov sú automaticky generované všetky $n$-tice prvkov domény, kde $n$ zodpovedá arite funkčného symbolu. Tieto $n$-tice sa následne zobrazia v tabuľke a ku každej z nich je sprava priradený jeden ďalší textový vstup. Tento vstup určuje akú hodnotu má funkcia nadobúdať pre príslušnú $n$-ticu. Takýto prístup je zvolený kvôli tomu, že používateľ musí vždy poskytnúť celú definíciu funkcie. Z toho dôvodu nie je potrebné, ani vhodné, aby musel jednotlivé $n$-tice pridávať manuálne.
+
+Tento editor je špecifický aj tým, že sa dá používať pri ľubovoľnej arite, keďže iba stačí vygenerovať tabuľku s príslušným počtom stĺpcov. Pri interpretáciach funkčných symbolov sme však museli jeho použiteľnosť obmedziť maximálnou veľkosťou arity 5. Totižto generované tabuľky by už pri vyšších aritách boli príliš veľké a prakticky nepoužiteľné.
+
+\begin{figure}[h]
+    \centerline{\includegraphics[width=1\textwidth]{images/matrix.png}}
+    %popis obrazku
+    \caption[Návrh rozhrania pre Maticový editor.]{Návrh rozhrania pre Maticový editor.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:matrix}
+\end{figure}
+\begin{figure}[h]
+    \centerline{\includegraphics[width=1\textwidth]{images/databazovy.png}}
+    %popis obrazku
+    \caption[Návrh rozhrania pre Databázový editor.]{Návrh rozhrania pre Databázový editor.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:database}
+\end{figure}
+
 
 \section{Editor interpretácií funkcií}
 TODO
 
+\section{Queries}
+\label{sec:plan-queries}
+
+Tento komponent neslúži ako editor, ale reprezentuje separátnu čast aplikácie, v ktorej je možné definovať dopyty na pravdivosť otvorených formúl logiky prvého rádu. Umiestniť sme sa ho rozhodli pod už existujúci komponent pravdivosti formúl. Návrh rozhrania možno vidieť na obrázku (obr).
+
+Do prvého textového vstupu zľava sa zadávajú voľné premenné oddelené čiarkou. Druhý textový vstup hneď vedľa slúži na definovanie otvorenej formuly. Oba vstupy sú validované. Pri premenných sa kontroluje správny formát ako aj to, či skutočne patria medzi voľné premenné danej formuly. Ak by to tak nebolo, používateľovi by sa pod vstupom zobrazila chybová správa s informáciou o konkrétnych premenných, ktoré nie sú v skutočnosti voľné. Validácia formuly využíva už existujúce riešenie používané v aplikácií. Bolo ho však potrebné doplniť tak, aby zohľadňovalo aj používateľom definované premenné.
+
+Ak sú oba vstupy vyplnené správne, používateľ môže stlačiť tlačidlo úplne napravo. Tým sa dopyt vyhodnotí, resp. sa vygenerujú všetky možné ohodnotenia, ktoré spĺňajú danú otvorenú formulu. Používateľovi sa následne zobrazí počet výsledkov spolu s ich zoznamom. Každý riadok predstavuje jedno ohodnotenie a stĺpce zodpovedajú jednotlivým premenným. Zoznam je navyše stránkovaný, takže aj pri veľkom množstve ohodnotení sa zobrazí iba konkrétny počet výsledkov. Prechádzanie strán zoznamu je umožnené tlačidlami na jeho spodku.
+
+Tiež sme museli vyriešiť problém neaktuálnych výsledok. Problém totižto môže nastať, keď používateľ po vygenerovaní výsledkov upraví štruktúru. Tým pádom vygenerované ohodnotenia už nemusia byť aktuálne.
+
+Jedným z riešení bolo pri každej zmene štruktúry všetky existujúce výsledky skryť. Na ich opätovné zobrazenie by bolo potrebné opäť stlačiť tlačidlo na generovanie. To nám však nevyhovovalo, pretože sme chceli, aby boli výsledky k dispozicii aj počas toho, ako sa používateľ snaží upraviť štruktúru. Keďže ich môže chcieť využiť ako pomôcku.
+
+Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení štruktúry neskryjú, ale sú označené ako potenciálne neaktuálne pomocou varovnej správy zobrazenej v hlavičke výsledkovej tabuľky. Na odstránenie tohto varovania ich bude používateľ musieť opäť vygenerovať.
 
 \section{Nový stav aplikácie}
 TODO
-
-\section{Queries}
-\label{sec:plan-queries}
