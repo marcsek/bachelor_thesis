@@ -26,7 +26,7 @@ Oproti množinovému pohľadu tiež pribudnú vylepšenia zamerané na prehľadn
 \textbf{Maticový a databázový editor:} Jednou z pridaných požiadaviek je reimplementácia Maticového a Databázového editora z predošlej verzie Prieskumníka štruktúr. Ich účel je podobný ako pri grafových reprezentáciách, no okrem poskytnutia alternatívneho pohľadu dokážu reprezentovať aj iné než iba binárne predikáty a unárne funkcie. Pri týchto editoroch sa taktiež vyžaduje možnosť zobrazovať unárne predikáty a využívať ich na filtrovanie.
 
 \textbf{Editor interpretácií funkcií:} Ďalšie vylepšenie má za cieľ uľahčiť tvorbu interpretácií funkčných symbolov.
-Ako už bolo uvedené v podkapitole \ref{sec:fol}, definičný obor takýchto funkcií predstavuje množina $D^n$, kde $D$ je doména a $n$ arita funkčného symbolu. Definovaním podmienok na vstupné $n$-tice a priradením hodnôt, ktoré má funkcia pri ich splnení nadobúdať, vieme jednoducho špecifikovať interpretácie funkčných symbolov aj s pomerne veľkou aritou. Požiadavkou je preto vytvorenie nástroja založeného na takomto princípe.
+To býva často zdĺhavé, keďže doposiaľ spomínané nástroje vyžadujú explicitné definovanie všetkých prípadov. Dá sa to však vylepšiť nástrojom, ktorý umožní definovať podmienky na argumenty funkcie spolu s príslušnými hodnotami, ktoré má funkcia pri ich splnení nadobúdať. Požiadavkou je preto vytvorenie nástroja založeného na takomto princípe.
 
 \textbf{Queries:} Toto rozšírenie, na rozdiel od ostatných, neslúži na tvorbu interpretácií. Malo by predstavovať samostatnú sekciu aplikácie, v ktorej bude možné definovať otvorené formuly a následne získať všetky ohodnotenia, pri ktorých sú tieto formuly splniteľné. Výsledok takéhoto dopytu (angl. \textit{query}) by sa mal vhodne zobraziť v podobe tabuľky.
 
@@ -183,9 +183,9 @@ Pri reprezentáciách unárnych a binárnych funkčných symbolov sú zaškrtáv
 \subsection{Databázový editor}
 Príklad editora reprezentujúceho konkrétny ternárny predikát možno vidieť na obrázku \ref{obr:database}. V tejto reprezentácii sú jednotlivé trojice prvkov zoskupené do riadkov. Na rozdiel od predošlého editora funguje vždy na báze textových vstupov. Príslušnosť prvkov k interpretáciám unárnych predikátov je vyznačená priamo pri nich. Posledný riadok slúži na pridávanie nových trojíc. K pridaniu však dôjde iba vtedy, ak sú správne vyplnené všetky vstupy v riadku. Tlačidlo s ikonou koša slúži na odstránenie príslušnej trojice.
 
-Pri reprezentáciách unárnych a binárnych funkčných symbolov sú automaticky generované všetky $n$-tice prvkov domény, kde $n$ zodpovedá arite funkčného symbolu. Tieto $n$-tice sa následne zobrazia v tabuľke a ku každej z nich je sprava priradený jeden ďalší textový vstup. Tento vstup určuje akú hodnotu má funkcia nadobúdať pre príslušnú $n$-ticu. Takýto prístup je zvolený kvôli tomu, že používateľ musí vždy poskytnúť celú definíciu funkcie. Z toho dôvodu nie je potrebné, ani vhodné, aby musel jednotlivé $n$-tice pridávať manuálne.
+Pri reprezentáciách funkčných symbolov sú pre vytvorenie rozhrania automaticky generované všetky $n$-tice prvkov domény, kde $n$ zodpovedá arite funkčného symbolu. Tieto $n$-tice sa následne zobrazia v tabuľke a ku každej z nich je sprava priradený jeden ďalší textový vstup. Tento vstup určuje akú hodnotu má funkcia nadobúdať pre príslušnú $n$-ticu. Takýto prístup je zvolený kvôli tomu, že používateľ musí vždy poskytnúť celú definíciu funkcie. Z toho dôvodu nie je potrebné, ani vhodné, aby musel jednotlivé $n$-tice pridávať manuálne.
 
-Tento editor je špecifický aj tým, že sa dá používať pri ľubovoľnej arite, keďže iba stačí vygenerovať tabuľku s príslušným počtom stĺpcov. Pri interpretáciach funkčných symbolov sme však museli jeho použiteľnosť obmedziť maximálnou veľkosťou arity 5. Totižto generované tabuľky by už pri vyšších aritách boli príliš veľké a prakticky nepoužiteľné.
+Tento editor je špecifický aj tým, že sa dá ľahko prispôsobiť ľubovoľnej arite, keďže tá priamo súvisí s počtom stĺpcov tabuľky. Pri interpretáciách funkčných symbolov sme však rozhodli obmedziť jeho použiteľnosť maximálnou veľkosťou arity 5. Totižto generované tabuľky by už pri vyšších aritách boli príliš veľké a prakticky nepoužiteľné.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=1\textwidth]{images/matrix.png}}
@@ -204,24 +204,77 @@ Tento editor je špecifický aj tým, že sa dá používať pri ľubovoľnej ar
 
 
 \section{Editor interpretácií funkcií}
-TODO
+Editor sme sa rozhodli reprezentovať ako všeobecný strom, príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzli stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument môže mať potomkov, pričom hrany z takéhoto uzla vyjadrujú podmienky pre daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
+
+Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda také prvky domény, ktoré nespĺňajú žiadnu inú podmienku vychádzajúcu z daného uzla.
+
+\begin{figure}[h]
+    \centerline{\includegraphics[width=0.5\textwidth]{images/case_tree.png}}
+    %popis obrazku
+    \caption[Všeobecný strom pre Editor interpretácií funkcií.]{Všeobecný strom pre Editor interpretácií funkcií.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:case_tree}
+\end{figure}
+
+Takýto strom nám umožňuje jednoznačne reprezentovať interpretáciu funkčných symbolov, a to aj pomocou relatívne malého množstva dát. V porovnaní s ostatným editormi to predstavuje veľkú výhodu, keďže tie vyžadujú explicitné definovanie celej interpretácie.
+
+Ďalej bolo potrebné pre editor navrhnúť vhodné používateľské rozhranie, ktoré dovolí tvorbu takýchto stromov. Počas jeho vývoja sme prešli viacerými rôznymi návrhmi. Pre poskytnutie lepšie predstavy o tom, čo viedlo k finálnemu návrhu, nižie  jednotlivé verzie v krátkosti popíšeme.
+
+\subsection*{Prvý návrh}
+Jednotlivé riadky reprezentujú konkrétne cesty v strome od koreňa až po list, pričom hodnota v liste je uvedená ako prvá. Všetky editovateľné časti sú reprezentované ako textové vstupy. Pridanie novej podmienky pre daný argument sa realizuje pomocou príslušných tlačidiel v každom riadku. V kontexte stromovej reprezentácie je to rovnaké ako pridať hranu.
+
+%Podmienky predstavujú jednotlivé riadky. Každý riadok tvorí hodnota a podmienka. Podmienka je tvorená označením argumentu funkcie, ktorého sa týka a hodnotou, ktorú má argument na splnenie podmienky nadobúdať. Označovanie argumentov funkcie je pevne stanovené, v prípade funkčného symbolu s aritou 3 to je $f(x, y, z)$. V druhom riadku možno vidieť špecifickejšiu podmienku, keďže sa týka argumentu $x$ aj $y$. Ak je podmienka na vstupné argumenty splnená, funkcií bude priradená hodnota špecifikovaná na začiatku riadku. Novú podmienku možno pridať stlačením tlačidla na spodku. Bližšie špecifikovať podmienku možno stlačením k nej prislúchajúcemu tlačidla. Taktiež treba špecifikovať aj hodnotu ktorú funkcia nadobudne, ak žiadna zo špecifikovaných podmienok nebola splnená.
+
+\subsection*{Druhý návrh}
+Druhý návrh je realizovaný tak, aby veľmi blízko reprezentoval samotnú stromovú štruktúru. Uzli argumentov sú znázornené slovom switch spolu s textovým vstupom. Pre daný uzol sa následne zadávajú podmienky, tie sú znázornené slovom case s textovým vstupom. Nájdením kurzorom na konkrétnu podmienku sa nám zobrazí menu. Tlačidlom s ikonou koša možno danú podmienku vymazať. Druhým tlačidlom je možné pridať novú podmienku. Pri tom je však potrebné určiť, či podmienka bude obsahovať hodnotu, alebo ďalší argument funkcie.
+
+
+\begin{figure}[h]
+    \centerline{\includegraphics[width=0.9\textwidth]{images/interval1.png}}
+    %popis obrazku
+    \caption[Prvý návrh pre Editor interpretácií funkcií.]{Prvý návrh pre Editor interpretácií funkcií.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:interval_1}
+\end{figure}
+\begin{figure}[h]
+    \centerline{\includegraphics[width=0.9\textwidth]{images/interval2.png}}
+    %popis obrazku
+    \caption[Druhý návrh pre Editor interpretácií funkcií.]{Druhý návrh pre Editor interpretácií funkcií.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:interval_2}
+\end{figure}
+\begin{figure}[h]
+    \centerline{\includegraphics[width=0.9\textwidth]{images/interval3.png}}
+    %popis obrazku
+    \caption[Tretí návrh pre Editor interpretácií funkcií.]{Tretí návrh pre Editor interpretácií funkcií.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:interval_3}
+\end{figure}
 
 \section{Queries}
 \label{sec:plan-queries}
 
-Tento komponent neslúži ako editor, ale reprezentuje samostatnú čast aplikácie, v ktorej je možné definovať dopyty na splniteľnosť otvorených formúl logiky prvého rádu. Návrh rozhrania a umiestnenia v aplikácii možno vidieť na obrázku (obr).
+Tento komponent neslúži ako editor, ale reprezentuje samostatnú čast aplikácie, v ktorej je možné definovať dopyty na splniteľnosť otvorených formúl logiky prvého rádu. Návrh rozhrania a umiestnenia v aplikácii možno vidieť na obrázku \ref{obr:queries}.
 
-V kontexte aplikácie má komponent štandardné rozhranie. Na samom vrchu sa nachádza jeho názov, pod ním sú definované dopyty. Pridávať nové, prázdne dopyty je možné pomocou tlačidla v dolnej časti. Ďalej rozoberieme rozhrania konkrétneho dopytu, ten sa na obrázku nachádza v strede.
+V kontexte aplikácie má komponent štandardné rozhranie. Na samom vrchu sa nachádza jeho názov, pod ním sú definované dopyty. Pridávať nové, prázdne dopyty je možné pomocou tlačidla v dolnej časti. Ďalej sa pozrieme na rozhranie konkrétneho dopytu, ten je na obrázku zobrazený v strede.
 
-Na definovanie dopytu je potrebné určiť voľné premenné, podľa ktorých sa budú generovať ohodnotenia, tie sa zadávajú do prvého textového vstupu zľava a musia byť oddelené čiarkou. Druhý textový vstup hneď vedľa slúži na definovanie otvorenej formuly. Oba vstupy sú validované. Pri premenných sa kontroluje správny formát ako aj to, či skutočne patria medzi voľné premenné danej formuly. Ak by to tak nebolo, používateľovi by sa pod vstupom zobrazila chybová správa s informáciou o konkrétnych premenných, pre ktoré to nie je pravda. Validácia formuly využíva už existujúce riešenie používané v aplikácií. Bolo ho však potrebné doplniť tak, aby zohľadňovalo aj používateľom definované premenné.
+Na definovanie dopytu je v najprv potrebné určiť voľné premenné, podľa ktorých sa budú generovať ohodnotenia. Tie sa zadávajú do prvého textového vstupu zľava a musia byť oddelené čiarkou. Druhý textový vstup hneď vedľa slúži na definovanie otvorenej formuly, ktorú chceme vyhodnotiť. Oba vstupy sú validované. Pri premenných sa kontroluje správny formát ako aj to, či skutočne patria medzi voľné premenné danej formuly. Ak nie, používateľovi sa pod vstupom zobrazí chybová správa s informáciou o konkrétnych premenných, ktoré podmienku nespĺňajú. Validácia formuly využíva už existujúce riešenie používané v aplikácií. Bolo ho však potrebné doplniť tak, aby zohľadňovalo aj používateľom definované premenné.
 
-Ak sú oba vstupy vyplnené správne, používateľ môže stlačiť tlačidlo úplne napravo. Tým sa dopyt vyhodnotí, resp. sa vygenerujú všetky možné ohodnotenia, ktoré spĺňajú danú otvorenú formulu. Používateľovi sa následne zobrazí počet výsledkov spolu s ich zoznamom. Každý riadok predstavuje jedno ohodnotenie a stĺpce zodpovedajú jednotlivým premenným. Zoznam je navyše stránkovaný, takže aj pri veľkom množstve ohodnotení sa zobrazí iba konkrétny počet výsledkov. Prechádzanie strán zoznamu je umožnené tlačidlami na jeho spodku.
+Ak sú oba vstupy vyplnené správne, používateľ môže stlačiť tlačidlo úplne napravo. Tým sa dopyt vyhodnotí, teda sa vygenerujú všetky možné ohodnotenia, ktoré spĺňajú danú otvorenú formulu. Následne sa zobrazí počet výsledkov spolu s ich zoznamom. Každý riadok predstavuje jedno ohodnotenie a stĺpce zodpovedajú jednotlivým premenným. Zoznam je navyše stránkovaný, takže aj pri väčšom množstve ohodnotení sa zobrazí iba obmedzený počet výsledkov. Prechádzanie strán zoznamu je umožnené tlačidlami na jeho spodku.
 
-Tiež sme museli vyriešiť problém neaktuálnych výsledok. Problém totižto môže nastať, keď používateľ po vygenerovaní výsledkov upraví štruktúru. Tým pádom vygenerované ohodnotenia už nemusia byť aktuálne.
+Problém, ktorý môže nastať je ak používateľ po vygenerovaní výsledok nejakým spôsobom upraví štruktúru. To totiž môže znamenať, že vygenerované ohodnotenia už nie sú aktuálne.
 
-Jedným z riešení bolo pri každej zmene štruktúry všetky existujúce výsledky skryť. Na ich opätovné zobrazenie by bolo potrebné opäť stlačiť tlačidlo na generovanie. To nám však nevyhovovalo, pretože sme chceli, aby boli výsledky k dispozicii aj počas toho, ako sa používateľ snaží upraviť štruktúru. Keďže ich môže chcieť využiť ako pomôcku.
+Jedným z riešením bolo pri každej zmene štruktúry všetky existujúce výsledky skryť. Na ich opätovné zobrazenie by bolo potrebné opäť stlačiť tlačidlo na generovanie. Táto možnosť nám však nevyhovovala, pretože sme chceli, aby boli výsledky stále k dispozicii. Pre používateľa môžu byť totižto nápomocné, najmä počas úprav samotnej štruktúry.
 
-Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení štruktúry neskryjú, ale sú označené ako potenciálne neaktuálne pomocou varovnej správy zobrazenej v hlavičke výsledkovej tabuľky. Na odstránenie tohto varovania ich bude používateľ musieť opäť vygenerovať.
+Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení štruktúry neskryjú, ale sú označené ako potenciálne neaktuálne pomocou varovnej správy zobrazenej v hlavičke výsledkovej tabuľky. Na odstránenie tohto varovania ich používateľ musí opäť vygenerovať.
+
+\begin{figure}
+    \centerline{\includegraphics[width=1\textwidth]{images/query.png}}
+    %popis obrazku
+    \caption[Návrh rozhrania a umiestnenia pre komponent dopytov.]{Návrh rozhrania a umiestnenia pre komponent dopytov.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:queries}
+\end{figure}
 
 \section{Nový stav aplikácie}
 TODO
