@@ -64,7 +64,7 @@ Komponent filtra prvkov domény je separátny. Ideou za ním je umožniť viac s
 
 \section{Grafové editory}
 \label{sec:plan-graph-editors}
-Táto podkapitola sa zameriava na návrh editorov pre tri zvolené grafové reprezentácie, konkrétne sa jedná o orientovaný graf, bipartitný graf a Hasseho diagram. Okrem opisu navrhnutých riešenie sa budeme zároveň snažiť vysvetliť súvislosti, ktoré stáli za ich vznikom.
+Táto podkapitola sa zameriava na návrh editorov pre tri zvolené grafové reprezentácie, konkrétne sa jedná o orientovaný graf, bipartitný graf a Hasseho diagram. Okrem opisu navrhnutých riešení sa budeme tiež snažiť vysvetliť súvislosti, ktoré stáli za ich vznikom.
 
 \subsection{Orientovaný graf}
 \label{sec:basic_graph}
@@ -176,7 +176,7 @@ V tejto podkapitole opíšeme návrh ďalších dvoch typov editorov. Oba sú un
 \subsection{Maticový editor}
 Návrh editora reprezentujúceho konkrétny binárny predikát je znázornený na obrázku \ref{obr:matrix}. Horizontálnu aj vertikálnu hlavičku tabuľky tvoria prvky domény, v tomto prípade sú to veľké písmena. Príslušnosť prvkov k interpretáciám unárnych predikátov je vizualizovaná podobne ako pri grafoch, teda tiež pomocou farieb. Pre malú veľkosť dostupného priestoru bolo však v tomto prípade potrebné zvoliť kompaktnejšie riešenie, v podobe krúžkov.
 
-Každá usporiadaná dvojica prvkov domény je reprezentovaná zaškrtávacím políčkom, ktorým ju možno jednoducho zaznačiť či patrí, alebo nepatrí do interpretácie. Editor tiež podporuje zobrazenie interpretácií unárnych predikátov, v takom prípade sa zobrazí iba horizontálna hlavička.
+Každá usporiadaná dvojica prvkov domény je reprezentovaná zaškrtávacím políčkom, ktorým je možno jednoducho zaznačiť či patrí, alebo nepatrí do interpretácie. Editor tiež podporuje zobrazenie interpretácií unárnych predikátov, v takom prípade sa zobrazí iba horizontálna hlavička.
 
 Pri reprezentáciách unárnych a binárnych funkčných symbolov sú zaškrtávacie políčka nahradené textovými vstupmi. Inak je jeho rozloženie v zásade identické. Obsah týchto textových vstupov je potrebné aj validovať, aby sa overilo, že používateľ skutočne zadáva výhradne prvky domény. V prípade chyby sa príslušné pole zvýrazní červenou farbu a používateľovi sa na chybovom bannery zobrazí vysvetlenie problému.
 
@@ -209,9 +209,11 @@ TODO
 \section{Queries}
 \label{sec:plan-queries}
 
-Tento komponent neslúži ako editor, ale reprezentuje separátnu čast aplikácie, v ktorej je možné definovať dopyty na pravdivosť otvorených formúl logiky prvého rádu. Umiestniť sme sa ho rozhodli pod už existujúci komponent pravdivosti formúl. Návrh rozhrania možno vidieť na obrázku (obr).
+Tento komponent neslúži ako editor, ale reprezentuje samostatnú čast aplikácie, v ktorej je možné definovať dopyty na splniteľnosť otvorených formúl logiky prvého rádu. Návrh rozhrania a umiestnenia v aplikácii možno vidieť na obrázku (obr).
 
-Do prvého textového vstupu zľava sa zadávajú voľné premenné oddelené čiarkou. Druhý textový vstup hneď vedľa slúži na definovanie otvorenej formuly. Oba vstupy sú validované. Pri premenných sa kontroluje správny formát ako aj to, či skutočne patria medzi voľné premenné danej formuly. Ak by to tak nebolo, používateľovi by sa pod vstupom zobrazila chybová správa s informáciou o konkrétnych premenných, ktoré nie sú v skutočnosti voľné. Validácia formuly využíva už existujúce riešenie používané v aplikácií. Bolo ho však potrebné doplniť tak, aby zohľadňovalo aj používateľom definované premenné.
+V kontexte aplikácie má komponent štandardné rozhranie. Na samom vrchu sa nachádza jeho názov, pod ním sú definované dopyty. Pridávať nové, prázdne dopyty je možné pomocou tlačidla v dolnej časti. Ďalej rozoberieme rozhrania konkrétneho dopytu, ten sa na obrázku nachádza v strede.
+
+Na definovanie dopytu je potrebné určiť voľné premenné, podľa ktorých sa budú generovať ohodnotenia, tie sa zadávajú do prvého textového vstupu zľava a musia byť oddelené čiarkou. Druhý textový vstup hneď vedľa slúži na definovanie otvorenej formuly. Oba vstupy sú validované. Pri premenných sa kontroluje správny formát ako aj to, či skutočne patria medzi voľné premenné danej formuly. Ak by to tak nebolo, používateľovi by sa pod vstupom zobrazila chybová správa s informáciou o konkrétnych premenných, pre ktoré to nie je pravda. Validácia formuly využíva už existujúce riešenie používané v aplikácií. Bolo ho však potrebné doplniť tak, aby zohľadňovalo aj používateľom definované premenné.
 
 Ak sú oba vstupy vyplnené správne, používateľ môže stlačiť tlačidlo úplne napravo. Tým sa dopyt vyhodnotí, resp. sa vygenerujú všetky možné ohodnotenia, ktoré spĺňajú danú otvorenú formulu. Používateľovi sa následne zobrazí počet výsledkov spolu s ich zoznamom. Každý riadok predstavuje jedno ohodnotenie a stĺpce zodpovedajú jednotlivým premenným. Zoznam je navyše stránkovaný, takže aj pri veľkom množstve ohodnotení sa zobrazí iba konkrétny počet výsledkov. Prechádzanie strán zoznamu je umožnené tlačidlami na jeho spodku.
 
