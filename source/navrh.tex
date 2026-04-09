@@ -28,7 +28,7 @@ Oproti množinovému pohľadu tiež pribudnú vylepšenia zamerané na prehľadn
 \textbf{Editor interpretácií funkcií:} Ďalšie vylepšenie má za cieľ uľahčiť tvorbu interpretácií funkčných symbolov.
 To býva často zdĺhavé, keďže doposiaľ spomínané nástroje vyžadujú explicitné definovanie všetkých prípadov. Dá sa to však vylepšiť nástrojom, ktorý umožní definovať podmienky na argumenty funkcie spolu s príslušnými hodnotami, ktoré má funkcia pri ich splnení nadobúdať. Požiadavkou je preto vytvorenie nástroja založeného na takomto princípe.
 
-\textbf{Queries:} Toto rozšírenie, na rozdiel od ostatných, neslúži na tvorbu interpretácií. Malo by predstavovať samostatnú sekciu aplikácie, v ktorej bude možné definovať otvorené formuly a následne získať všetky ohodnotenia, pri ktorých sú tieto formuly splniteľné. Výsledok takéhoto dopytu (angl. \textit{query}) by sa mal vhodne zobraziť v podobe tabuľky.
+\textbf{Dopyty:} Toto rozšírenie, na rozdiel od ostatných, neslúži na tvorbu interpretácií. Malo by predstavovať samostatnú sekciu aplikácie, v ktorej bude možné definovať otvorené formuly a následne získať všetky ohodnotenia, pri ktorých sú tieto formuly splniteľné. Výsledok takéhoto dopytu by sa mal vhodne zobraziť v podobe tabuľky.
 
 \textbf{Refaktorizácia častí aplikácie:} Aplikácia si v aktuálnej verzii ukladá jednotlivé časti stavu primárne v textovej podobe, keďže to bol doteraz jediný spôsob reprezentácie dát. Pri našich nových požiadavkách je to však obmedzujúce a bude potrebné dáta ukladať štrukturovanejším spôsobom. Taktiež logika zodpovedná za generovanie Henkinovej-Hintikkovej hry by mala v určitých situáciach fungovať na náhodnom výbere, no v súčasnej verzii tomu tak nie je. Požaduje sa preto oprava aj tohto správania.
 
@@ -204,9 +204,24 @@ Tento editor je špecifický aj tým, že sa dá ľahko prispôsobiť ľubovoľn
 
 
 \section{Editor interpretácií funkcií}
-Editor sme sa rozhodli reprezentovať ako všeobecný strom, príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzly stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument môže mať potomkov, pričom hrany z takéhoto uzla vyjadrujú podmienky pre daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
 
-Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla. Ďalej v texte budeme tieto hrany označovať ako default.
+Zámerom tohto editora je umožniť definovať interpretácie funkčných symbolov pomocou rozboru prípadov. Príklad takejto definície pre funkciu s dvoma argumentmi je uvedený nižšie \ref{eq:geom}.
+
+\begin{equation}
+    f(x, y)=
+    \begin{cases}
+        \text{A}, & \text{ak } x = \text{B}                         \\
+        \text{C}, & \text{ak } x = \text{E} \text{ a } y = \text{D} \\
+        \text{B}, & \text{inak}
+    \end{cases}
+    \label{eq:geom}
+\end{equation}
+
+Jednotlivé prípady predstavujú rôzne špecifické podmienky. Napríklad prvá sa vzťahuje iba na argument $x$, zatiaľ čo v druhej sa zohľadňuje aj $y$. Aby bola definícia úplná, je potrebné špecifikovať aj prípad, keď nie je splnená žiadna z uvedených podmienok. V príklade je tento prípad označený ako „inak“.
+
+Keďže editor by mal fungovať pre ľubovoľný počet argumentov. Bolo v prvom rade potrebné zvoliť vhodnú dátovú reprezentáciu takejto štruktúry. Rozhodli sa pre všeobecný strom, príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzly stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument môže mať potomkov, pričom hrany z takéhoto uzla vyjadrujú podmienky pre daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
+
+Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla.
 
 \begin{figure}[h]
     \centerline{\includegraphics[width=0.5\textwidth]{images/case_tree.png}}
@@ -216,27 +231,26 @@ Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok v
     \label{obr:case_tree}
 \end{figure}
 
-Takýto strom nám umožňuje jednoznačne reprezentovať interpretáciu funkčných symbolov, a to aj pomocou relatívne malého množstva dát. V porovnaní s ostatným editormi to predstavuje veľkú výhodu, keďže tie vyžadujú explicitné definovanie celej interpretácie.
+Takýto strom nám umožňuje jednoznačne reprezentovať interpretáciu funkčných symbolov, a to aj pomocou relatívne malého množstva dát. V porovnaní s ostatnými editormi to predstavuje veľkú výhodu, keďže tie vyžadujú explicitné definovanie celej interpretácie.
 
 Ďalej bolo potrebné pre editor navrhnúť vhodné používateľské rozhranie, ktoré dovolí tvorbu takýchto stromov. Počas jeho vývoja sme prešli viacerými rôznymi návrhmi. Pre poskytnutie lepšie predstavy o tom, čo viedlo k finálnemu návrhu, ďalej jednotlivé verzie v krátkosti popíšeme.
 
 \subsection*{Prvý návrh}
 Prvý spôsob reprezentácie možno vidieť na obrázku \ref{obr:interval_1}. Jednotlivé riadky reprezentujú konkrétne cesty v strome od koreňa až po list, pričom hodnota v liste je uvedená ako prvá. Všetky editovateľné časti sú reprezentované ako textové vstupy. Sprísnenie podmienky, resp. pridanie ďalšieho argumentu, sa realizuje pomocou príslušných tlačidiel v každom riadku. V kontexte stromovej reprezentácie je to rovnaké ako pridať hranu s uzlom reprezentujúci argument. Vymazať konkrétny riadok je možné pomocou tlačidla s ikonou koša.
-...TODO
 
-%Hlavným problémom tohto návrhu bolo to, že jeho interná reprezentácia nebola v skutočnosti 
-
-%Podmienky predstavujú jednotlivé riadky. Každý riadok tvorí hodnota a podmienka. Podmienka je tvorená označením argumentu funkcie, ktorého sa týka a hodnotou, ktorú má argument na splnenie podmienky nadobúdať. Označovanie argumentov funkcie je pevne stanovené, v prípade funkčného symbolu s aritou 3 to je $f(x, y, z)$. V druhom riadku možno vidieť špecifickejšiu podmienku, keďže sa týka argumentu $x$ aj $y$. Ak je podmienka na vstupné argumenty splnená, funkcií bude priradená hodnota špecifikovaná na začiatku riadku. Novú podmienku možno pridať stlačením tlačidla na spodku. Bližšie špecifikovať podmienku možno stlačením k nej prislúchajúcemu tlačidla. Taktiež treba špecifikovať aj hodnotu ktorú funkcia nadobudne, ak žiadna zo špecifikovaných podmienok nebola splnená.
+Na tejto reprezentácii nám však nevyhovovalo používateľské rozhranie, pretože sa nám nezdalo byť dostatočne intuitívne. Napríklad nebolo zrejmé, ako by mali byť označované jednotlivé argumenty, čo by bolo najmä pre nového používateľa dosť mätúce. Zároveň rozhranie neumožňovalo vykonávať niektoré dôležité úkony, ako napríklad pridávanie nových podmienok.
 
 \subsection*{Druhý návrh}
-Druhý návrh je realizovaný tak, aby veľmi blízko reprezentoval samotnú stromovú štruktúru. Uzly reprezentujúce argumenty sú znázornené slovom „switch“ spolu s textovým vstupom pre označenie argumentu. Pre každý takýto uzol sa následne definujú podmienky, ktoré sú znázornené slovom „case“ s príslušným textovým vstupom pre jej hodnotu. Default uzol sa pridáva automaticky a vždy musí mať určenú hodnotu. Presunutím kurzora na konkrétnu podmienku sa zobrazí menu. Pomocou tlačidla s ikonou koša je možné danú podmienku vymazať, druhé tlačidlom slúži na pridanie novej podmienku. Po jeho stlačení je ešte potrebné určiť, či podmienka bude obsahovať priamo hodnotu, alebo ďalší argument funkcie. 
+Druhý návrh je realizovaný tak, aby veľmi blízko reprezentoval samotnú stromovú štruktúru. Konkrétny príklad možno vidieť na obrázku \ref{obr:interval_2}. Uzly reprezentujúce argumenty sú znázornené slovom „switch“ spolu s textovým vstupom pre označenie argumentu. Pre každý takýto uzol sa následne definujú podmienky, ktoré sú znázornené slovom „case“ s príslušným textovým vstupom pre jej hodnotu. Podmienka znázornená slovom „default“ označuje všetky ostatné prvky domény a pridáva sa automaticky, keďže vždy musí mať určenú hodnotu. Presunutím kurzora na konkrétnu podmienku sa zobrazí menu. V ňom je pomocou tlačidla s ikonou koša možné danú podmienku vymazať, druhé tlačidlo slúži na pridanie novej podmienky. Po jeho stlačení je ešte potrebné určiť, či podmienka bude obsahovať priamo hodnotu, alebo ďalší argument funkcie.
 
-V tejto verzií bola tiež pridaná validácia jednotlivých vstupov. Napríklad sa kontroluje, či používateľ nezadal viac podmienok s rovnakou hodnotou, alebo či nebol ten istý argument použitý už v niektorom rodičovskom uzle. 
+V tejto verzií bola tiež pridaná validácia jednotlivých vstupov. Napríklad sa kontroluje, či používateľ nezadal viac podmienok s rovnakou hodnotou, alebo či nebol ten istý argument použitý už v niektorom rodičovskom uzle.
 
-Dôvod, prečo sme nezostali pri tejto reprezentácii bol najmä ten, že jej vizuálna podoba má skôr programátorský charakter než matematický. Ďalší problém bol aj pomerne kostrbatý spôsob pridávania a mazania vetiev. Poskytla nám však veľmi dobrý základ, z ktorého sme mohli ťažiť v ďalšom návrh.
+Dôvod, prečo sme nezostali pri tejto reprezentácii bol najmä ten, že jej vizuálna podoba nezodpovedala matematickej definicii. Napriek tomu nám však poskytla veľmi dobrý základ, z ktorého sme mohli vychádzať pri ďalšom návrh.
 
 \subsection*{Tretí návrh}
-TODO
+Pri finálnom návrhu (obr. \ref{obr:interval_3}) sme sa snažili, aby čo najvernejšie zodpovedal matematickej definícii. Spôsob rozdelenia jednotlivých prípadov na riadky je podobný ako pri prvom návrhu. Rozdiel je však v tom, že tlačidlo na bližšiu špecifikáciu podmienky sa nachádza na pravej strane príslušného riadku. Po jeho stlačení sa zobrazí výber argumentov, ktoré sa v podmienke ešte nevyskytujú. Po výbere sa automaticky pridá nová podmienka s predvyplneným textovým vstupom podľa zvoleného argumentu. Pridanie novej podmienky sa realizuje prostredníctvom menej výrazných, čiastočne priehľadných riadkov. Tie sa v kontexte stromu nachádzajú všade tam, kde je ešte možné pridať ďalšiu podmienku k uzlu reprezentujúcemu argument. Jednotlivé vstupy sú taktiež validované, podobne ako pri druhom návrhu.
+
+Pri takomto spôsobe reprezentácie stromu je však často potrebné zobrazovať jeden uzol reprezentujúci argument naprieč viacerými riadkami. Preto sme sa rozhodli povoliť úpravu tohto argumentu iba v tom riadku, v ktorom sa vyskytuje po prvýkrát. V ostatným riadkoch je príslušný textový vstup deaktivovaný.
 
 
 \begin{figure}[h]
@@ -261,7 +275,7 @@ TODO
     \label{obr:interval_3}
 \end{figure}
 
-\section{Queries}
+\section{Dopyty}
 \label{sec:plan-queries}
 
 Tento komponent neslúži ako editor, ale reprezentuje samostatnú čast aplikácie, v ktorej je možné definovať dopyty na splniteľnosť otvorených formúl logiky prvého rádu. Návrh rozhrania a umiestnenia v aplikácii možno vidieť na obrázku \ref{obr:queries}.
@@ -287,4 +301,34 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 \end{figure}
 
 \section{Nový stav aplikácie}
-TODO
+
+\subsection*{Grafové editory}
+V tejto časti stavu sa ukladajú dáta jednotlivých grafových reprezentácii. Na obrázku \ref{obr:graph_diagram} je znázornený návrh dátového modelu. Každý binárny predikát a unárna funkcia predstavuje jeden záznam v podobe \texttt{GraphStateEntry}. V ňom je uložený stav (\texttt{GraphState}) pre každý grafový typ. Stav si ukladá jednotlivé vrcholy (\texttt{Node}) a hrany (\texttt{Edge}). Hrana je navyše asociovaná s dvoma vrcholmi, z ktorých jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}).
+
+\subsection*{Maticový a Databázový editor}
+
+\subsection*{Editor interpretacii funkcií}
+
+\subsection*{Dopyty}
+Táto čast stavu má obsahovať zoznam jednotlivých dopytov. Každý dopyt sa skladá z textovej reprezentácie premenných a formuly.
+
+\subsection*{Filtre}
+
+\ref{obr:tree_diagram}
+
+
+\begin{figure}
+    \centerline{\includegraphics[width=0.6\textwidth]{images/graph_diagram.png}}
+    %popis obrazku
+    \caption[Triedny diagram pre graf.]{Triedny diagram pre grafové editory.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:graph_diagram}
+\end{figure}
+
+\begin{figure}
+    \centerline{\includegraphics[width=0.4\textwidth]{images/BP-tree.drawio (2).png}}
+    %popis obrazku
+    \caption[Triedny diagram pre editor interpretácií funkcií.]{Triedny diagram pre Editor interpretácií funkcií.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:tree_diagram}
+\end{figure}

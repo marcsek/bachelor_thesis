@@ -12,8 +12,40 @@ Logika prvého rádu je rodina formálnych jazykov, ktoré hovoria o objektoch a
 
 Predikátové symboly používame na označenie vlastností alebo vzťahov. V konkrétnom jazyku $\mathcal{L}$ vždy majú (spolu s funkčnými symbolmi) pevne zvolený počet argumentov, ktorý určuje ich \textit{arita}, niekedy označovaná horným indexom. Predikátové symboly s aritou 1 (unárne) zvyknú označovať nejakú vlastnosť alebo stav (napr. ${zviera}^1, {svieti}^1$), zatiaľ čo predikátové symboly s aritou 2 a viac ($n$-árne pre $n \geq 2$) opisujú určitý vzťah svojich argumentov (napr. ${stavia}^2$, ${ukazuje}^3$).
 
-Ďalším dôležitým pojmom je \textit{štruktúra}, ktorá sa vždy viaže na nejaký konkrétny jazyk. Označujeme ju dvojicou $\mathcal{M} = (D, i)$, kde $D$ predstavuje ľubovoľnú neprázdnu množinu (doména) a $i$ je zobrazenie (interpretačná funkcia). Úlohou interpretačnej funkcie je každej indivíduovej konštante priradiť prvok z $D$, každému funkčnému symbolu priradiť funkciu $f:D^n \rightarrow D$ a každému predikátovému symbolu priradiť podmnožinu množiny $D^n$, kde $n$ v oboch prípadoch označuje aritu daného symbolu. Štruktúry sú dôležitou súčasťou skúmania vlastností jazyka logiky prvého rádu, keďže poskytujú jeho presný matematický model.
+Ďalší zadefinujeme pojem \textit{term}. Každá indivíduová premenná a indivíduová konštanta jazyka $\mathcal{L}$ je term. Taktiež ak $f$ predstavuje funkčný symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy, tak aj postupnosť symbolov $f(t_1, \dots, t_n)$ je term.
 
+Ďalej každá postupnosť symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy predstavuje \textit{rovnostný atóm} a každá postupnosť symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy predstavuje \textit{predikátový atóm}. Všetky rovnostné a predikátové atómy súhrnne nazývame \textit{atomickými formulami}.
+
+Nakoniec množinu všetkých \textit{formúl} jazyka $\mathcal{L}$ definujeme takto: Každá atomická formula je zároveň aj formula. Ak $A$ je formula, tak aj postupnosť symbolov $\neg A$ je formula. Ak $A$ aj $B$ sú formuly, tak aj postupnosti symbolov $(A \land B)$, $(A \lor B)$, $(A \rightarrow B)$ sú formuly. A napokom ak $x$ je indivíduová premenná a $A$ je formula, tak aj postupnosti symbolov $\exists x A$ a $\forall x A$ sú formuly.
+
+
+Prvým dôležitým pojmom týkajúcim sa sémantiky logiky prvého rádu je \textit{štruktúra}, ktorá sa vždy viaže na nejaký konkrétny jazyk. Označujeme ju dvojicou $\mathcal{M} = (D, i)$, kde $D$ predstavuje ľubovoľnú neprázdnu množinu (doména) a $i$ je zobrazenie (interpretačná funkcia). Úlohou interpretačnej funkcie je každej indivíduovej konštante priradiť prvok z $D$, každému funkčnému symbolu priradiť funkciu $f:D^n \rightarrow D$ a každému predikátovému symbolu priradiť podmnožinu množiny $D^n$, kde $n$ v oboch prípadoch označuje aritu daného symbolu. Štruktúry sú dôležitou súčasťou skúmania vlastností jazyka logiky prvého rádu, keďže poskytujú jeho presný matematický model.
+
+Tiež zadefinujeme niektoré ďalšie pojmy. \textit{Ohodnotenie indivíduových premenných} je ľubovoľná funkcia $e: \mathcal{V}_\mathcal{L} \rightarrow D$, kde $\mathcal{V}_\mathcal{L}$ je množina indivíduových premenných. Potom \textit{hodnota termu} $t$ v štruktúre $\mathcal{M}$ pri ohodnotení premenných $e$ je prvok z $D$ označovaný $t^\mathcal{M}[e]$ definovaný nasledovne:
+\[
+    \begin{aligned}
+        x^{\mathcal{M}}[e]                                & = e(x), \\
+        a^{\mathcal{M}}[e]                                & = i(a), \\
+        \left(f(t_1, \ldots, t_n)\right)^{\mathcal{M}}[e] & =
+        i(f)\left(t_1^{\mathcal{M}}[e], \ldots, t_n^{\mathcal{M}}[e]\right),
+    \end{aligned}
+\]
+pre všetky premenné $x$, všetky konštanty $a$, všetky funkčné symboly $f$ s aritou $n$ a všetky termy $t_1, \dots, t_n$.
+
+Relácia $M \models X[e]$ (čítame \textit{štruktúra }$\mathcal{M}$ \textit{spĺňa formulu} $X$ \textit{pri ohodnotení} $e$) je definovaná induktívne takto:
+\[
+    \begin{aligned}
+        \mathcal{M} & \models t_1 = t_2 [e] \;\text{vtt}\; t_1^{\mathcal{M}}[e] = t_2^{\mathcal{M}}[e],                                      \\
+        \mathcal{M} & \models P(t_1, \ldots, t_n)[e] \;\text{vtt}\; (t_1^{\mathcal{M}}[e], \ldots, t_n^{\mathcal{M}}[e]) \in i(P),           \\
+        \mathcal{M} & \models \neg A [e] \;\text{vtt}\; \mathcal{M} \not\models A [e],                                                       \\
+        \mathcal{M} & \models (A \land B)[e] \;\text{vtt}\; \mathcal{M} \models A[e] \;\text{a zároveň}\; \mathcal{M} \models B[e],          \\
+        \mathcal{M} & \models (A \lor B)[e] \;\text{vtt}\; \mathcal{M} \models A[e] \;\text{alebo}\; \mathcal{M} \models B[e],               \\
+        \mathcal{M} & \models (A \to B)[e] \;\text{vtt}\; \mathcal{M} \not\models A[e] \;\text{alebo}\; \mathcal{M} \models B[e],            \\
+        \mathcal{M} & \models \exists x\, A[e] \;\text{vtt}\; \text{pre nejaký prvok } m \in D \text{ platí } \mathcal{M} \models A[e(x/m)], \\
+        \mathcal{M} & \models \forall x\, A[e] \;\text{vtt}\; \text{pre každý prvok } m \in D \text{ platí } \mathcal{M} \models A[e(x/m)],
+    \end{aligned}
+\]
+pre všetky premenné $x$, všetky formuly $A, B$, všetky termy $t_1, \dots, t_n$ a všetky predikátové symboly $P$ s aritou $n$.
 
 \section{Grafové reprezentácie}
 \label{sec:reprezentacie}
