@@ -1,6 +1,7 @@
 \chapter{Návrh}
+V tejto kapitole najprv zadefinujeme požiadavky kladené na výslednú aplikáciu. Následne predstavíme návrh jednotlivých riešení spolu s priblížením postupu, ktorým sme k ním dospeli. V závere sa zameriame na návrh stavu nových častí aplikácie a jeho zakomponovanie do už existujúceho riešenia.
+
 %V tejto kapitole najprv zadefinujeme požiadavky, ktoré od výslednej aplikácie očakávame. Následne sa pozrieme na návrh jednotlivých grafových ale aj iných editor a vylepšení. V závere priblížime, ako sme všetky navrhnuté riešenia zakomponovali do už existujúceho stavu aplikácie.
-TODO
 
 \label{kap:navrh} % id kapitoly pre prikaz ref
 
@@ -206,6 +207,7 @@ Tento editor je špecifický aj tým, že sa dá ľahko prispôsobiť ľubovoľn
 
 
 \section{Editor interpretácií funkcií rozborom prípadov}
+\label{sec:case_tree}
 
 Zámerom tohto editora je umožniť definovať interpretácie funkčných symbolov pomocou rozboru prípadov. Príklad takejto definície pre funkciu s dvoma argumentmi (\ref{eq:geom}) je uvedený nižšie.
 \begin{equation}
@@ -302,20 +304,25 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 \end{figure}
 
 \section{Nový stav aplikácie}
+V tejto podkapitole sú predstavené návrhy stavov nových častí aplikácie. Všetky opísané riešenie sú integrované do centrálneho stavu aplikácie spolu s jeho existujúcim časťami. Tam, kde je to vhodné, sú návrhy navyše doplnené aj o diagram znázorňujúci ich dátový model.
 
 \subsection*{Grafové editory}
-V tejto časti stavu sa ukladajú dáta jednotlivých grafových reprezentácii. Na obrázku \ref{obr:graph_diagram} je znázornený návrh dátového modelu. Každý binárny predikát a unárna funkcia predstavuje jeden záznam v podobe \texttt{GraphStateEntry}. V ňom je uložený stav (\texttt{GraphState}) pre každý grafový typ. Stav si ukladá jednotlivé vrcholy (\texttt{Node}) a hrany (\texttt{Edge}). Hrana je navyše asociovaná s dvoma vrcholmi, z ktorých jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}).
+V tejto časti stavu sa ukladajú dáta jednotlivých grafových reprezentácií. Návrh dátového modelu je znázornený na obrázku \ref{obr:graph_diagram}. Každý binárny predikát a unárna funkcia predstavuje jeden záznam v podobe \texttt{GraphStateEntry}, pričom jednotlivé záznamy sú jednoznačne identifikované kombináciou názvu a typu príslušného symbolu.
+
+Každý \texttt{GraphStateEntry} obsahuje stav (\texttt{GraphState}) pre jednotlivé grafové typy. Tento stav zahŕňa zoznam vrcholov (\texttt{Node}) a hrán (\texttt{Edge}). Hrana je navyše asociovaná s dvojicou vrcholov, pričom jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}). Vrchol bipartitného grafu (\texttt{BipartiteNode}) rozširuje \texttt{Node} o atribút \texttt{partition}, ktorý určuje jeho príslušnosť k jednej z dvoch skupín.
 
 \subsection*{Maticový a Databázový editor}
+Rovnako ako pri grafových editoroch je záznam o ich stave jednoznačne identifikovaný pomocou názvu a typu predikátového alebo funkčného symbolu. V prípade Databázového editora je stav ukladaný ako zoznam hodnôt zadaných do textových vstupov pre jednotlivé $n$-tice. Naopak Maticový editor pre každú $n$-ticu zaznamenáva buď stav zaškrtávacieho tlačidla, alebo hodnotu textového vstupu, v závislosti od typu reprezentácie.
 
-\subsection*{Editor interpretacii funkcií}
+\subsection*{Editor interpretácií funkcií rozborom prípadov}
+Stav tejto reprezentácie je veľmi podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Návrh dátového modelu editora možno vidieť na obrázku \ref{obr:tree_diagram}. Každý funkčný symbol zodpovedá jednému \texttt{TreeEntry} záznamu, ktorý je jednoznačne identifikovaný podľa názvu symbolu. Takýto záznam obsahuje stav editora (\texttt{TreeState}), v ktorom su uložené jednotlivé uzly (\texttt{TreeNode}) spolu s identifikátor koreňového uzla. Každý uzol je zas tvorený zoznamom z neho vychádzajúcich hrán (\texttt{TreeEdge}). Abstraktný typ \texttt{TreeEdge} špecializujú dva typy hrán. Jednou z nich je referenčná hrana (\texttt{ReferenceEdge}), ktorá si uchováva identifikátor koncového uzla, teda ďalšej inštancie \texttt{TreeNode}. Druhou je hodnotová hrana (\texttt{ValueEdge}), tá priamo ukladá samotnú hodnotu.
 
 \subsection*{Dopyty}
 Táto čast stavu má obsahovať zoznam jednotlivých dopytov. Každý dopyt sa skladá z textovej reprezentácie premenných a formuly.
 
-\subsection*{Filtre}
+\subsection*{Spoločné rozhranie editorov}
+V tejto časti sa ukladá informácia o tom, ktorý editor je aktuálne otvorený a o jednotlivých nastaveniach filtrovania. Konkrétne sa jedná o stav zaškrtávacieho tlačidla domény, názvy zaškrtnutých unárnych predikátov ako aj zoznam prvkov domény, označených v komponente filtra domény. Záznam o tomto stave je opäť jednoznačne identifikovaný rovnakým spôsobom, ako bolo už spomenuté v opisoch predošlých stavov.
 
-\ref{obr:tree_diagram}
 
 
 \begin{figure}
