@@ -6,6 +6,7 @@
 %zapnutie fontov pre UTF8 kodovanie
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
+\usepackage{lmodern}
 
 %zapnutie slovenskeho delenia slov
 %a automatickych nadpisov ako Obsah, Obrázok a pod. v slovencine
@@ -18,12 +19,27 @@
 \usepackage{listings}
 % ukazky kodu su cislovane ako Listing 1,2,...
 % tu je Listing zmenene na Algoritmus 1,2,...
-\renewcommand{\lstlistingname}{Algoritmus}
+\renewcommand{\lstlistingname}{Ukážka programu}
 % nastavenia balicka listings
 % mozete pridat aj language=...
 % na nastavenie najcastejsie pouzivaneho prog. jazyka
 % takisto sa da zapnut cislovanie riadkov
-\lstset{frame=lines}
+\lstdefinestyle{mystyle}{
+    numbers=left,
+    numberstyle=\small,
+    stepnumber=1,
+    numbersep=10pt,
+    breaklines=true,
+    basicstyle=\ttfamily\small,
+    captionpos=b,
+    frame=lines,
+}
+
+\lstdefinelanguage{JavaScript}{}
+
+\lstset{style=mystyle}
+%\lstset{frame=lines}
+
 
 % balicek na vkladanie obrazkov
 \usepackage{graphicx}
@@ -51,7 +67,7 @@
 \def\mfskolitel{Mgr. Ján Kľuka, PhD. }
 
 %ak mate konzultanta, odkomentujte aj jeho meno na titulnom liste
-\def\mfkonzultant{tit. Meno Priezvisko, tit. }  
+%\def\mfkonzultant{tit. Meno Priezvisko, tit. }  
 
 \def\mfmiesto{Bratislava, \mfrok}
 

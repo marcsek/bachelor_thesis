@@ -3,5 +3,21 @@
     "latex-workshop.latex.jobname": "bp-marcek",
     "cSpell.words": [
         "vizualizovali"
-    ]
+    ],
+    "latex-workshop.latex.tools": [
+        {
+            "name": "make",
+            "command": "make",
+            "args": []
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "Makefile",
+            "tools": [
+                "make"
+            ]
+        }
+    ],
+    "latex-workshop.latex.recipe.default": "Makefile"
 }

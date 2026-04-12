@@ -2,24 +2,135 @@
 \label{kap:implementation}
 TODO
 
-\section{Komponent editorov}
+\section{Použité technológie}
+Nová verzia pôvodnej aplikácie je plne implementovaná v jazyku TypeScript. Používateľské rozhranie je vytvorené pomocou knižnice React a na správu globálneho stavu sa používa knižnica Redux (všetky sú opísané v podkapitole \ref{sec:technologie}). Prirodzene sme sa teda rozhodli pokračovať v používaní týchto technológií aj pri tvorbe našich rozšírení. TypeScript sa ukázal ako veľmi nápomocný aj pri oboznamovaní sa s existujúcou implementáciou, keďže vďaka definovaným typom bolo výrazne jednoduchšie porozumieť očakávaným tvarom objektov alebo argumentov funkcií.
+
+Tiež bolo potrebné vybrať knižnicu, pomocou ktorej budú implementované grafové editory. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu ReactFlow. Na základe môjho hľadania išlo o jedinú knižnicu, ktorá podporovala už spomenuté technológie a zároveň poskytovala dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít.
+
+\section{Refaktorizácia stavu pôvodnej aplikácie}
+
+\section{Integrácia nových nástrojov}
+
+\subsection{Organizácia}
+Súborovú štruktúru pôvodnej aplikácie sme v zásade nemenili. Držali sme sa stanovenej konvencie, podľa ktorej je každá funkcionalita organizovaná v priečinku \texttt{src/features}. Zdrojové súbory pre jednotlivé nástroje preto ukladáme do samostatných podpriečinkov pomenovaných podľa daného nástroja. Obsah týchto priečinkov je rôzny, no každý obsahuje aspoň hlavný React komponent pre daný nástroj a súbor definujúci jeho Redux stav. V rámci stavu sú spravidla implementované reducery a potrebné selektory.
+
+\subsection{Integrácia komponentov editorov}
+Predošlá verzia aplikácie používala na zobrazovanie interpretácií textové vstupy, tie boli obalené v komponente \texttt{InterpretationInput} a následne používané naprieč aplikáciou. My máme však viac komponentov pomocou ktorých je možné interpretáciu konkrétneho symbolu reprezentovať.
+
+Tento problém rieši nový komponent \texttt{InterpretationEditor}, ktorý zaobaľuje všetky editory vrátane pôvodného komponentu. Jedným z jeho vstupných parametrov je názov symbolu, ktorého interpretáciu reprezentuje. Na základe tohto názvu získa zo stavu typ editora, ktorý sa má zobraziť. Ak ide o textový editor zobrazuje sa pôvodný komponent \texttt{InterpretationInput}. V opačnom prípade sa vykreslí nový komponent \texttt{DrawerEditor}.
+
+\texttt{DrawerEditor} integruje spoločné rozhranie editorov, ktoré sa skladá z ďalších troch častí. Jedným z nich je komponent panela nástrojov \texttt{EditorToolbar}. Ten implementuje rozhranie filtrovania. Ďalším je \texttt{EditorError}, ktorý predstavuje chybový banner. Treťou časťou je samotný komponent editora, ktorý je určený na základe získaného typu.
+
+\subsection{Synchronizácia stavu}
+Pri synchronizácie stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Každý z editorov však reprezentuje interpretáciu konkrétneho symbolu vo svojom stave iným spôsobom, čo predstavuje problém.
+
+Aktuálna interpretácia konkrétneho symbolu je uložená v rámci stavu štruktúry a je možné ju meniť pomocou príslušných akcií:
+\begin{itemize}
+    \item \texttt{updateInterpretationPredicates} - akcia na aktualizáciu interpretácie predikátu
+    \item \texttt{updateInterpretationFunctions} - akcia na aktualizáciu interpretácie funkcie
+\end{itemize}
+Súčasťou týchto akcií je okrem jej typu aj informácia o názve daného symbolu ako aj samotná aktualizovaná interpretácia.
+
+Každý editor má v súvislosti s týmito akciami dve úlohy. Prvou je vyvolať príslušnú akciu v prípade, že sa nejakým spôsobom v jeho pohľade zmenila samotná interpretácia. To vyžaduje okrem iného aj konverziu medzi stavom reprezentácie a stavom ukladaným v štruktúre.
+
+Druhou je vo svojom reducery reagovať aj na tieto akcie a na základe informácií v nich obsiahnutých aktualizovať svoj vnútorný stav. Na to bolo potrebné využiť špeciálnu funkcionalitu knižnice Redux, pomocou ktorej je možné v jednom reducery reagovať na akcie iného.
+
+Ukážka takéhoto reducera (\ref{prog:extra_red}) demonštruje implementáciu tejto funkcionality pre Databázový editor pri zmene interpretácie predikátu. Každý reducer sa definuje v rámci funkcie \texttt{extraReducers}, ktorá dostáva ako argument objekt \texttt{builder}. Pomocou metódy \texttt{addCase} je možné špecifikovať akciu (prvý argument) pri ktorej sa má príslušný reducer zavolať (druhý argument).
+
+
+\begin{lstlisting}[float,language=JavaScript,caption={Funkcia používaná na generovanie hierarchie},label=prog:extra_red]
+extraReducers(builder) {
+  builder.addCase(updateInterpretationPredicates, (state, action) => {
+    if (action.meta.source === "databaseView") return;
+
+    const { key, value } = action.payload;
+    syncInterpretation(key, "predicate", value, state);
+  });
+}
+\end{lstlisting}
+
+\section{Implementácia grafových editorov}
 TODO
-\section{Stav aplikácie}
-TODO
-\subsection{Štruktúra}
-TODO
-\subsection{Synchronizácia}
-TODO
+
+%\subsection{Štruktúra}
+%Implementácia grafových editorov je organizovaná v rámci priečinku \texttt{features/graphView}, ktorý je ďalej členený do logických celkov nasledovne:
+
+%\begin{itemize}
+%\item \texttt{/graphViewComponent} - obsahuje spoločný komponent pre zobrazovanie grafov, do ktorého sú jednotlivé reprezentácie vkladané
+%\item \texttt{/graphs} - priečinok obsahuje hlavne zdrojové súbory jednotlivých reprezentácii organizovaných do podpriečinkov
+%\begin{itemize}
+%\item \texttt{/BipartiteGraph}
+%\item \texttt{/HasseDiagram}
+%\item \texttt{/OrientedGraph}
+%\item \texttt{/common} - obsahuje súbory so spoločnou konfiguráciou editorov
+%\item \texttt{/graphComponents} - obsahuje zdrojové kódy jednotlivých komponentov grafov, ako napríklad vrcholy alebo hrany
+%\end{itemize}
+%\item \texttt{/helpers} - obsahuje rôzne pomocné funkcie
+%\end{itemize}
+
+\subsection{Štruktúra stavu}
+Stav grafov predstavuje obyčajný objekt, v ktorom každý záznam uchováva stav jednotlivých reprezentácií pre každý binárny predikát alebo unárnu funkciu. Kľúče sú kombináciou názvu a typu príslušného symbolu. Hodnota asociovaná s konkrétnym kľúčom je opäť objekt s dvoma atribútmi. Prvým je \texttt{tupleType}, ten predstavuje typ symbolu, a teda môže nadobúdať hodnoty \texttt{'predicate'} alebo \texttt{'function'}. Druhým je atribút \texttt{state}, ktorý je ďalej členený podľa jednotlivých reprezentácií na \texttt{state.oriented}, \texttt{state.bipartite} a \texttt{state.hasse}. Konkrétny stav je tvorený atribútmi \texttt{nodes} a \texttt{edges}, tie predstavujú zoznam vrcholov a hrán.
+
+Tvar konkrétneho vrcholu alebo hrany je určený samotnou knižnicou a nie je odporúčané ho priamo rozširovať o vlastné atribúty. Pre tento účel je vyčlenený atribút \texttt{data}, ktorého tvar možno ľubovoľne špecifikovať. V prípade vrcholov ho využívame na zaznamenanie stavu, v ktorom sa vrchol nachádza pomocou atribútov \texttt{error}, \texttt{ghost}, \texttt{hatched} a \texttt{leftover}, všetky z nich sú voliteľné a typu \texttt{boolean}. Vrchol pre Bipartitný graf obsahuje ešte aj atribút \texttt{origin}, vyjadrujúci jeho príslušnosť do skupiny, môže nadobúdať hodnoty \texttt{'domain'} alebo \texttt{'range'}.
+
+\subsection{Práca so stavom}
+Jednotlivé dáta zo stavu sú komponentom grafov sprístupnené pomocou selektorov. To dovoľuje oddeliť transformáciu dát od implementácie používateľského rozhrania. Jednotlivé selektory je navyše možné kombinovať, čo uľahčuje ich použiteľnosť.
+
+Napríklad úlohou selektora \texttt{selectNodes} je pre konkrétnu reprezentáciu získať zoznam vrcholov, aplikovať na ne aktuálne filtre domény a výsledok vrátiť v podobe zoznamu. Ako vstupné argumenty vyžaduje typ symbolu interpretácie, jeho názov a navyše ešte aj typ samotnej reprezentácie. Z týchto informácií je schopný zo stavu vybrať príslušný zoznam vrcholov. Na získanie domény po aplikovaní všetkých filtrov sa používa ďalší selektor \texttt{selectRelevantDomain}. Nakoniec je ešte potrebné zo zoznamu vrcholov odstrániť tie, ktoré nereprezentujú prvok nachádzajúci sa vo vyfiltrovanej doméne.
+
+Na podobnom princípe funguje aj selektor \texttt{selectEdges}. Jeho úlohou je vrátiť zoznam hrán, ktorý sa dá rovno použiť pri zobrazení grafu. V prípade grafu reprezentujúceho hasseho diagramu to napríklad znamená potrebu odstrániť všetky nepotrebné hrany (podľa pravidiel opísaných v sekcií \ref{sec:reprezentacie-hasse}), keďže v jeho stave sú uložené hrany reprezentujúce celú interpretáciu.
+
+Aktualizácia stavu prebieha pomocou reducerov a k nim prislúchajúcich akcií. Akcie na vyjadrenie zmien v stave vrcholov a hrán sú \texttt{nodesChanged} a \texttt{edgesChanged}. Zmena môže znamenať napríklad posunutie vrcholu alebo zakliknutie hrany. Pri vytvorení novej hrany je vyvolaná akcia \texttt{nodesConnected}, ktorej súčasťou sú aj identifikátory oboch vrcholov. Pomocou akcie \texttt{leftoverDeleted} je možné odstrániť chybný vrchol. Vyvoláva sa pri kliknutí na tlačidlo koša príslušného vrchola, popísaného v sekcií venovanej návrhu vrcholov \ref{sec:basic_graph}.
+
+Dôležitou akciou je aj \texttt{syncGraphView}, ktorá slúži na inicializáciu stavu všetkých grafových reprezentácií všetkých binárnych predikátov a funkčných symbolov. Používa sa najmä pri synchronizácií grafových editorov so samotnou štruktúrou.
+
+%Iba zacnem ze sa ukladaju hentak a blablabla. to uy je popisane v navrhu. potom spomeniem reducery a pluginy, mozno vypisat jednotlive funkcie pluginov a popisat ich
+
+\subsection{Komponenty}
+Hlavný komponent, ktorý obaluje komponenty konkrétnych reprezentácii je \texttt{GraphView}. Jeho úlohou je na základe poskytnutého grafového typu vykresliť správny komponent reprezentácie. Zobrazenie každej reprezentácie je implementované vrámci jej vlastného komponentu, konkrétne ide o \texttt{OrientedGraph}, \texttt{BipartiteGraph} a \texttt{HasseDiagram}. Tieto komponenty následne obaľujú komponent \texttt{ReactFlow} poskytovaný knižnicou, ktorý sa  využíva na vykreslenie samotného rozhrania grafu.
+
+Úlohou jednotlivých komponentov je získavať potrebné dáta na vykreslenie grafu zo stavu príslušnej reprezentácie, ako sú napríklad vrcholy a hrany, prostredníctvom vyššie spomínaných selektorov. Zároveň sa v nich definuje konfigurácia komponentu \texttt{ReactFlow} špecifická pre daný typ grafu. Príkladom možnosti, ktorú knižnica pri konfigurácii ponúka je funkcia \texttt{isValidConnection}. Tú po jej špecifikovaní knižnica volá pri každom pokuse o vytvorenie novej hrany, čo poskytuje možnosť implementovania vlastnej validačnej logiky pre vytváranie hrán. Táto funkcionalita sa využíva napríklad v komponente \texttt{HasseDiagram}, kde sa kontroluje, či by pridaním hrany ostali neporušené všetky podmienky čiastočného usporiadania.
+
+Menšie komponenty \texttt{PredicateNode} a \texttt{DirectEdge} predstavujú konkrétne vrcholy a hrany rozhrania grafu. O ich vykresľovanie sa stará samotná knižnica a taktiež je ich potrebné definovať vrámci konfigurácie. Pomocou komponentu \texttt{PredicateNode} je implementovaná napríklad funkcionalita vytvárania hrán alebo zobrazovania panelu s farbami unárnych predikátov.
+
+%jednotlive komponenty ziskavaju data zo stavu
+%spomenut nieco o konfiguraci atd.
+%mozno pridat komponenty nodov edgov
+
+%\subsection{Generovanie hierarchie}
+%Na generovanie hierarchie pre Hasseho Diagrame sme sa rozhodli použiť knižnicu dagre.js \cite{dagrejs}. Jej hlavnými výhodami oproti ostatným alternatívam bola najmä jednoduchá konfigurácia a relatívne malá veľkosť balíčka.
+%%
+%Funkciu používanú na generovanie hierarchie možno vidieť na ukážke \ref{prog:hasse}. V prvom rade je potrebné vytvoriť inštanciu triedy \texttt{Graph}, ktorú poskytuje samotná knižnica. Následne sa pomocou metódy \texttt{setGraph} špecifikuje konfigurácia hierarchie. Nám z veľkej časti vyhovovala základná konfigurácie. Jediný atribút, ktorý bolo potrebné zmeniť bol \texttt{rankdir}. Ten určuje smer usporiadania vrcholov. V našom prípade chceme odspodu nahor. Po nastavení konfigurácie je potrebné špecifikovať jednotlivé vrcholy a hrany pomocou metód \texttt{setNode} a \texttt{setEdge}.
+%%
+%\begin{lstlisting}[float,language=JavaScript,caption={Funkcia používaná na generovanie hierarchie},label=prog:hasse]
+%function computeLayoutHasse(nodes: Node[], edges: Edge[]) {
+%  const dagreGraph = new dagre.graphlib.Graph();
+%  dagreGraph.setGraph({ rankdir: "BT" });
+%
+%  nodes.forEach((n) => dagreGraph.setNode(n.id, {}));
+%  edges.forEach((e) => dagreGraph.setEdge(e.source, e.target));
+%
+%  dagre.layout(dagreGraph);
+%
+%  return nodes;
+%};
+%\end{lstlisting}
+
+%\section{Stav aplikácie}
+%TODO
+%\subsection{Štruktúra}
+%TODO
+%\subsection{Synchronizácia}
+%TODO
+
 \section{Integrácia s Logickým pracovným zošitom}
 TODO
 \subsection{Importovanie a exportovanie stavu}
 TODO
-\subsection{Logický kontext}
-TODO
+%\subsection{Logický kontext}
+%TODO
 
 \section{Ďalšie vylepšenia Prieskumníka štruktúr}
-TODO
-\subsection{Queries}
 TODO
 \subsection{Refaktorizácia Henkinovej-Hintikkovej hry}
 TODO
