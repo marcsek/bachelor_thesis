@@ -5,7 +5,7 @@ TODO
 \section{Použité technológie}
 Nová verzia pôvodnej aplikácie je plne implementovaná v jazyku TypeScript. Používateľské rozhranie je vytvorené pomocou knižnice React a na správu globálneho stavu sa používa knižnica Redux (všetky sú opísané v podkapitole \ref{sec:technologie}). Prirodzene sme sa teda rozhodli pokračovať v používaní týchto technológií aj pri tvorbe našich rozšírení. TypeScript sa ukázal ako veľmi nápomocný aj pri oboznamovaní sa s existujúcou implementáciou, keďže vďaka definovaným typom bolo výrazne jednoduchšie porozumieť očakávaným tvarom objektov alebo argumentov funkcií.
 
-Tiež bolo potrebné vybrať knižnicu, pomocou ktorej budú implementované grafové editory. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu ReactFlow. Na základe môjho hľadania išlo o jedinú knižnicu, ktorá podporovala už spomenuté technológie a zároveň poskytovala dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít.
+Tiež bolo potrebné vybrať knižnicu, pomocou ktorej budú implementované grafové editory. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu ReactFlow. Na základe môjho hľadania išlo o jedinú knižnicu, ktorá podporovala už spomenuté technológie a zároveň poskytovala dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít. Veľkou výhodou bola aj kvalitná dokumentácia doplnená sadou interaktívnych príkladov, ktoré výrazne uľahčovali objavovanie všetkých dostupných možností.
 
 \section{Refaktorizácia stavu pôvodnej aplikácie}
 
@@ -15,30 +15,34 @@ Tiež bolo potrebné vybrať knižnicu, pomocou ktorej budú implementované gra
 Súborovú štruktúru pôvodnej aplikácie sme v zásade nemenili. Držali sme sa stanovenej konvencie, podľa ktorej je každá funkcionalita organizovaná v priečinku \texttt{src/features}. Zdrojové súbory pre jednotlivé nástroje preto ukladáme do samostatných podpriečinkov pomenovaných podľa daného nástroja. Obsah týchto priečinkov je rôzny, no každý obsahuje aspoň hlavný React komponent pre daný nástroj a súbor definujúci jeho Redux stav. V rámci stavu sú spravidla implementované reducery a potrebné selektory.
 
 \subsection{Integrácia komponentov editorov}
-Predošlá verzia aplikácie používala na zobrazovanie interpretácií textové vstupy, tie boli obalené v komponente \texttt{InterpretationInput} a následne používané naprieč aplikáciou. My máme však viac komponentov pomocou ktorých je možné interpretáciu konkrétneho symbolu reprezentovať.
+Predošlá verzia aplikácie používala na zobrazovanie interpretácií textové vstupy, tie boli obalené v komponente \texttt{InterpretationInput} a následne používané naprieč aplikáciou. Pre náš účel však potrebujeme riešenie, ktoré bude vedieť vybrať a zobraziť vhodný komponent na základe aktuálne zvoleného editora.   
 
 Tento problém rieši nový komponent \texttt{InterpretationEditor}, ktorý zaobaľuje všetky editory vrátane pôvodného komponentu. Jedným z jeho vstupných parametrov je názov symbolu, ktorého interpretáciu reprezentuje. Na základe tohto názvu získa zo stavu typ editora, ktorý sa má zobraziť. Ak ide o textový editor zobrazuje sa pôvodný komponent \texttt{InterpretationInput}. V opačnom prípade sa vykreslí nový komponent \texttt{DrawerEditor}.
 
 \texttt{DrawerEditor} integruje spoločné rozhranie editorov, ktoré sa skladá z ďalších troch častí. Jedným z nich je komponent panela nástrojov \texttt{EditorToolbar}. Ten implementuje rozhranie filtrovania. Ďalším je \texttt{EditorError}, ktorý predstavuje chybový banner. Treťou časťou je samotný komponent editora, ktorý je určený na základe získaného typu.
 
 \subsection{Synchronizácia stavu}
-Pri synchronizácie stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Každý z editorov však reprezentuje interpretáciu konkrétneho symbolu vo svojom stave iným spôsobom, čo predstavuje problém.
+Pri synchronizácii stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Jednotlivé editory však reprezentuje interpretáciu konkrétneho symbolu vo svojom stave iným spôsobom, čo predstavuje problém.
+
+!TODO Tu potrebujem mat napisanu refaktorizaciu alebo vysvetlit ako su tie data reprezentovane!
 
 Aktuálna interpretácia konkrétneho symbolu je uložená v rámci stavu štruktúry a je možné ju meniť pomocou príslušných akcií:
 \begin{itemize}
     \item \texttt{updateInterpretationPredicates} - akcia na aktualizáciu interpretácie predikátu
     \item \texttt{updateInterpretationFunctions} - akcia na aktualizáciu interpretácie funkcie
 \end{itemize}
-Súčasťou týchto akcií je okrem jej typu aj informácia o názve daného symbolu ako aj samotná aktualizovaná interpretácia.
+Tieto akcie okrem svojho typu nesú aj názov daného symbolu (atribút \texttt{key}) a samotnú aktualizovanú interpretáciu (atribút \texttt{value}).
 
-Každý editor má v súvislosti s týmito akciami dve úlohy. Prvou je vyvolať príslušnú akciu v prípade, že sa nejakým spôsobom v jeho pohľade zmenila samotná interpretácia. To vyžaduje okrem iného aj konverziu medzi stavom reprezentácie a stavom ukladaným v štruktúre.
+Každý editor má v súvislosti s týmito akciami dve úlohy. Prvou je vyvolať príslušnú akciu v momente, keď sa v jeho pohľade nejakým spôsobom zmení samotná interpretácia. To vyžaduje okrem iného aj konverziu medzi jeho internou reprezentáciou a formátom používaným v štruktúre.
 
-Druhou je vo svojom reducery reagovať aj na tieto akcie a na základe informácií v nich obsiahnutých aktualizovať svoj vnútorný stav. Na to bolo potrebné využiť špeciálnu funkcionalitu knižnice Redux, pomocou ktorej je možné v jednom reducery reagovať na akcie iného.
+Druhou je reagovať na tieto akcie vo svojom vlastnom reducery a na základe informácií, ktoré nesú, aktualizovať svoj stav. Na tento účel bolo potrebné využiť mechanizmus knižnice Redux, ktorý umožňuje jednému reduceru reagovať na akcie druhého. V tomto prípade teda reducery editorov reagujú na spomínané akcie štruktúry.
 
-Ukážka takéhoto reducera (\ref{prog:extra_red}) demonštruje implementáciu tejto funkcionality pre Databázový editor pri zmene interpretácie predikátu. Každý reducer sa definuje v rámci funkcie \texttt{extraReducers}, ktorá dostáva ako argument objekt \texttt{builder}. Pomocou metódy \texttt{addCase} je možné špecifikovať akciu (prvý argument) pri ktorej sa má príslušný reducer zavolať (druhý argument).
+Ukážka takéhoto reducera (\ref{prog:extra_red}) demonštruje spracovanie zmeny interpretácie predikátu v Databázovom editore. Reducer je definovaný vrámci funkcie \texttt{extraReducers}, ktorá dostáva ako argument objekt \texttt{builder}. Pomocou metódy \texttt{addCase} sa určí akcia (prvý argument), pri ktorej sa má príslušný reducer zavolať (druhý argument). 
+
+V tele reducera sa najprv prostredníctvom atribútu \texttt{meta.source} kontroluje pôvod akcie. Ten sa vždy nastavuje pri jej vyvolaní. To je dôležité z toho dôvodu, aby Databázový editor zbytočne nespracovával akcie, ktoré sám vyvolal. Následne sa volá funkcia \texttt{syncInterpretation}, ktorá implementuje logiku prevádzania interpretácie do podoby používanej daným editorom.
 
 
-\begin{lstlisting}[float,language=JavaScript,caption={Funkcia používaná na generovanie hierarchie},label=prog:extra_red]
+\begin{lstlisting}[float,language=JavaScript,caption={Extra reducer používaný pri aktualizovaní Databázového editora.},label=prog:extra_red]
 extraReducers(builder) {
   builder.addCase(updateInterpretationPredicates, (state, action) => {
     if (action.meta.source === "databaseView") return;
@@ -91,7 +95,7 @@ Hlavný komponent, ktorý obaluje komponenty konkrétnych reprezentácii je \tex
 
 Úlohou jednotlivých komponentov je získavať potrebné dáta na vykreslenie grafu zo stavu príslušnej reprezentácie, ako sú napríklad vrcholy a hrany, prostredníctvom vyššie spomínaných selektorov. Zároveň sa v nich definuje konfigurácia komponentu \texttt{ReactFlow} špecifická pre daný typ grafu. Príkladom možnosti, ktorú knižnica pri konfigurácii ponúka je funkcia \texttt{isValidConnection}. Tú po jej špecifikovaní knižnica volá pri každom pokuse o vytvorenie novej hrany, čo poskytuje možnosť implementovania vlastnej validačnej logiky pre vytváranie hrán. Táto funkcionalita sa využíva napríklad v komponente \texttt{HasseDiagram}, kde sa kontroluje, či by pridaním hrany ostali neporušené všetky podmienky čiastočného usporiadania.
 
-Menšie komponenty \texttt{PredicateNode} a \texttt{DirectEdge} predstavujú konkrétne vrcholy a hrany rozhrania grafu. O ich vykresľovanie sa stará samotná knižnica a taktiež je ich potrebné definovať vrámci konfigurácie. Pomocou komponentu \texttt{PredicateNode} je implementovaná napríklad funkcionalita vytvárania hrán alebo zobrazovania panelu s farbami unárnych predikátov.
+Menšie komponenty \texttt{PredicateNode} a \texttt{DirectEdge} predstavujú konkrétne vrcholy a hrany rozhrania grafu. O ich vykresľovanie sa stará samotná knižnica a taktiež je ich potrebné definovať vrámci konfigurácie. Pomocou komponentu \texttt{PredicateNode} je implementovaná napríklad funkcionalita vytvárania hrán alebo zobrazovania panelu s farbami unárnych predikátov. Obe sú bližšie popísané v rámci časti venovanej návrhu orientovaného grafu \ref{sec:basic_graph}.
 
 %jednotlive komponenty ziskavaju data zo stavu
 %spomenut nieco o konfiguraci atd.
