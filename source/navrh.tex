@@ -248,7 +248,7 @@ Druhý návrh je realizovaný tak, aby veľmi blízko reprezentoval samotnú str
 
 V tejto verzií bola tiež pridaná validácia jednotlivých vstupov. Napríklad sa kontroluje, či používateľ nezadal viac podmienok s rovnakou hodnotou, alebo či nebol ten istý argument použitý už v niektorom rodičovskom uzle.
 
-Dôvod, prečo sme nezostali pri tejto reprezentácii bol najmä ten, že jej vizuálna podoba nezodpovedala matematickej definicii. Napriek tomu nám však poskytla veľmi dobrý základ, z ktorého sme mohli vychádzať pri ďalšom návrh.
+Dôvod, prečo sme nezostali pri tejto reprezentácii bol najmä ten, že jej vizuálna podoba nezodpovedala matematickej definicii. Napriek tomu nám však poskytla veľmi dobrý základ, z ktorého sme mohli vychádzať pri ďalšom návrhu.
 
 \subsection*{Tretí návrh}
 Pri finálnom návrhu (obr. \ref{obr:interval_3}) sme sa snažili, aby čo najvernejšie zodpovedal matematickému zápisu. Spôsob rozdelenia jednotlivých prípadov na riadky je podobný ako pri prvom návrhu. Rozdiel je však v tom, že tlačidlo na bližšiu špecifikáciu podmienky sa nachádza na pravej strane príslušného riadku. Po jeho stlačení sa zobrazí výber argumentov, ktoré sa v podmienke ešte nevyskytujú. Po výbere sa automaticky pridá nová podmienka s predvyplneným textovým vstupom podľa zvoleného argumentu. Pridanie novej podmienky sa realizuje prostredníctvom menej výrazných, čiastočne priehľadných riadkov. Tie sa v kontexte stromu nachádzajú všade tam, kde je ešte možné pridať ďalšiu podmienku k uzlu reprezentujúcemu argument. Jednotlivé vstupy sú taktiež validované, podobne ako pri druhom návrhu.
@@ -305,6 +305,16 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 
 \section{Nový stav aplikácie}
 V tejto podkapitole sú predstavené návrhy stavov nových častí aplikácie. Všetky opísané riešenie sú integrované do centrálneho stavu aplikácie spolu s jeho existujúcim časťami. Tam, kde je to vhodné, sú návrhy navyše doplnené aj o diagram znázorňujúci ich dátový model.
+
+\subsection*{Textový pohľad}
+V pôvodnej implementácii je stav organizovaný do viacerých logických celkov zodpovedajúcich jednotlivým častiam aplikácie, spomedzi nich sú pre nás dôležité najmä \textit{jazyk} a \textit{štruktúra}. Oba uchovávajú väčšinu svojich dát výhradne v textovej podobe. Teda napríklad pri štruktúre je interpretácia konkrétneho predikátu reprezentovaná ako text, ktorý používateľ zadal do príslušného textové vstupu. 
+
+Tento spôsob reprezentácie by bol však pri implementácii našich rozšírení veľmi nepraktický a neefektívny, keďže by si vyžadoval neustále premieňanie medzi textovou a štrukturovanou formou interpretácie používanou v jednotlivých editoroch. Na druhej strane pre správne fungovanie textových vstupov je potrebné, aby bol aj naďalej ukladaný ich presný obsah, keďže používateľ môže zadať aj syntakticky nesprávne vstupy, ktoré sa nedajú priamo previesť do štrukturovanej formy.
+
+Rozhodli sme sa preto zaviesť novú čast stavu dedikovanú ukladaniu obsahu všetkých textových vstupov spomínaných častí aplikácie.
+Každý takýto vstup je reprezentovaný pomocou záznamu, ktorý obsahuje okrem samotného textové reťazca aj informáciu o type reprezentovaných dát (napr. či ide o indivíduové konštanty alebo interpretáciu funkčného symbolu). 
+
+V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vhodnou štrukturovanou formou. Napríklad v prípade interpretácií predikátov je to zoznam jednotlivých $n$-tíc prvkov domény, kde $n$ je jeho arita.
 
 \subsection*{Grafové editory}
 V tejto časti stavu sa ukladajú dáta jednotlivých grafových reprezentácií. Návrh dátového modelu je znázornený na obrázku \ref{obr:graph_diagram}. Každý binárny predikát a unárna funkcia predstavuje jeden záznam v podobe \texttt{GraphStateEntry}, pričom jednotlivé záznamy sú jednoznačne identifikované kombináciou názvu a typu príslušného symbolu.

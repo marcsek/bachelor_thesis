@@ -22,7 +22,7 @@ Tento problém rieši nový komponent \texttt{InterpretationEditor}, ktorý zaob
 \texttt{DrawerEditor} integruje spoločné rozhranie editorov, pozostávajúce z ďalších troch častí. Jedným z nich je komponent panela nástrojov \texttt{EditorToolbar}. Ten implementuje rozhranie filtrovania. Ďalším je \texttt{EditorError}, predstavujúci chybový banner. Treťou časťou je samotný komponent editora, ktorý je určený na základe získaného typu.
 
 \subsection{Synchronizácia stavu}
-Pri synchronizácii stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Jednotlivé editory však reprezentuje interpretáciu konkrétneho symbolu vo svojom stave iným spôsobom, čo predstavuje problém.
+Pri synchronizácii stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Jednotlivé editory však reprezentujú interpretáciu konkrétneho symbolu vo svojom stave iným spôsobom, čo predstavuje problém.
 
 !TODO Tu potrebujem mat napisanu refaktorizaciu alebo vysvetlit ako su tie data reprezentovane!
 
@@ -82,7 +82,7 @@ Jednotlivé dáta zo stavu sú komponentom grafov sprístupnené prostredníctvo
 
 Napríklad úlohou selektora \texttt{selectNodes} je pre konkrétnu reprezentáciu získať zoznam vrcholov, aplikovať na ne aktuálne doménové filtre a výsledok vrátiť v podobe zoznamu. Ako vstupné argumenty prijíma typ symbolu interpretácie, jeho názov a aj typ samotnej reprezentácie. Na základe týchto informácií dokáže zo stavu vybrať príslušné vrcholy. Na získanie domény po aplikovaní všetkých filtrov sa používa ďalší selektor \texttt{selectRelevantDomain}. Nakoniec sa ešte zo zoznamu vrcholov odstránia tie, ktoré nereprezentujú prvok nachádzajúci sa vo vyfiltrovanej doméne.
 
-Na podobnom princípe funguje aj selektor \texttt{selectEdges}, ktorého úlohou je vrátiť zoznam hrán priamo použiteľný pri zobrazení grafu. Napríklad pri Hasseho diagrame je v selektore potrebné odstrániť všetky nadbytočné hrany (podľa pravidiel opísaných v sekcii \ref{sec:reprezentacie-hasse}), keďže v jeho stave sú explicitne uložené hrany reprezentujúce interpretáciu.
+Na podobnom princípe funguje aj selektor \texttt{selectEdges}, ktorého úlohou je vrátiť zoznam hrán priamo použiteľný pri zobrazení grafu. Napríklad pri Hasseho diagrame je v selektore potrebné odstrániť nadbytočné hrany (podľa pravidiel opísaných v sekcii \ref{sec:reprezentacie-hasse}), keďže v jeho stave sú explicitne uložené všetky hrany reprezentujúce interpretáciu.
 
 Aktualizácia stavu prebieha prostredníctvom reducerov a k nim prislúchajúcich akcií. Zmeny týkajúce sa stavu vrcholov a hrán sú reprezentované akciami \texttt{nodesChanged} a \texttt{edgesChanged}. Tieto zmena môže zahŕňať napríklad posunutie vrcholu alebo označenie hrany. Pri vytvorení novej hrany je vyvolaná akcia \texttt{nodesConnected}, ktorej súčasťou sú aj identifikátory oboch vrcholov. Akcie \texttt{leftoverDeleted} slúži na odstránenie chybného vrcholu. Vyvoláva sa pri kliknutí na tlačidlo koša príslušného vrchola, popísaného v sekcií venovanej návrhu vrcholov \ref{sec:basic_graph}.
 
