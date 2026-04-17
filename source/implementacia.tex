@@ -7,14 +7,14 @@ Nová verzia pôvodnej aplikácie je plne implementovaná v jazyku TypeScript. P
 
 Tiež bolo potrebné vybrať knižnicu, pomocou ktorej budú implementované grafové editory. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu ReactFlow. Na základe môjho hľadania išlo o jedinú knižnicu, ktorá podporovala už spomenuté technológie a zároveň poskytovala dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít. Veľkou výhodou bola aj kvalitná dokumentácia doplnená sadou interaktívnych príkladov, ktoré výrazne uľahčovali objavovanie všetkých dostupných možností.
 
-\section{Refaktorizácia stavu pôvodnej aplikácie}
-
 \section{Integrácia nových nástrojov}
+TODO
 
 \subsection{Organizácia}
 Súborovú štruktúru pôvodnej aplikácie sme v zásade nemenili. Držali sme sa stanovenej konvencie, podľa ktorej je každá funkcionalita organizovaná v priečinku \texttt{src/features}. Zdrojové súbory pre jednotlivé nástroje preto ukladáme do samostatných podpriečinkov pomenovaných podľa daného nástroja. Obsah týchto priečinkov je rôzny, no každý obsahuje aspoň hlavný React komponent pre daný nástroj a súbor definujúci jeho Redux stav. V rámci stavu sú spravidla implementované reducery a potrebné selektory.
 
 \subsection{Integrácia komponentov editorov}
+\label{sec:editor_integration}
 Predošlá verzia aplikácie používala na zobrazovanie interpretácií textové vstupy, tie boli obalené v komponente \texttt{InterpretationInput} a následne používané naprieč aplikáciou. Pre náš účel však potrebujeme riešenie, ktoré bude vedieť vybrať a zobraziť vhodný komponent na základe aktuálne zvoleného editora.
 
 Tento problém rieši nový komponent \texttt{InterpretationEditor}, ktorý zaobaľuje všetky editory vrátane pôvodného. Jedným z jeho vstupných parametrov je názov reprezentovaného symbolu. Na základe tohto názvu získa zo stavu typ editora, ktorý sa má zobraziť. Ak ide o textový editor zobrazuje sa pôvodný komponent \texttt{InterpretationInput}. V opačnom prípade sa vykreslí nový komponent \texttt{DrawerEditor}.
@@ -126,6 +126,34 @@ Menšie komponenty \texttt{PredicateNode} a \texttt{DirectEdge} predstavujú kon
 %TODO
 %\subsection{Synchronizácia}
 %TODO
+
+\section{Refaktorizácia stavu pôvodnej aplikácie}
+Ako bolo uvedené v podkapitole venovanej návrhu nového stavu aplikácie \ref{sec:new_state}, časti stavu predstavujúce štruktúru a jazyk uchovávali výhradne obsah jednotlivých textových stupov. Každý z týchto vstupov však predstavuje odlišný typ dát, ktorý si vyžaduje špecifický formát zápisu, ako aj vlastnú validáciu a prevod do štrukturovanej podoby. Z toho dôvodu bol každý typ textového vstupu asociovaný s príslušnou akciou na jeho aktualizáciu a selektorom. V tomto selektore prebiehala ich premena na štrukturovanú podobu spolu so syntaktickou a sémantickou validáciou.
+
+%Jedným z využití týchto selektorov bolo získanie chybovej správy na jej zobrazenie v komponente reprezentujúceho daný textový vstup.
+
+Prvým krokom pri refaktorizácii bolo v pôvodných častiach stavu nahradiť textové reprezentácie ich štrukturovanou formou a následne týmto zmenám prispôsobiť aj príslušné selektory. To si vyžadovalo zo selektorov odstrániť časť zodpovedajúcu za premenu z textovej na štrukturovanú podobu spolu so syntaktickou validáciou. Sémantická kontrola v selektoroch aj naďalej ostala. Zároveň bolo potrebné upraviť akcie a k nim prislúchajúce reducery tak, aby namiesto textových vstupov pracovali priamo so štrukturovanými dátami.
+
+Ďalším krokom bolo vytvorenie novej časti stavu určenej na ukladanie obsah jednotlivých textových vstupov. Na aktualizáciu stavu konkrétneho textového vstupu sa používa funkcia \texttt{updateTextView}. Jej úlohou je v prvom rade na základe typu textového vstupu vykonať syntaktickú kontrolu vstupného reťazca a následne vyvolať akciu \texttt{textViewChanged}, ktorá zabezpečuje aktualizáciu obsahu textového vstupu, ako aj prípadnej chybovej správy s ním spojenou. Ak je reťazec syntakticky v poriadku nasleduje jeho transformácia do štrukturovanej podoby a vyvolanie jednej z refaktorizovaných akcií zodpovedných za aktualizáciu príslušného typu dát.
+
+Keďže textové vstupy nie sú jediný spôsob, ako meniť interpretáciu predikátového alebo funkčného symbolu, je potrebné ich obsah aktualizovať aj pri každej inde vyvolanej zmene. To je riešené rovnakým spôsobom, ako bolo už opísané v časti venovanej integrácii komponentov editorov \ref{sec:editor_integration}. Teda pomocou extra reducera, ktorý reaguje na vyvolanie akcie predstavujúcej aktualizáciu interpretácie. Tieto akcie však nesú údaje v štrukturovanej podobe a je ich pred použitím potrebné vhodne previesť do textovej formy.
+
+\begin{lstlisting}[float,language=JavaScript,caption={Konfiguračný objekt popisujúci interpretáciu predikátov.},label=prog:config_pred]
+predicate_interpretation: {
+    parse: (value) => parseTuples(value),
+    toText: (struct) =>
+      struct.map((tuple) => `(${tuple.join(",")})`).join(", "),
+    validate: selectValidatedPredicate,
+    syncActionCreator: updateInterpretationPredicates,
+    payloadType: "key",
+}
+\end{lstlisting}
+
+Na konfiguráciu toho, ako správne spracovať jednotlivé typy dát sme pre každý zadefinovali jeho popisný objekt. Príklad takéhoto objektu pre interpretáciu predikátov je uvedený v ukážke \ref{prog:config_pred}. Jeho jednotlivé atribúty sú využívané v už opísaných častiach implementácie textových vstupov.
+
+Konkrétne atribútom \texttt{parse} špecifikujeme funkciu použivanú pri konverzii z textovej na štrukturovanú formu. Naopak atribút \texttt{toText} určuje funkciu na konverziu štrukturovanej formy do textovej. Atribút \texttt{validate} reprezentuje selektor, pomocou ktorého je možné zistiť, či je štrukturovaná reprezentácia sémanticky validná, čo je používané v komponentoch textových vstupov na získanie kompletnej chybovej správy. Ďalej \texttt{syncActionCreator} predstavuje akciu, na ktorej vyvolanie je potrebné reagovať pri synchronizacii textového vstupu so štrukturovanou častou stavu. Posledný atribút \texttt{payloadType} určuje, či je nutné pri použití selektora \texttt{validate} alebo akcie \texttt{syncActionCreator} špecifikovať aj identifikátor (kľúč). V prípade interpretácií symbolov individúových konštánt, predikátov a funkcií tento kľúč predstavuje ich názov. Naopak pri typoch dát, ktoré sa v stave vyskytujú iba raz (napr. doména), nie je nutné uvádzať žiadny identifikátor.
+
+
 
 \section{Integrácia s Logickým pracovným zošitom}
 TODO

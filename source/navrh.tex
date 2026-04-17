@@ -304,17 +304,25 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 \end{figure}
 
 \section{Nový stav aplikácie}
+\label{sec:new_state}
 V tejto podkapitole sú predstavené návrhy stavov nových častí aplikácie. Všetky opísané riešenie sú integrované do centrálneho stavu aplikácie spolu s jeho existujúcim časťami. Tam, kde je to vhodné, sú návrhy navyše doplnené aj o diagram znázorňujúci ich dátový model.
 
 \subsection*{Textový pohľad}
-V pôvodnej implementácii je stav organizovaný do viacerých logických celkov zodpovedajúcich jednotlivým častiam aplikácie, spomedzi nich sú pre nás dôležité najmä \textit{jazyk} a \textit{štruktúra}. Oba uchovávajú väčšinu svojich dát výhradne v textovej podobe. Teda napríklad pri štruktúre je interpretácia konkrétneho predikátu reprezentovaná ako text, ktorý používateľ zadal do príslušného textové vstupu. 
+V pôvodnej implementácii je stav organizovaný do viacerých logických celkov zodpovedajúcich jednotlivým častiam aplikácie, spomedzi nich sú pre nás dôležité najmä \textit{language} a \textit{structure}. Oba uchovávajú väčšinu svojich dát výhradne v textovej podobe. Teda napríklad pri štruktúre je interpretácia konkrétneho predikátu reprezentovaná ako text, ktorý používateľ zadal do príslušného textové vstupu.
 
 Tento spôsob reprezentácie by bol však pri implementácii našich rozšírení veľmi nepraktický a neefektívny, keďže by si vyžadoval neustále premieňanie medzi textovou a štrukturovanou formou interpretácie používanou v jednotlivých editoroch. Na druhej strane pre správne fungovanie textových vstupov je potrebné, aby bol aj naďalej ukladaný ich presný obsah, keďže používateľ môže zadať aj syntakticky nesprávne vstupy, ktoré sa nedajú priamo previesť do štrukturovanej formy.
 
-Rozhodli sme sa preto zaviesť novú čast stavu dedikovanú ukladaniu obsahu všetkých textových vstupov spomínaných častí aplikácie.
-Každý takýto vstup je reprezentovaný pomocou záznamu, ktorý obsahuje okrem samotného textové reťazca aj informáciu o type reprezentovaných dát (napr. či ide o indivíduové konštanty alebo interpretáciu funkčného symbolu). 
+Rozhodli sme sa preto zaviesť novú čast stavu dedikovanú ukladaniu obsahu všetkých textových vstupov spomínaných častí aplikácie. Každý takýto vstup je reprezentovaný pomocou záznamu, ktorý obsahuje okrem samotného textové reťazca aj informáciu o type reprezentovaných dát (napr. či ide o indivíduové konštanty alebo interpretáciu funkčného symbolu). Jednotlivé záznamy sú unikátne identifikované typom reprezentovaných dát a v prípade interpretácií symbolov konštánt, predikátov a funkcií aj jeho názvom.
 
 V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vhodnou štrukturovanou formou. Napríklad v prípade interpretácií predikátov je to zoznam jednotlivých $n$-tíc prvkov domény, kde $n$ je jeho arita.
+
+\begin{figure}
+    \centerline{\includegraphics[width=0.6\textwidth]{images/graph_diagram2.png}}
+    %popis obrazku
+    \caption[Triedny diagram pre graf.]{Triedny diagram pre grafové editory.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:graph_diagram}
+\end{figure}
 
 \subsection*{Grafové editory}
 V tejto časti stavu sa ukladajú dáta jednotlivých grafových reprezentácií. Návrh dátového modelu je znázornený na obrázku \ref{obr:graph_diagram}. Každý binárny predikát a unárna funkcia predstavuje jeden záznam v podobe \texttt{GraphStateEntry}, pričom jednotlivé záznamy sú jednoznačne identifikované kombináciou názvu a typu príslušného symbolu.
@@ -327,26 +335,17 @@ Rovnako ako pri grafových editoroch je záznam o ich stave jednoznačne identif
 \subsection*{Editor interpretácií funkcií rozborom prípadov}
 Stav tejto reprezentácie je veľmi podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Návrh dátového modelu editora možno vidieť na obrázku \ref{obr:tree_diagram}. Každý funkčný symbol zodpovedá jednému \texttt{TreeEntry} záznamu, ktorý je jednoznačne identifikovaný podľa názvu symbolu. Takýto záznam obsahuje stav editora (\texttt{TreeState}), v ktorom su uložené jednotlivé uzly (\texttt{TreeNode}) spolu s identifikátor koreňového uzla. Každý uzol je zas tvorený zoznamom z neho vychádzajúcich hrán (\texttt{TreeEdge}). Abstraktný typ \texttt{TreeEdge} špecializujú dva typy hrán. Jednou z nich je referenčná hrana (\texttt{ReferenceEdge}), ktorá si uchováva identifikátor koncového uzla, teda ďalšej inštancie \texttt{TreeNode}. Druhou je hodnotová hrana (\texttt{ValueEdge}), tá priamo ukladá samotnú hodnotu.
 
+\begin{figure}
+    \centerline{\includegraphics[width=0.7\textwidth]{images/tree_diagram.png}}
+    %popis obrazku
+    \caption[Triedny diagram pre editor interpretácií funkcií.]{Triedny diagram pre Editor interpretácií funkcií.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:tree_diagram}
+\end{figure}
+
 \subsection*{Dopyty}
 Táto čast stavu má obsahovať zoznam jednotlivých dopytov. Každý dopyt sa skladá z textovej reprezentácie premenných a formuly.
 
 \subsection*{Spoločné rozhranie editorov}
 V tejto časti sa ukladá informácia o tom, ktorý editor je aktuálne otvorený a o jednotlivých nastaveniach filtrovania. Konkrétne sa jedná o stav zaškrtávacieho tlačidla domény, názvy zaškrtnutých unárnych predikátov ako aj zoznam prvkov domény, označených v komponente filtra domény. Záznam o tomto stave je opäť jednoznačne identifikovaný rovnakým spôsobom, ako bolo už spomenuté v opisoch predošlých stavov.
 
-
-
-\begin{figure}
-    \centerline{\includegraphics[width=0.6\textwidth]{images/graph_diagram.png}}
-    %popis obrazku
-    \caption[Triedny diagram pre graf.]{Triedny diagram pre grafové editory.}
-    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
-    \label{obr:graph_diagram}
-\end{figure}
-
-\begin{figure}
-    \centerline{\includegraphics[width=0.4\textwidth]{images/BP-tree.drawio (2).png}}
-    %popis obrazku
-    \caption[Triedny diagram pre editor interpretácií funkcií.]{Triedny diagram pre Editor interpretácií funkcií.}
-    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
-    \label{obr:tree_diagram}
-\end{figure}
