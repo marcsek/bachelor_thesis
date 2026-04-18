@@ -22,11 +22,11 @@ Tento problém rieši nový komponent \texttt{InterpretationEditor}, ktorý zaob
 \texttt{DrawerEditor} integruje spoločné rozhranie editorov, pozostávajúce z ďalších troch častí. Jedným z nich je komponent panela nástrojov \texttt{EditorToolbar}. Ten implementuje rozhranie filtrovania. Ďalším je \texttt{EditorError}, predstavujúci chybový banner. Treťou časťou je samotný komponent editora, ktorý je určený na základe získaného typu.
 
 \subsection{Synchronizácia stavu}
-Pri synchronizácii stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Jednotlivé editory však reprezentujú interpretáciu konkrétneho symbolu vo svojom stave iným spôsobom, čo predstavuje problém.
+Pri synchronizácii stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Jednotlivé editory však reprezentujú interpretácie symbolov vo svojom stave rôznym spôsobom, čo predstavuje problém.
 
-!TODO Tu potrebujem mat napisanu refaktorizaciu alebo vysvetlit ako su tie data reprezentovane!
+Riešením je zaviesť jednotné miesto a formát ukladania interpretácií, ktorý budú všetky editory zdieľať a vedieť spracovať. Na tento účel sme sa rozhodli použiť interpretácie uložené v rámci stavu štruktúry. V nasledujúcej časti popíšeme spôsob, akým je implementované zdieľanie týchto dát medzi jednotlivými editormi.
 
-Aktuálna interpretácia konkrétneho symbolu je uložená v rámci stavu štruktúry a je možné ju meniť pomocou príslušných akcií:
+Aktualizácia interpretácie konkrétneho symbolu uloženého v stave štruktúry sa realizuje pomocou príslušných akcií:
 \begin{itemize}
   \item \texttt{updateInterpretationPredicates} - akcia na aktualizáciu interpretácie predikátu
   \item \texttt{updateInterpretationFunctions} - akcia na aktualizáciu interpretácie funkcie
@@ -80,11 +80,11 @@ Tvar konkrétneho vrcholu alebo hrany je určený samotnou knižnicou a nie je o
 \subsection{Práca so stavom}
 Jednotlivé dáta zo stavu sú komponentom grafov sprístupnené prostredníctvom selektorov. To dovoľuje oddeliť transformáciu dát od implementácie používateľského rozhrania. Jednotlivé selektory je navyše možné navzájom kombinovať, čo uľahčuje ich organizáciu a znižuje duplicitu logiky.
 
-Napríklad úlohou selektora \texttt{selectNodes} je pre konkrétnu reprezentáciu získať zoznam vrcholov, aplikovať na ne aktuálne doménové filtre a výsledok vrátiť v podobe zoznamu. Ako vstupné argumenty prijíma typ symbolu interpretácie, jeho názov a aj typ samotnej reprezentácie. Na základe týchto informácií dokáže zo stavu vybrať príslušné vrcholy. Na získanie domény po aplikovaní všetkých filtrov sa používa ďalší selektor \texttt{selectRelevantDomain}. Nakoniec sa ešte zo zoznamu vrcholov odstránia tie, ktoré nereprezentujú prvok nachádzajúci sa vo vyfiltrovanej doméne.
+Napríklad úlohou selektora \texttt{selectNodes} je pre konkrétnu reprezentáciu získať zoznam vrcholov, aplikovať na ne aktuálne doménové filtre a výsledok vrátiť v podobe zoznamu. Ako vstupné argumenty prijíma typ symbolu interpretácie, jeho názov a aj typ samotnej reprezentácie. Na základe týchto informácií dokáže zo stavu vybrať príslušné vrcholy. Pre získanie domény po aplikovaní všetkých filtrov sa používa ďalší selektor \texttt{selectRelevantDomain}. Nakoniec sa ešte zo zoznamu vrcholov odstránia tie, ktoré nereprezentujú prvok nachádzajúci sa vo vyfiltrovanej doméne.
 
 Na podobnom princípe funguje aj selektor \texttt{selectEdges}, ktorého úlohou je vrátiť zoznam hrán priamo použiteľný pri zobrazení grafu. Napríklad pri Hasseho diagrame je v selektore potrebné odstrániť nadbytočné hrany (podľa pravidiel opísaných v sekcii \ref{sec:reprezentacie-hasse}), keďže v jeho stave sú explicitne uložené všetky hrany reprezentujúce interpretáciu.
 
-Aktualizácia stavu prebieha prostredníctvom reducerov a k nim prislúchajúcich akcií. Zmeny týkajúce sa stavu vrcholov a hrán sú reprezentované akciami \texttt{nodesChanged} a \texttt{edgesChanged}. Tieto zmena môže zahŕňať napríklad posunutie vrcholu alebo označenie hrany. Pri vytvorení novej hrany je vyvolaná akcia \texttt{nodesConnected}, ktorej súčasťou sú aj identifikátory oboch vrcholov. Akcie \texttt{leftoverDeleted} slúži na odstránenie chybného vrcholu. Vyvoláva sa pri kliknutí na tlačidlo koša príslušného vrchola, popísaného v sekcií venovanej návrhu vrcholov \ref{sec:basic_graph}.
+Aktualizácia stavu prebieha prostredníctvom reducerov a k nim prislúchajúcich akcií. Zmeny týkajúce sa stavu vrcholov a hrán sú reprezentované akciami \texttt{nodesChanged} a \texttt{edgesChanged}. Zmena môže zahŕňať napríklad posunutie vrcholu alebo označenie hrany. Pri vytvorení novej hrany je vyvolaná akcia \texttt{nodesConnected}, ktorej súčasťou sú aj identifikátory oboch vrcholov. Akcia \texttt{leftoverDeleted} slúži na odstránenie chybného vrcholu. Vyvoláva sa pri kliknutí na tlačidlo koša príslušného vrchola, popísaného v sekcií venovanej návrhu vrcholov \ref{sec:basic_graph}.
 
 Dôležitou akciou je aj \texttt{syncGraphView}, ktorá slúži na inicializáciu stavu všetkých grafových reprezentácií všetkých binárnych predikátov a funkčných symbolov. Používa sa najmä pri synchronizácií grafových editorov so samotnou štruktúrou.
 
@@ -128,7 +128,7 @@ Menšie komponenty \texttt{PredicateNode} a \texttt{DirectEdge} predstavujú kon
 %TODO
 
 \section{Refaktorizácia stavu pôvodnej aplikácie}
-Ako bolo uvedené v podkapitole venovanej návrhu nového stavu aplikácie \ref{sec:new_state}, časti stavu predstavujúce štruktúru a jazyk uchovávali výhradne obsah jednotlivých textových stupov. Každý z týchto vstupov však predstavuje odlišný typ dát, ktorý si vyžaduje špecifický formát zápisu, ako aj vlastnú validáciu a prevod do štrukturovanej podoby. Z toho dôvodu bol každý typ textového vstupu asociovaný s príslušnou akciou na jeho aktualizáciu a selektorom. V tomto selektore prebiehala ich premena na štrukturovanú podobu spolu so syntaktickou a sémantickou validáciou.
+Ako bolo uvedené v podkapitole venovanej návrhu nového stavu aplikácie \ref{sec:new_state}, časti stavu predstavujúce štruktúru a jazyk uchovávali výhradne obsah svojich textových stupov. Každý z týchto vstupov však predstavuje odlišný typ dát, ktorý si vyžaduje špecifický formát zápisu, ako aj vlastnú validáciu a prevod do štrukturovanej podoby. Z toho dôvodu bol každý typ textového vstupu asociovaný s príslušnou akciou na jeho aktualizáciu a selektorom. V tomto selektore prebiehala ich premena na štrukturovanú podobu spolu so syntaktickou a sémantickou validáciou.
 
 %Jedným z využití týchto selektorov bolo získanie chybovej správy na jej zobrazenie v komponente reprezentujúceho daný textový vstup.
 
@@ -136,7 +136,7 @@ Prvým krokom pri refaktorizácii bolo v pôvodných častiach stavu nahradiť t
 
 Ďalším krokom bolo vytvorenie novej časti stavu určenej na ukladanie obsah jednotlivých textových vstupov. Na aktualizáciu stavu konkrétneho textového vstupu sa používa funkcia \texttt{updateTextView}. Jej úlohou je v prvom rade na základe typu textového vstupu vykonať syntaktickú kontrolu vstupného reťazca a následne vyvolať akciu \texttt{textViewChanged}, ktorá zabezpečuje aktualizáciu obsahu textového vstupu, ako aj prípadnej chybovej správy s ním spojenou. Ak je reťazec syntakticky v poriadku nasleduje jeho transformácia do štrukturovanej podoby a vyvolanie jednej z refaktorizovaných akcií zodpovedných za aktualizáciu príslušného typu dát.
 
-Keďže textové vstupy nie sú jediný spôsob, ako meniť interpretáciu predikátového alebo funkčného symbolu, je potrebné ich obsah aktualizovať aj pri každej inde vyvolanej zmene. To je riešené rovnakým spôsobom, ako bolo už opísané v časti venovanej integrácii komponentov editorov \ref{sec:editor_integration}. Teda pomocou extra reducera, ktorý reaguje na vyvolanie akcie predstavujúcej aktualizáciu interpretácie. Tieto akcie však nesú údaje v štrukturovanej podobe a je ich pred použitím potrebné vhodne previesť do textovej formy.
+Keďže textové vstupy nie sú jediný spôsob, ako meniť interpretáciu predikátového alebo funkčného symbolu, je potrebné ich obsah v tomto prípade aktualizovať aj pri každej inde vyvolanej zmene. To je riešené rovnakým spôsobom, ako bolo už opísané v časti venovanej integrácii komponentov editorov \ref{sec:editor_integration}. Teda pomocou extra reducera, ktorý reaguje na vyvolanie akcie predstavujúcej aktualizáciu interpretácie. Tieto akcie však nesú údaje v štrukturovanej podobe a je ich pred použitím potrebné vhodne previesť do textovej formy.
 
 \begin{lstlisting}[float,language=JavaScript,caption={Konfiguračný objekt popisujúci interpretáciu predikátov.},label=prog:config_pred]
 predicate_interpretation: {
@@ -149,20 +149,23 @@ predicate_interpretation: {
 }
 \end{lstlisting}
 
-Na konfiguráciu toho, ako správne spracovať jednotlivé typy dát sme pre každý zadefinovali jeho popisný objekt. Príklad takéhoto objektu pre interpretáciu predikátov je uvedený v ukážke \ref{prog:config_pred}. Jeho jednotlivé atribúty sú využívané v už opísaných častiach implementácie textových vstupov.
+Na konfiguráciu toho, ako správne spracovať jednotlivé typy dát sme pre každý zadefinovali popisný objekt. Príklad takéhoto objektu pre interpretáciu predikátov je uvedený v ukážke \ref{prog:config_pred}. Jeho jednotlivé atribúty sú využívané v už opísaných častiach implementácie textových vstupov.
 
 Konkrétne atribútom \texttt{parse} špecifikujeme funkciu použivanú pri konverzii z textovej na štrukturovanú formu. Naopak atribút \texttt{toText} určuje funkciu na konverziu štrukturovanej formy do textovej. Atribút \texttt{validate} reprezentuje selektor, pomocou ktorého je možné zistiť, či je štrukturovaná reprezentácia sémanticky validná, čo je používané v komponentoch textových vstupov na získanie kompletnej chybovej správy. Ďalej \texttt{syncActionCreator} predstavuje akciu, na ktorej vyvolanie je potrebné reagovať pri synchronizacii textového vstupu so štrukturovanou častou stavu. Posledný atribút \texttt{payloadType} určuje, či je nutné pri použití selektora \texttt{validate} alebo akcie \texttt{syncActionCreator} špecifikovať aj identifikátor (kľúč). V prípade interpretácií symbolov individúových konštánt, predikátov a funkcií tento kľúč predstavuje ich názov. Naopak pri typoch dát, ktoré sa v stave vyskytujú iba raz (napr. doména), nie je nutné uvádzať žiadny identifikátor.
 
 
 
 \section{Integrácia s Logickým pracovným zošitom}
-TODO
-\subsection{Importovanie a exportovanie stavu}
-TODO
-%\subsection{Logický kontext}
-%TODO
+Knižničné rozhranie potrebné pre integráciu s Logickým pracovným zošitom bolo implementované už v rámci predošlej bakalárskej práce \cite{filip2025}. Pre zakomponovanie našich rozšírení bolo potrebné doplniť už existujúcu funkcionalitu ukladania a načítania stavu vloženej aplikácie. Tie sú realizované pomocou dvoch funkcií.
 
-\section{Ďalšie vylepšenia Prieskumníka štruktúr}
-TODO
-\subsection{Refaktorizácia Henkinovej-Hintikkovej hry}
-TODO
+Na exportovanie momentálneho stavu sa používa funkcia \texttt{exportAppState}. Jej úlohou je vrátiť objekt, ktorý Logický pracovný zošit následne prevedie do formátu \texttt{JSON} a uloží. V pôvodnej implementácii bol jednoducho exportovaný celý stav aplikácie, čo je v našom prípade zbytočné. Konkrétne stav Maticového editora, Databázového editora a textového pohľadu sme sa rozhodli vôbec neukladať, keďže ho možno odvodiť z interpretácií uložených v stave štruktúry. Z rovnakého dôvodu sa aj pri grafových editoroch ukladá iba pozícia jednotlivých vrcholov, pričom informácie o hranách sa opäť odvádzajú zo stavu štruktúry. Ostatné spomínané rozšírenia ukladajú celý svoj stav.
+
+Pri otvorení aplikácie môže byť dostupný počiatočný stav (ak bol predtým uložený), jeho načítanie je zabezpečené funkciou \texttt{importAppState}. Proces načítania sme sa rozhodli rozšíriť o krok validácie vstupných dát, ktorý je realizovaný knižnicou Zod \cite{zod}. Tá umožňuje definovať schémy opisujúce očakávanú štruktúru objektov. Každú exportovanú časť stavu bolo potrebné pomocou takejto schémy opísať a spojiť do jednej centrálnej schémy \texttt{serializedAppStateSchema}. Na overenie tvaru konkrétneho objektu na základe tejto schémy poskytuje knižnica metódu \texttt{parse}. Ak vstupné dáta nespĺňajú požadovaný tvar, metóda vráti chybovú hlášku. V takomto prípade sa používateľovi zobrazí varovanie v rozhraní aplikácie informujúce o tom, že niektoré časti stavu sa nepodarilo načítať. V prípade, že validácia prebehla úspešne sú jednotlivé časti priamo načítané alebo odvodené.
+
+\section{Vylepšenia Henkinovej-Hintikkovej hry}
+Reimplementovaná verzia Henkinovej-Hintikkovej hry spočiatku neobsahovala všetku požadovanú funkcionalitu. Kľúčovou zmenou jej fungovania bolo zavedenie znáhodnenia v situáciach, kedy si hra vyberá podformulu alebo ohodnotenie otvorenej formuly. Pri prvých pokusoch o implementáciu tejto funkcionality sa však objavili viaceré problémy, niektoré spôsobujúce padnutie samotnej aplikacie. Preto bolo najskôr potrebné výrazne refaktorizovať existujúcu implementáciu, čo zároveň prispelo k lepšiemu pochopenie jej fungovania. Refaktorizácia zahŕňala najmä sprehľadnenie selektorov používaných hrou a úpravu jej komponentov. Ukázalo sa tiež, že niektorých selektory nepočítali so všetkými možnými situáciami, v ktorých sa hra môže nachádzať, čo bolo potrebné taktiež vhodne ošetriť.
+
+
+Po týchto zmenách sa podarilo implementovať aj samotné znáhodnenie, ktoré sme sa následne rozhodli doplniť ďalšími zmenami. Jednou z nich bolo zjednotenie spôsobu výpisu matematických výrazov. Pôvodná verzia kombinovala používanie Unicode znakov s prehľadnejším zápisom pomocou KaTeX-u, pričom tieto zápisy boli generované naprieč viacerými zdrojovými súbormi. To sťažovalo ich prípadnú zmenu, keďže by vyžadovala úpravy daného výrazu naprieč viacerými súbormi. Všetka logika generovania zápisov bola presunutá do súboru \texttt{messageBubbleFactories.ts}, ktorý obsahuje funkcie na generovanie rôznych typov výhradne KaTeX zápisov, využívaných jednotlivými komponentmi hry. Okrem toho bolo pridaných viacero menších vylepšení používateľského rozhrania, ako aj samotného dialógu hry. Porovnanie novej verzie s predchádzajúcou možno vidieť na obrázku (ref).
+
+%Tiež sme pridali nové stavy hry. Predtým mohla hra byť iba prehraná alebo vyhratá. Teraz je doplnená aj o stav nedokončená, pre lepšiu komunikáciu stavu používateľovi.
