@@ -86,7 +86,7 @@ Na podobnom princípe funguje aj selektor \texttt{selectEdges}, ktorého úlohou
 
 Aktualizácia stavu prebieha prostredníctvom reducerov a k nim prislúchajúcich akcií. Zmeny týkajúce sa stavu vrcholov a hrán sú reprezentované akciami \texttt{nodesChanged} a \texttt{edgesChanged}. Zmena môže zahŕňať napríklad posunutie vrcholu alebo označenie hrany. Pri vytvorení novej hrany je vyvolaná akcia \texttt{nodesConnected}, ktorej súčasťou sú aj identifikátory oboch vrcholov. Akcia \texttt{leftoverDeleted} slúži na odstránenie chybného vrcholu. Vyvoláva sa pri kliknutí na tlačidlo koša príslušného vrchola, popísaného v sekcií venovanej návrhu vrcholov \ref{sec:basic_graph}.
 
-Dôležitou akciou je aj \texttt{syncGraphView}, ktorá slúži na inicializáciu stavu všetkých grafových reprezentácií všetkých binárnych predikátov a funkčných symbolov. Používa sa najmä pri synchronizácií grafových editorov so samotnou štruktúrou.
+Dôležitou akciou je aj \texttt{syncGraphView}, ktorá slúži na inicializáciu stavu všetkých grafových reprezentácií všetkých binárnych predikátov a unárnych funkcií. Používa sa najmä pri synchronizácií grafových editorov so samotnou štruktúrou.
 
 %Iba zacnem ze sa ukladaju hentak a blablabla. to uy je popisane v navrhu. potom spomeniem reducery a pluginy, mozno vypisat jednotlive funkcie pluginov a popisat ich
 
