@@ -53,7 +53,9 @@ pre všetky premenné $x$, všetky formuly $A, B$, všetky termy $t_1, \dots, t_
 V tejto podkapitole sú uvedené typy grafov použité v tejto práci spolu s ich krátkym vysvetlením. Niektoré definície vychádzajú z Grimaldiho učebnice diskrétnej matematiky \cite{grimaldi1985discrete}.
 
 \subsection{Orientovaný graf}
-Orientovaný graf $G$ je daný neprázdnou konečnou množinou vrcholov $V$ a množinou usporiadaných dvojíc $E \subseteq V \times V$, resp. hrán, pričom každá hrana $(x, y) \in E$ začína vo vrchole $x$ a končí vo vrchole $y$. V diagramoch sú vrcholy väčšinou znázornené ako kruh, prípadne spolu s jeho príslušným označením. Hrany sú zas vyobrazené pomocou šípok, ktorých smer určuje poradie vrcholov hrany (šípka vždy ukazuje na druhý vrchol v poradí). Majú mnohoraké využitie pri modelovaní vzťahov, ktoré vyžadujú zachovať nejaký smer, postupnosť úkonov alebo vyjadriť určitú hierarchiu. Príklad bežného diagramu jednoduchého orientovaného grafu možno vidieť na obrázku \ref{obr:dir_demo}, kde $V = \{1, 2, 3, 4\}$ a $E = \left\{(1, 2), (2, 3), (3, 1), (2, 4), (4, 2)\right\}$.
+Orientovaný graf $G$ je daný neprázdnou konečnou množinou vrcholov $V$ a množinou usporiadaných dvojíc $E \subseteq V \times V$, resp. hrán.
+%pričom každá hrana $(x, y) \in E$ začína vo vrchole $x$ a končí vo vrchole $y$. 
+V diagramoch sú vrcholy väčšinou znázornené ako kruhy, prípadne spolu s ich príslušným označením. Hrany sú zas vyobrazené pomocou šípok, ktorých smer určuje poradie vrcholov hrany (šípka vždy ukazuje na druhý vrchol v poradí). Majú mnohoraké využitie pri modelovaní vzťahov, ktoré vyžadujú zachovať nejaký smer, postupnosť úkonov alebo vyjadriť určitú hierarchiu. Príklad bežného diagramu jednoduchého orientovaného grafu možno vidieť na obrázku \ref{obr:dir_demo}, kde $V = \{1, 2, 3, 4\}$ a $E = \left\{(1, 2), (2, 3), (3, 1), (2, 4), (4, 2)\right\}$.
 
 \begin{figure}
     \centerline{\includegraphics[width=0.4\textwidth]{images/directed_demo_b.png}}
@@ -97,7 +99,7 @@ Na obrázku \ref{obr:hasse_demo} možno vidieť príklad Hasseho diagramu pre č
 
 \subsection{Bipartitný graf}
 Bipartitný graf je taký graf $G$, ktorého vrcholy možno rozdeliť do dvoch disjunktných podmnožín $U$ a $V$ tak, že
-$U \cap V = \emptyset$ a zároveň každá hrana spája jeden vrchol z $U$ s ďalším vrcholom z $V$. Vedia byť nápomocné pri hľadaní a skúmaní vzťahov (relácií a zobrazení) medzi entitami dvoch rôznych tried, ako napríklad medzi študentmi a učiteľmi, autormi a publikáciami alebo receptami a ingredienciami. Pri menšom množstve dát a vhodnom rozložení vrcholov umožňujú prehľadnú vizualizáciu prítomných vzťahov. Ukážku diagramu konkrétneho bipartitného grafu pre zobrazenie $f: \{1, 2, 3\} \rightarrow \{4, 5\}$, kde $f(1) = 4, f(2) = 5$ a $f(3) = 5$ so znázorneným rozdelením prvkov do množín $U$ a $V$ (v tomto prípade si možno predstaviť definičný obor a obor hodnôt zobrazenia) je vidieť na obrázku \ref{obr:bipartite_demo}.
+$U \cap V = \emptyset$ a zároveň každá hrana spája jeden vrchol z $U$ s ďalším vrcholom z $V$. Vedia byť nápomocné pri hľadaní a skúmaní vzťahov (relácií a zobrazení) medzi entitami dvoch rôznych tried, ako napríklad medzi študentmi a učiteľmi, autormi a publikáciami alebo receptami a ingredienciami. Pri menšom množstve dát a vhodnom rozložení vrcholov umožňujú prehľadnú vizualizáciu prítomných vzťahov. Ukážku diagramu konkrétneho bipartitného grafu pre zobrazenie $f: \{1, 2, 3\} \rightarrow \{4, 5\}$, kde $f(1) = 4, f(2) = 5$ a $f(3) = 5$, so znázorneným rozdelením prvkov do množín $U$ a $V$ (v tomto prípade si možno predstaviť definičný obor a obor hodnôt zobrazenia) je vidieť na obrázku \ref{obr:bipartite_demo}.
 
 \begin{figure}
     \centerline{\includegraphics[width=0.5\textwidth]{images/bipartite_demo.png}}
@@ -117,7 +119,7 @@ React \cite{react} je v súčasnosti jedna z najpopulárnejších JavaScriptový
 
 Základnú stavebnú jednotku tvorí komponent, čo je JavaScriptová funkcia, ktorá produkuje určitý strom elementov jazyka HTML, ďalej označovaný ako markup. Každý takýto komponent potom predstavuje konkrétnu časť používateľského rozhrania s vlastnou funkcionalitou a vzhľadom.
 
-Vo väčšine prípadov sa markup komponentov zapisuje vo forme JavaScript XML (JSX), čo je syntaktické rozšírenie jazyku JavaScript. JSX je veľmi podobný značkovaciemu jazyku HTML, no umožňuje používanie vlastných značiek, ako aj jednoduchšiu manipuláciu s dynamickým obsahom. Toto je pre React kľúčové, keďže je tým umožnené skladať viaceré reaktívne komponenty do určitej hierarchie, ktorá reprezentuje celú aplikáciu.
+Vo väčšine prípadov sa markup komponentov zapisuje vo forme JavaScript XML (JSX), čo je syntaktické rozšírenie jazyka JavaScript. JSX je veľmi podobný značkovaciemu jazyku HTML, no umožňuje používanie vlastných značiek, ako aj jednoduchšiu manipuláciu s dynamickým obsahom. Toto je pre React kľúčové, keďže je tým umožnené skladať viaceré reaktívne komponenty do určitej hierarchie, ktorá reprezentuje celú aplikáciu.
 
 %Ďalšou dôležitou súčasťou React-u je tzv. \verb'state', alebo stav komponentu. Zmena tohoto stavu spôsobuje, že sa celý komponent spracuje nanovo, už ale s aktuálnou hodnotou stavu. Na jeho základnú reprezentáciu sa používa špeciálna funkcia \verb|useState()|. Tejto funkcii môžeme dať ako parameter počiatočnú hodnotu stavu, ona nám vráti dvojicu aktuálnej hodnoty stavu, ako aj funkciu na zmenu tohoto stavu. Táto a s ňou aj iné funkcie poskytnuté React-om predstavujú tzv. \verb'hook', čo je funkcia ktorou sa vieme napojiť na niektoré vnútorné mechanizmy nášho komponentu.
 
@@ -128,18 +130,18 @@ TypeScript \cite{typescript} je programovací jazyk s podporou pre statické typ
 
 Statické typovanie pomáha odhaľovať chyby už v skorých fázach vývoja, zlepšuje čitateľnosť aj udržateľnosť kódu a vývojárskym prostrediam umožňuje integráciu bohatšej funkcionality, ako napríklad pokročilejšie automatické dopĺňanie na základe kontextu alebo vyhľadávanie definícií. Svojimi prínosmi teda dokáže priamo aj nepriamo uľahčiť a spríjemniť prácu samotného programátora.
 
-Jazyk poskytuje možnosť definovať rozhrania pomocou kľúčového slova \verb|interface|, ktoré upresňujú zamýšľaný tvar objektov. Kľúčové slovo \verb|type| zas umožňuje vytváranie typových aliasov, či už primitívnych alebo komplexných typov. Okrem samotných typov podporuje typovú inferenciu čo pomáha s prehľadnosťou programu, keďže často nie je potrebné tvar objektu definovať manuálne.
+Jazyk poskytuje možnosť definovať rozhrania pomocou kľúčového slova \verb|interface|, ktoré upresňujú zamýšľaný tvar objektov. Kľúčové slovo \verb|type| zas umožňuje vytváranie typových aliasov, či už primitívnych alebo komplexných typov. Okrem samotných typov podporuje typovú inferenciu, čo pomáha s prehľadnosťou programu, keďže často nie je potrebné tvar objektu definovať manuálne.
 
 \subsection{React Flow}
 React Flow \cite{reactflow} je populárna knižnica na tvorbu grafových editorov, ktorá je súčasťou väčšieho projektu xyflow \cite{xyflow}. Zatiaľ čo React Flow je určený pre React, xyflow ponúka plnú kompatibilitu aj s niektorými inými podobnými knižnicami. Jej veľkou výhodou je široká škála možností prispôsobenia jednotlivých aspektov grafu, ako aj ich jednoduchá implementácia.
 
-Každý vrchol predstavujú jeho atribúty a príslušný React komponent. Atribúty musia byť minimálne tvorené pozíciou a unikátnym identifikátorom. Ďalej však môžeme pridávať vlastné atribúty, ako aj komponenty, ktoré sa dajú prispôsobiť špecifickým potrebám našej aplikácie. Na veľmi podobnom princípe sa dajú konfigurovať aj hrany grafu, tie sú tiež tvorené komponentami a spolu s vrcholmi tvoria základnú štruktúru každého grafu.
+Každý vrchol predstavujú jeho atribúty a príslušný React komponent. Atribúty musia byť minimálne tvorené pozíciou a unikátnym identifikátorom. Ďalej však môžeme pridávať vlastné atribúty, ako aj komponenty, ktoré sa dajú prispôsobiť špecifickým potrebám našej aplikácie. Na veľmi podobnom princípe sa dajú konfigurovať aj hrany grafu, tie sú tiež tvorené komponentmi a spolu s vrcholmi tvoria základnú štruktúru každého grafu.
 
-Knižnica tiež poskytuje niektorú rozšírenú funkcionalitu akou je napríklad centrovanie grafov, uloženie a obnovenie stavu grafu alebo
+Knižnica tiež poskytuje niektorú rozšírenú funkcionalitu, akou je napríklad centrovanie grafov, uloženie a obnovenie stavu grafu alebo
 konfigurovateľný panel s nástrojmi.
 
 \subsection{Redux}
-Redux \cite{redux} je knižnica na správu stavu JavaScriptových aplikácií, často používaná spolu s knižnicou React na zjednodušenie tvorby komplexných používateľských rozhraní. Stav aplikácie je reprezentovaný iba ako obyčajný objekt, ktorý predstavuje centrálne miesto pre ukladanie a čítanie dát, čím výrazne uľahčuje ich zdieľanie naprieč komponentami.
+Redux \cite{redux} je knižnica na správu stavu JavaScriptových aplikácií, často používaná spolu s knižnicou React na zjednodušenie tvorby komplexných používateľských rozhraní. Stav aplikácie je reprezentovaný iba ako obyčajný objekt, ktorý predstavuje centrálne miesto pre ukladanie a čítanie dát, čím výrazne uľahčuje ich zdieľanie naprieč komponentmi.
 
 Stav v Reduxe nie je možné meniť priamo. Namiesto toho sa zmeny vykonávajú pomocou akcií a reducerov. Akcie sú objekty popisujúce konkrétnu udalosť v aplikácii. V prípade potreby môžu obsahovať aj doplňujúce údaje (payload). Tieto akcie ďalej spracúvajú reducery. To sú funkcie, ktoré na základe aktuálneho stavu a prijatej akcie určia nový stav aplikácie. Pre ich správne fungovanie je dôležité dbať na to, aby reducer pre rovnaký stav a rovnakú akciu vždy vrátil rovnaký výsledok, nemali by sa preto používať napríklad na generovanie náhodných hodnôt. Aplikácia môže obsahovať viacero reducerov, čo umožňuje rozdeliť logiku na menšie, nezávislé časti.
 
