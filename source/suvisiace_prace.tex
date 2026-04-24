@@ -2,18 +2,18 @@
 
 \label{kap:suvisiace_prace} % id kapitoly pre prikaz ref
 
-V tejto kapitole sa podrobnejšie venujeme aplikáciám Prieskumník štruktúr a Prieskumník grafových štruktúr, ktoré sú pre túto prácu kľúčové. Postupne vysvetlíme, aký problém sa snažia vyriešiť, ako fungujú, a aké majú nedostatky. V závere kapitoly stručne popíšeme aplikáciu Logický pracovný zošit, do ktorej sú spomínané aplikácie integrované.
+V tejto kapitole sa podrobnejšie venujeme aplikáciám Prieskumník štruktúr a Prieskumník grafových štruktúr, ktoré sú pre túto prácu kľúčové. Postupne vysvetlíme, aké problémy sa snažia vyriešiť, ako fungujú a aké sú ich nedostatky. V závere kapitoly stručne predstavíme aplikáciu Logický pracovný zošit, do ktorej sú spomínané aplikácie integrované.
 
 \section{Prieskumník štruktúr}
 \label{sec:explorer}
 
-Prieskumník štruktúr je jednou z webových aplikácií používaných na predmete Logika pre informatikov. Jej primárnou úlohou je umožniť študentom interaktívne vytvárať vlastný jazyk a štruktúru logiky prvého rádu. V takto definovanej štruktúre je ďalej možná tvorba a analýza pravdivosti formúl s rýchlou spätnou väzbou.
+Prieskumník štruktúr je jednou z webových aplikácií používaných na predmete Logika pre informatikov. Jej primárnou úlohou je umožniť študentom interaktívne vytvárať vlastný jazyk a štruktúru logiky prvého rádu. V takto definovanej štruktúre je ďalej možná tvorba formúl a analýza ich pravdivosti s rýchlou spätnou väzbou.
 
-Pôvodná aplikácia vznikla v rámci viacerých bakalárskych prác. Konkrétne sa jedná o prácu Milana Cifru \cite{cifra2018}, ktorá sa zaoberá samotným vývojom prieskumníka štruktúr, prácu Richarda Tótha \cite{toth2021}, rozširujúcu prieskumník o Henkinovu-Hintikkovu hru a prácu Miroslava Baluchu \cite{baluch2020}, ktorá priniesla alternatívny grafový pohľad. Túto poslednú prácu ešte bližšie rozoberieme v nasledujúcej podkapitole \ref{sec:graph-explorer}.
+Pôvodná aplikácia vznikla v rámci viacerých bakalárskych prác. Konkrétne ide o prácu Milana Cifru \cite{cifra2018}, ktorá sa zaoberá samotným vývojom Prieskumníka štruktúr, prácu Richarda Tótha \cite{toth2021}, rozširujúcu prieskumník o Henkinovu-Hintikkovu hru a prácu Miroslava Baluchu \cite{baluch2020}, ktorá priniesla alternatívny grafový pohľad. Túto poslednú prácu ešte bližšie rozoberieme v nasledujúcej podkapitole \ref{sec:graph-explorer}.
 
-Implementácia aplikácia sa však časom stala neaktuálnou a nejednotnou, keďže bola výsledkom viacerých bakalárskych prác využívajúcich rôzne prístupy k použitým technológiám. To spôsobilo jej ťažkú udržateľnosť, ako aj náročnosť rozširovania o ďalšiu funkcionalitu.
+Implementácia aplikácie sa však časom stala neaktuálnou a nejednotnou, keďže bola výsledkom viacerých bakalárskych prác využívajúcich rôzne prístupy k použitým technológiám. To spôsobilo jej ťažkú udržateľnosť, ako aj náročnosť rozširovania o ďalšiu funkcionalitu.
 
-Cieľom bakalárskej práce Jozefa Filipa \cite{filip2025} bolo vytvorenie novej, jednotnej verzie pôvodnej aplikácie bez grafového pohľadu a s novým spôsobom využitia Henkinovej-Hintikkovej hry. Túto verziu možno vidieť na obrázku \ref{obr:old_se}.
+Cieľom bakalárskej práce Jozefa Filipa \cite{filip2025} bolo vytvoriť novú, jednotnú verziu pôvodnej aplikácie bez grafového pohľadu a s novým spôsobom využitia Henkinovej-Hintikkovej hry. Túto verziu možno vidieť na obrázku \ref{obr:old_se}.
 
 \begin{figure}
     \centerline{\includegraphics[width=1\textwidth]{images/old_se3cr.png}}
@@ -32,19 +32,19 @@ Cieľom bakalárskej práce Jozefa Filipa \cite{filip2025} bolo vytvorenie novej
 \end{figure}
 
 
-V ľavej hornej časti obrázka sa nachádzajú textové vstupy na definovanie mimologický symbolov. V prípade predikátových a funkčných symbolov sa definuje aj ich arita vo formáte \textit{symbol/arita}. Pod definíciou jazyka logiky prvého rádu sa definuje samotná štruktúra, to vyžaduje zadanie domény a určenie interpretácie jednotlivých mimologických symbolov. Aplikácia poskytuje iba jeden, tzv. množinový pohľad na interpretáciu predikátových a funkčných symbolov, ktorý je opäť realizovaný pomocou textového vstupu.
+V ľavej hornej časti obrázka sa nachádzajú textové vstupy na definovanie mimologických symbolov. V prípade predikátových a funkčných symbolov sa definuje aj ich arita vo formáte \textit{symbol/arita}. Pod definíciou jazyka logiky prvého rádu sa definuje samotná štruktúra, čo vyžaduje zadanie domény a určenie interpretácie jednotlivých mimologických symbolov. Aplikácia poskytuje iba jeden, tzv. množinový pohľad na interpretáciu predikátových a funkčných symbolov, ktorý je opäť realizovaný pomocou textového vstupu.
 
-V pravej časti aplikácie používateľ definuje formuly. Po vytvorení validného jazyka a štruktúry môže skúmať pravdivosť týchto formúl v danej štruktúre. Najprv však musí sám odhadnúť a zvoliť, či je formula pravdivá alebo nie. Svoj odhad si následne overí prostredníctvom Henkinovej-Hintikkovej hry. Tá funguje na princípe dialógu, v ktorom používateľ postupne dostáva otázky o pravdivosti čoraz menších podformúl pôvodnej formuly. Keď je už podformula dostatočne jednoduchá, hra používateľovi odhalí správnosť jeho predpokladu spolu s vysvetlením, prečo bol alebo nebol správny. Príklad dialógu je zobrazený na obrázku \ref{obr:hh_game}.
+V pravej časti aplikácie používateľ definuje formuly. Po vytvorení validného jazyka a štruktúry môže skúmať pravdivosť týchto formúl v danej štruktúre. Najprv však musí sám odhadnúť a zvoliť, či je formula pravdivá, alebo nie. Svoj odhad si následne overí prostredníctvom Henkinovej-Hintikkovej hry. Tá funguje na princípe dialógu, v ktorom používateľ postupne dostáva otázky o pravdivosti čoraz menších podformúl pôvodnej formuly. Keď je už podformula dostatočne jednoduchá, hra používateľovi odhalí správnosť jeho predpokladu spolu s vysvetlením, prečo bol alebo nebol správny. Príklad dialógu je zobrazený na obrázku \ref{obr:hh_game}.
 
-Asi najväčším problémom novej aplikácie v porovnaní s predošlou je nedostatok spôsobov vizualizácie a vytvárania interpretácií predikátových a funkčných symbolov. Množinová, resp. textová reprezentácia sa už pri pomerne malých interpretáciách stáva neprehľadnou a ťažko editovateľnou, keďže vyžaduje dodržiavanie správnej syntaxe pri zápise. Predošlá verzia riešila tento problém pridaním dvoch ďalších alternatívnych pohľadov. Konkrétne ide o tzv. maticový a databázový pohľad, v ktorých bolo možné pomocou zaškrtávania alebo výberu zo zoznamu určiť, ktoré prvky sa majú v interpretácií vyskytnúť.
+Asi najväčším problémom novej aplikácie v porovnaní s predošlou je nedostatok spôsobov vizualizácie a tvorby interpretácií predikátových a funkčných symbolov. Množinová, resp. textová reprezentácia sa už pri pomerne malých interpretáciách stáva neprehľadnou a ťažko editovateľnou, keďže vyžaduje dodržiavanie správnej syntaxe pri zápise. Predošlá verzia tento problém čiastočne riešila pridaním dvoch ďalších alternatívnych pohľadov. Konkrétne išlo o tzv. maticový a databázový pohľad, v ktorých bolo možné pomocou zaškrtávania alebo výberu zo zoznamu určiť, ktoré prvky sa majú v interpretácii vyskytnúť.
 
 
 \section{Prieskumník grafových štruktúr}
 \label{sec:graph-explorer}
 
-Úlohou bakalárskej práce Miroslava Baluchu \cite{baluch2020} bolo rozšíriť aplikáciu Prieskumník štruktúr o nový pohľad na štruktúry logiky prvého rádu vo forme grafového editora. V jednom grafe sa mu podarilo pomocou rôznych typov vrcholov znázorniť konštanty, prvky domény a za pomoci hrán aj vzťahy medzi nimi. Príklad konkrétnej štruktúry je možné vidieť na obrázku \ref{obr:old_graph}.
+Úlohou bakalárskej práce Miroslava Baluchu \cite{baluch2020} bolo rozšíriť aplikáciu Prieskumník štruktúr o nový pohľad na štruktúry logiky prvého rádu vo forme grafového editora. V jednom grafe sa mu podarilo pomocou rôznych typov vrcholov znázorniť konštanty, prvky domény a pomocou hrán aj vzťahy medzi nimi. Príklad konkrétnej štruktúry je možné vidieť na obrázku \ref{obr:old_graph}.
 
-S grafom možno interagovať v dvoch režimoch. Prvým je pohybový režim, ktorý dovoľuje iba mazanie a zmenu pozície jednotlivých objektov. V druhom, editovacom režime sú už sprístupnené funkcie ako vytváranie predikátových a funkčných symbolov, tvorba nových vzťahov alebo premenovávanie prvkov domény. Tlačidlá, pomocou ktorých sa medzi režimami prepína, sú viditeľné v ľavej hornej časti obrázka. Pod týmito tlačidlami sú umiestnené jednotlivé typy vrcholov. Ich potiahnutím do priestoru grafu sa vytvorí nová inštancia príslušného typu. Zelené vrcholy reprezentujú prvky domény a sivé zas konštanty. Žlté vrcholy pomáhajú pri tvorbe ternárnych a kvaternárnych vzťahov.
+S grafom možno interagovať v dvoch režimoch. Prvým je pohybový režim, ktorý umožňuje iba mazanie a zmenu pozície jednotlivých objektov. V druhom, editovacom režime sú už sprístupnené funkcie ako vytváranie predikátových a funkčných symbolov, tvorba nových vzťahov alebo premenovávanie prvkov domény. Tlačidlá, pomocou ktorých sa medzi režimami prepína, sú viditeľné v ľavej hornej časti obrázka. Pod týmito tlačidlami sú umiestnené jednotlivé typy vrcholov. Ich potiahnutím do priestoru grafu sa vytvorí nová inštancia príslušného typu. Zelené vrcholy reprezentujú prvky domény a sivé konštanty. Žlté vrcholy pomáhajú pri tvorbe ternárnych a kvaternárnych vzťahov.
 
 \begin{figure}
     \centerline{\includegraphics[width=1\textwidth]{images/old_graph.png}}
@@ -54,7 +54,7 @@ S grafom možno interagovať v dvoch režimoch. Prvým je pohybový režim, ktor
     \label{obr:old_graph}
 \end{figure}
 
-Binárny vzťah medzi prvkami domény je znázornený pomocou hrany spolu s jej popisom (viď obrázok \ref{obr:old_edge}). Do popisu možno pridávať alebo odoberať predikátové a funkčné symboly, ktoré majú obsahovať tento vzťah vo svojej interpretácii. Pomocou šípky pri názve predikátu sa určuje smer vzťahu. Pri ternárnych a kvaternárnych vzťahoch je nutné najprv spojiť všetky prvky domény s vhodným vrcholom, pri ktorom sa následne dá meniť popis už spomínaným spôsobom.
+Binárny vzťah medzi prvkami domény je znázornený pomocou hrany spolu s jej popisom (viď obrázok \ref{obr:old_edge}). Do popisu možno pridávať alebo odoberať predikátové a funkčné symboly, ktoré majú tento vzťah obsahovať vo svojej interpretácii. Pomocou šípky pri názve predikátu sa určuje smer vzťahu. Pri ternárnych a kvaternárnych vzťahoch je nutné najprv spojiť všetky prvky domény s príslušným vrcholom, pri ktorom sa následne dá meniť popis už spomínaným spôsobom.
 %Príslušnosť prvku domény do interpretácie unárneho predikátu sa zapisuje priamo do vrcholov domény. 
 
 \begin{figure}
@@ -65,7 +65,7 @@ Binárny vzťah medzi prvkami domény je znázornený pomocou hrany spolu s jej 
     \label{obr:old_edge}
 \end{figure}
 
-Ako sa však časom ukázalo, implementácia mala niekoľko fundamentálnych problémov. Hlavným z nich bola snaha nahradiť takmer celú funkcionalitu prieskumníka štruktúr, čo na viacerých miestach viedlo ku kompromisom znižujúcich prehľadnosť aj intuitívnosť rozhrania. Azda najväčším vinníkom zlej prehľadnosti, resp. čitateľnosti, je spôsob zobrazovania binárnych vzťahov. Tých sa v štruktúrach používaných na predmete vyskytuje pomerne veľa, čo v kombinácií s ich rozsiahlou vizualizáciou vedie k prekrývaniu ostatných prvkov a výraznému zníženiu schopnosti orientácie sa v zobrazení.
+Ako sa však časom ukázalo, implementácia mala niekoľko zásadných problémov. Hlavným z nich bola snaha nahradiť takmer celú funkcionalitu Prieskumníka štruktúr, čo na viacerých miestach viedlo ku kompromisom znižujúcim prehľadnosť aj intuitívnosť rozhrania. Azda najväčším vinníkom zlej prehľadnosti, resp. čitateľnosti, je spôsob zobrazovania binárnych vzťahov. Tých sa v štruktúrach používaných na predmete vyskytuje pomerne veľa, čo v kombinácii s ich rozsiahlou vizualizáciou vedie k prekrývaniu ostatných prvkov a výraznému zníženiu schopnosti orientácie sa v zobrazení.
 
 Návrh niektorých ovládacích prvkov tiež pôsobil vo výsledku ťažkopádne, ako napríklad oddelenie editovania a presúvania do dvoch samostatných režimov. Ďalším problémom je nedostatok zaujímavých a unikátnych funkcií v porovnaní s textovými vstupmi, ktoré by ho spravili pre študentov atraktívnejším. Spomínané nedostatky sa prejavili aj na jeho nízkej popularite na predmete, kde sa prakticky vôbec nevyužíval.
 
