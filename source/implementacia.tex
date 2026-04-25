@@ -171,6 +171,23 @@ Niektoré z nich spôsobovali výrazné spomalenie a zhoršenie responzívnosti 
 
 Keďže hra implementuje väčšinu svojej logiky v selektoroch, zmeny zahŕňali najmä ich sprehľadnenie, odstránenie zbytočných častí, ako aj úpravu komponentov, ktoré ich využívajú. Ukázalo sa tiež, že selektory zodpovedné za správne resetovanie hry pri zmene štruktúry nepočítali so všetkými možnými situáciami, v ktorých sa hra môže nachádzať, a bolo potrebné tieto prípady vhodne ošetriť. Dokopy moje úpravy priniesli pri zložitejších formulách až desaťnásobné zlepšenie výkonu, čo je pre používateľa značne citeľné.
 
-Po spomínaných zmenách sa nám pomerne jednoducho podarilo implementovať aj samotné znáhodnenie, ktoré sme sa následne rozhodli doplniť ďalšími vylepšeniami. Jedným z nich bolo zjednotenie spôsobu výpisu matematických výrazov v dialógu hry. Pôvodná verzia kombinovala používanie Unicode znakov s prehľadnejším zápisom pomocou KaTeX-u, pričom tieto zápisy boli generované naprieč viacerými zdrojovými súbormi. Všetka logika generovania zápisov bola preto presunutá do súboru \texttt{messageBubbleFactories.ts}, ktorý obsahuje funkcie na generovanie rôznych typov výrazov výhradne vo formáte KaTeX, využívaných jednotlivými komponentmi hry. Okrem toho bolo pridaných viacero menších vylepšení používateľského rozhrania, ako aj samotného dialógu hry. Porovnanie rozhrania novej verzie s predchádzajúcou možno vidieť na obrázku (ref).
+Po spomínaných zmenách sa nám pomerne jednoducho podarilo implementovať aj samotné znáhodnenie, ktoré sme sa následne rozhodli doplniť ďalšími vylepšeniami. Jedným z nich bolo zjednotenie spôsobu výpisu matematických výrazov v dialógu hry. Pôvodná verzia kombinovala používanie Unicode znakov s prehľadnejším zápisom pomocou KaTeX-u, pričom tieto zápisy boli generované naprieč viacerými zdrojovými súbormi. Všetka logika generovania zápisov bola preto presunutá do súboru \texttt{messageBubbleFactories.ts}, ktorý obsahuje funkcie na generovanie rôznych typov výrazov výhradne vo formáte KaTeX, využívaných jednotlivými komponentmi hry. Okrem toho bolo pridaných viacero menších vylepšení používateľského rozhrania, ako aj samotného dialógu hry. Porovnanie rozhrania novej verzie s predchádzajúcou na krátkej časti hry možno vidieť na obrázku \ref{obr:hasse_compare}.
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hasse-new.png}
+        \caption{Nová verzia}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.9\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{images/hasse-old.png}
+        \caption{Pôvodná verzia}
+    \end{subfigure}
+    \caption{Porovnanie nového a pôvodného rozhrania Henkinovej-Hintikkovej hry.}
+    \label{obr:hasse_compare}
+\end{figure}
 
 %To sťažovalo ich prípadnú zmenu, keďže by vyžadovala úpravy daného výrazu naprieč viacerými súbormi.
