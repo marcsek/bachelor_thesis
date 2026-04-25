@@ -124,14 +124,14 @@ Toto riešenie nám však nevyhovovalo, a preto sme sa rozhodli na ňom ešte za
 Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru orientovaného grafu. Príslušnosť vrcholov do skupiny je naznačená pomocou dvoch kontajnerov s rozdielnou farbou a názvom danej skupiny. Pre jednoduchosť sme sa tiež rozhodli odstrániť tlačidlá na pridávanie ďalších prvkov do skupiny. V dôsledku toho obe časti vždy obsahujú rovnakú podmnožinu domény, ovládanú iba pomocou filtrov. Týmito úpravami sa nám podarilo dosiahnuť konzistentnejšie správanie naprieč grafovými editormi. Všetky ostatné funkcie sme ponechali.
 
 \begin{figure}[H]
-    \centerline{\includegraphics[width=0.7\textwidth]{images/bipartite_1.png}}
+    \centerline{\includegraphics[width=0.7\textwidth]{images/bipartite_1_v2.png}}
     %popis obrazku
     \caption[Prvý návrh vizuálu pre bipartitný graf.]{Prvý návrh vizuálu pre bipartitný graf.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:bipartite_navrh_1}
 \end{figure}
 \begin{figure}[H]
-    \centerline{\includegraphics[width=0.85\textwidth]{images/bipartite_2.png}}
+    \centerline{\includegraphics[width=0.7\textwidth]{images/bipartite_2_v2.png}}
     %popis obrazku
     \caption[Druhý návrh vizuálu pre bipartitný graf.]{Druhý návrh vizuálu pre bipartitný graf.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -146,10 +146,10 @@ Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru or
 
 Spôsob fungovania vrcholov a hrán grafu zostal v zásade nezmenený. Pri tejto reprezentácii sme sa však zamerali najmä na overovanie, či interpretácia binárneho predikátu skutočne tvorí čiastočné usporiadanie, čo je nevyhnutný predpoklad pre zmysluplnosť tejto reprezentácie.
 
-Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali zachované všetky podmienky čiastočného usporiadania. Ak by tomu tak nebolo, používateľ je už počas vytvárania hrany upozornený varovnou správou spolu s vysvetlením, akú vlastnosť by ňou porušil. Príklad takejto správy možno vidieť na obrázku \ref{obr:hasse_error}.
+Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali zachované všetky podmienky čiastočného usporiadania. Ak by tomu tak nebolo, používateľ je už počas vytvárania hrany upozornený varovnou správou v spodnej časti rozhrania grafu s vysvetlením, akú vlastnosť by tým porušil. Príklad takejto správy možno vidieť na obrázku \ref{obr:hasse_error}.
 
 \begin{figure}[h]
-    \centerline{\includegraphics[width=0.6\textwidth]{images/hasse_error.png}}
+    \centerline{\includegraphics[width=0.60\textwidth]{images/hasse_error_v2.png}}
     %popis obrazku
     \caption[Príklad varovnej správy Hasseho diagramu.]{Príklad varovnej správy Hasseho diagramu.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -159,7 +159,7 @@ Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali z
 Ďalšou požiadavkou bolo automatické generovanie vertikálnej hierarchie vrcholov, typickej pre túto reprezentáciu. Rozhodli sme sa však, že nebudeme používateľa akokoľvek obmedzovať za účelom dodržiavania tejto hierarchie, ako tomu bolo v bipartitnom grafe, ale poskytneme mu dobrý základ rozmiestnenia vrcholov, ktorý si môže ďalej prispôsobiť podľa vlastných predstáv. Samotné generovanie preto prebieha iba pri prvom otvorení grafu alebo na vyžiadanie používateľa stlačením tlačidla na paneli nástrojov.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.75\textwidth]{images/hasse.png}}
+    \centerline{\includegraphics[width=0.85\textwidth]{images/hasse.png}}
     %popis obrazku
     \caption[Návrh vizuálu pre Hasseho diagram.]{Návrh vizuálu pre Hasseho diagram.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -194,7 +194,7 @@ Databázový editor je špecifický aj tým, že sa dá ľahko prispôsobiť ľu
     \label{obr:matrix}
 \end{figure}
 \begin{figure}[h]
-    \centerline{\includegraphics[width=1\textwidth]{images/databazovy.png}}
+    \centerline{\includegraphics[width=1\textwidth]{images/database.png}}
     %popis obrazku
     \caption[Návrh rozhrania pre databázový editor.]{Návrh rozhrania pre databázový editor.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
