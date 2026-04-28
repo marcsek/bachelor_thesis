@@ -58,7 +58,7 @@ Orientovaný graf $G$ je daný neprázdnou konečnou množinou vrcholov $V$ a mn
 V diagramoch sú vrcholy väčšinou znázornené ako kruhy, prípadne spolu s ich príslušným označením. Hrany sú zas vyobrazené pomocou šípok, ktorých smer určuje poradie vrcholov hrany (šípka vždy ukazuje na druhý vrchol v poradí). Majú mnohoraké využitie pri modelovaní vzťahov, ktoré vyžadujú zachovať nejaký smer, postupnosť úkonov alebo vyjadriť určitú hierarchiu. Príklad bežného diagramu jednoduchého orientovaného grafu možno vidieť na obrázku \ref{obr:dir_demo}, kde $V = \{1, 2, 3, 4\}$ a $E = \left\{(1, 2), (2, 3), (3, 1), (2, 4), (4, 2)\right\}$.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.4\textwidth]{images/directed_demo_b.png}}
+    \centerline{\includegraphics[width=0.4\textwidth]{images/directed-demo.png}}
     %popis obrazku
     \caption[Príklad vyobrazenia orientovaného grafu.]{Príklad vyobrazenia orientovaného grafu.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -88,7 +88,7 @@ Hasseho diagram slúži na prehľadnejšiu grafickú reprezentáciu čiastočný
 Na obrázku \ref{obr:hasse_demo} možno vidieť príklad Hasseho diagramu pre čiastočné usporiadanie $(A, \mathcal{R})$, kde $A = \{2, 4, 5, 10, 20, 25\}$ a $x \, \mathcal{R} \, y$, ak $x$ delí $y$ bezozvyšku. Dobré je podotknúť, že aj prvky $2$ a $5$ sú v relácii s prvkom $20$, no hrany vyjadrujúce tento vzťah, ako bolo vyššie spomínané, nemusíme do diagramu explicitne zakresľovať.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.4\textwidth]{images/hasse_demo.png}}
+    \centerline{\includegraphics[width=0.4\textwidth]{images/hasse-demo.png}}
     %popis obrazku
     \caption[Príklad vyobrazenia Hasseho diagramu.]{Príklad vyobrazenia Hasseho diagramu.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -102,7 +102,7 @@ Bipartitný graf je taký graf $G$, ktorého vrcholy možno rozdeliť do dvoch d
 $U \cap V = \emptyset$ a zároveň každá hrana spája jeden vrchol z $U$ s ďalším vrcholom z $V$. Vedia byť nápomocné pri hľadaní a skúmaní vzťahov (relácií a zobrazení) medzi entitami dvoch rôznych tried, ako napríklad medzi študentmi a učiteľmi, autormi a publikáciami alebo receptami a ingredienciami. Pri menšom množstve dát a vhodnom rozložení vrcholov umožňujú prehľadnú vizualizáciu prítomných vzťahov. Ukážku diagramu konkrétneho bipartitného grafu pre zobrazenie $f: \{1, 2, 3\} \rightarrow \{4, 5\}$, kde $f(1) = 4, f(2) = 5$ a $f(3) = 5$, so znázorneným rozdelením prvkov do množín $U$ a $V$ (v tomto prípade si možno predstaviť definičný obor a obor hodnôt zobrazenia) je vidieť na obrázku \ref{obr:bipartite_demo}.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.5\textwidth]{images/bipartite_demo.png}}
+    \centerline{\includegraphics[width=0.5\textwidth]{images/bipartite-demo.png}}
     %popis obrazku
     \caption[Príklad vyobrazenia bipartitného grafu.]{Príklad vyobrazenia bipartitného grafu.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat

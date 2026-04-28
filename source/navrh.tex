@@ -39,7 +39,7 @@ Oproti množinovému pohľadu navyše pribudnú vylepšenia zamerané na prehľa
 Na obrázku \ref{obr:rozhranie} možno vidieť návrh rozhrania, do ktorého sú jednotlivé editory vkladané. Jeho cieľom je poskytnúť konzistentné rozhranie spoločných ovládacích prvkov naprieč všetkými druhmi editorov. Dokopy sa skladá z nasledujúcich komponentov:
 
 \begin{figure}
-    \centerline{\includegraphics[width=1\textwidth]{images/editor_rozhranie.png}}
+    \centerline{\includegraphics[width=1\textwidth]{images/editor-interface.png}}
     %popis obrazku
     \caption[Návrh spoločného rozhrania editorov.]{Návrh spoločného rozhrania editorov.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -96,7 +96,7 @@ Posledné dva vrcholy na obrázku \ref{obr:vrch_navrh_1} sa aktivujú iba v prí
 Ďalej sme sa rozhodli pomocou vrcholov vyjadriť aj určité chybové stavy. Tie môžu nastať v dvoch prípadoch. Jedným z nich je situácia, keď interpretácia obsahuje prvok, ktorý nepatrí do domény. Vrchol reprezentujúci takýto prvok je zobrazený v pravej časti obrázka \ref{obr:error_vrch}. Okrem vizuálnej informácie v podobe červeného orámovania a nápisu poskytuje aj možnosť chybný prvok odstrániť kliknutím na tlačidlo koša, čím sa interpretácia opraví. Druhý prípad nastáva pri interpretáciách funkčných symbolov. Vtedy je vrcholom v ľavej časti obrázka označený prvok, ktorý nemá priradenú hodnotu alebo ich má priradených viac.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.5\textwidth]{images/error_nodes.png}}
+    \centerline{\includegraphics[width=0.5\textwidth]{images/error-nodes.png}}
     %popis obrazku
     \caption[Návrh vizuálu chybových vrcholov.]{Návrh vizuálu chybových vrcholov.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -125,14 +125,14 @@ Uvedené riešenie nám však nevyhovovalo, a preto sme sa rozhodli na ňom ešt
 Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru orientovaného grafu. Príslušnosť vrcholov do skupiny je naznačená pomocou dvoch kontajnerov s rozdielnou farbou a názvom danej skupiny. Pre jednoduchosť sme sa tiež rozhodli odstrániť tlačidlá na pridávanie ďalších prvkov do skupiny. V dôsledku toho obe časti vždy obsahujú rovnakú podmnožinu domény, ovládanú iba pomocou filtrov. Týmito úpravami sa nám podarilo dosiahnuť konzistentnejšie správanie naprieč grafovými editormi. Všetky ostatné funkcie sme ponechali.
 
 \begin{figure}[H]
-    \centerline{\includegraphics[width=0.7\textwidth]{images/bipartite_1_v2.png}}
+    \centerline{\includegraphics[width=0.7\textwidth]{\imgdir/bipartite-v1.png}}
     %popis obrazku
     \caption[Prvý návrh vizuálu pre bipartitný graf.]{Prvý návrh vizuálu pre bipartitný graf.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:bipartite_navrh_1}
 \end{figure}
 \begin{figure}[H]
-    \centerline{\includegraphics[width=0.7\textwidth]{images/bipartite_2_v2.png}}
+    \centerline{\includegraphics[width=0.7\textwidth]{\imgdir/bipartite-v2.png}}
     %popis obrazku
     \caption[Druhý návrh vizuálu pre bipartitný graf.]{Druhý návrh vizuálu pre bipartitný graf.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -150,7 +150,7 @@ Spôsob fungovania vrcholov a hrán grafu zostal v zásade nezmenený. Pri tejto
 Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali zachované všetky podmienky čiastočného usporiadania. Ak by tomu tak nebolo, používateľ je už počas vytvárania hrany upozornený varovnou správou v spodnej časti rozhrania grafu s vysvetlením, akú vlastnosť by tým porušil. Príklad takejto správy možno vidieť na obrázku \ref{obr:hasse_error}.
 
 \begin{figure}[h]
-    \centerline{\includegraphics[width=0.60\textwidth]{images/hasse_error_v2.png}}
+    \centerline{\includegraphics[width=0.60\textwidth]{images/hasse-error.png}}
     %popis obrazku
     \caption[Príklad varovnej správy Hasseho diagramu.]{Príklad varovnej správy Hasseho diagramu.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -224,7 +224,7 @@ Keďže editor by mal fungovať pre ľubovoľný počet argumentov, bolo v prvom
 Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla.
 
 \begin{figure}[h]
-    \centerline{\includegraphics[width=0.5\textwidth]{images/case_tree.png}}
+    \centerline{\includegraphics[width=0.5\textwidth]{images/case-tree.png}}
     %popis obrazku
     \caption[Všeobecný strom pre Editor interpretácií funkcií rozborom prípadov.]{Všeobecný strom pre Editor interpretácií funkcií rozborom prípadov.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -314,7 +314,7 @@ Rozhodli sme sa preto zaviesť novú časť stavu dedikovanú ukladaniu obsahu v
 V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vhodnou štruktúrovanou formou. Napríklad v prípade interpretácií predikátov ide o zoznam jednotlivých $n$-tíc prvkov domény, kde $n$ je jeho arita.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.6\textwidth]{images/graph_diagram2.png}}
+    \centerline{\includegraphics[width=0.6\textwidth]{images/graph-diagram.png}}
     %popis obrazku
     \caption[Triedny diagram pre graf.]{Triedny diagram pre grafové editory.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -333,7 +333,7 @@ Rovnako ako pri grafových editoroch je záznam o ich stave jednoznačne identif
 Stav tejto reprezentácie je veľmi podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Návrh dátového modelu editora možno vidieť na obrázku \ref{obr:tree_diagram}. Každý funkčný symbol zodpovedá jednému \texttt{TreeEntry} záznamu, ktorý je jednoznačne identifikovaný podľa názvu symbolu. Takýto záznam obsahuje stav editora (\texttt{TreeState}), v ktorom sú uložené jednotlivé uzly (\texttt{TreeNode}) spolu s identifikátor koreňového uzla. Každý uzol je zas tvorený zoznamom z neho vychádzajúcich hrán (\texttt{TreeEdge}). Abstraktný typ \texttt{TreeEdge} špecializujú dva typy hrán. Jednou z nich je referenčná hrana (\texttt{ReferenceEdge}), ktorá si uchováva identifikátor koncového uzla, teda ďalšej inštancie \texttt{TreeNode}. Druhou je hodnotová hrana (\texttt{ValueEdge}), tá priamo ukladá samotnú hodnotu.
 
 \begin{figure}[h]
-    \centerline{\includegraphics[width=0.7\textwidth]{images/tree_diagram.png}}
+    \centerline{\includegraphics[width=0.7\textwidth]{images/tree-diagram.png}}
     %popis obrazku
     \caption[Triedny diagram pre editor interpretácií funkcií.]{Triedny diagram pre editor interpretácií funkcií.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
