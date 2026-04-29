@@ -5,7 +5,7 @@ V tejto kapitole sa zameriame na vybrané časti implementácie. Tie majú pribl
 \section{Použité technológie}
 Nová verzia pôvodnej aplikácie je plne implementovaná v jazyku TypeScript. Používateľské rozhranie je vytvorené pomocou knižnice React a na správu globálneho stavu sa používa knižnica Redux (všetky sú opísané v podkapitole \ref{sec:technologie}). Prirodzene sme sa teda rozhodli pokračovať v používaní týchto technológií aj pri tvorbe našich rozšírení. TypeScript sa ukázal ako veľmi nápomocný aj počas oboznamovania sa s existujúcou implementáciou, keďže vďaka definovaným typom bolo výrazne jednoduchšie porozumieť očakávaným tvarom objektov alebo argumentov funkcií.
 
-Tiež bolo potrebné vybrať knižnicu, pomocou ktorej budú implementované grafové editory. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu React Flow. Na základe môjho prieskumu išlo o jedinú knižnicu, ktorá podporovala už spomenuté technológie a zároveň poskytovala dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít. Veľkou výhodou bola aj kvalitná dokumentácia doplnená sadou interaktívnych príkladov, ktoré výrazne uľahčovali objavovanie všetkých dostupných možností.
+Tiež bolo potrebné vybrať nástroj na implementáciu grafových editorov. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu React Flow. Na základe môjho prieskumu išlo o jediné riešenie, ktoré podporovalo už spomenuté technológie a zároveň poskytovalo dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít. Veľkou výhodou bola aj kvalitná dokumentácia doplnená sadou interaktívnych príkladov, ktoré výrazne uľahčovali oboznámenie sa s dostupnými možnosťami.
 
 \section{Integrácia nových nástrojov}
 V tejto podkapitole priblížime spôsob, akým sme predstavené nástroje zakomponovali do už existujúcej aplikácie.
@@ -177,14 +177,14 @@ Po spomínaných zmenách sa nám pomerne jednoducho podarilo implementovať aj 
     \centering
     \begin{subfigure}{0.9\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{images-optimized/hasse-new.jpg}
-        \caption{Nová verzia}
+        \includegraphics[width=\linewidth]{\imgdir/hasse-old.jpg}
+        \caption{Pôvodná verzia}
     \end{subfigure}
     \hfill
     \begin{subfigure}{0.9\textwidth}
         \centering
-        \includegraphics[width=\linewidth]{\imgdir/hasse-old.jpg}
-        \caption{Pôvodná verzia}
+        \includegraphics[width=\linewidth]{images-optimized/hasse-new.jpg}
+        \caption{Nová verzia}
     \end{subfigure}
     \caption{Porovnanie nového a pôvodného rozhrania Henkinovej-Hintikkovej hry.}
     \label{obr:hasse_compare}
