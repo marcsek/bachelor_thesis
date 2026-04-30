@@ -1,5 +1,5 @@
 \chapter{Návrh}
-V tejto kapitole najprv zadefinujeme požiadavky kladené na výslednú aplikáciu. Následne predstavíme návrh jednotlivých riešení spolu s priblížením postupu, ktorým sme k ním dospeli. V závere sa zameriame na návrh stavu nových častí aplikácie a jeho zakomponovanie do už existujúceho riešenia.
+V tejto kapitole najprv zadefinujeme požiadavky kladené na výslednú aplikáciu. Následne predstavíme návrh jednotlivých riešení spolu s vysvetlením, ako sme k ním dospeli. V závere sa zameriame na návrh stavu nových častí aplikácie a jeho zakomponovanie do už existujúceho riešenia.
 
 %V tejto kapitole najprv zadefinujeme požiadavky, ktoré od výslednej aplikácie očakávame. Následne sa pozrieme na návrh jednotlivých grafových ale aj iných editor a vylepšení. V závere priblížime, ako sme všetky navrhnuté riešenia zakomponovali do už existujúceho stavu aplikácie.
 
@@ -305,7 +305,7 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 V tejto podkapitole sú predstavené návrhy stavov nových častí aplikácie. Všetky opísané riešenia sú integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Tam, kde je to vhodné, sú návrhy navyše doplnené aj diagramom znázorňujúcim ich dátový model.
 
 \subsection*{Textový pohľad}
-V pôvodnej implementácii je stav organizovaný do viacerých logických celkov zodpovedajúcich jednotlivým častiam aplikácie, spomedzi nich sú pre nás dôležité najmä \textit{language} a \textit{structure}. Oba uchovávajú väčšinu svojich dát výhradne v textovej podobe. Teda napríklad pri štruktúre je interpretácia konkrétneho predikátu reprezentovaná ako text, ktorý používateľ zadal do príslušného textového vstupu.
+V pôvodnej implementácii je stav organizovaný do viacerých logických celkov zodpovedajúcich jednotlivým častiam aplikácie, spomedzi nich sú pre nás dôležité najmä \textit{language} a \textit{structure} (predstavujúce jazyk a štruktúru). Oba uchovávajú väčšinu svojich dát výhradne v textovej podobe. Teda napríklad pri štruktúre je interpretácia konkrétneho predikátu reprezentovaná ako text, ktorý používateľ zadal do príslušného textového vstupu.
 
 Tento spôsob reprezentácie by bol však pri implementácii našich rozšírení veľmi nepraktický a neefektívny, keďže by si vyžadoval neustále premieňanie medzi textovou a štruktúrovanou formou interpretácie používanou v jednotlivých editoroch. Na druhej strane, pre správne fungovanie textových vstupov je potrebné, aby bol aj naďalej ukladaný ich presný obsah, keďže používateľ môže zadať aj syntakticky nesprávne vstupy, ktoré sa nedajú priamo previesť do štruktúrovanej formy.
 

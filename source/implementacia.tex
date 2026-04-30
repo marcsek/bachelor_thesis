@@ -2,7 +2,7 @@
 \label{kap:implementation}
 V tejto kapitole sa zameriame na vybrané časti implementácie. Tie majú priblížiť hlavné problémy riešené počas vývoja a zároveň vysvetliť zvolené prístupy a ich realizáciu pomocou použitých technológií. Cieľom je taktiež poskytnúť základný prehľad implementácie, ktorý uľahčí orientáciu v systéme pri jeho prípadnom budúcom rozšírení.
 
-\section{Použité technológie}
+\section{Výber technológií}
 Nová verzia pôvodnej aplikácie je plne implementovaná v jazyku TypeScript. Používateľské rozhranie je vytvorené pomocou knižnice React a na správu globálneho stavu sa používa knižnica Redux (všetky sú opísané v podkapitole \ref{sec:technologie}). Prirodzene sme sa teda rozhodli pokračovať v používaní týchto technológií aj pri tvorbe našich rozšírení. TypeScript sa ukázal ako veľmi nápomocný aj počas oboznamovania sa s existujúcou implementáciou, keďže vďaka definovaným typom bolo výrazne jednoduchšie porozumieť očakávaným tvarom objektov alebo argumentov funkcií.
 
 Tiež bolo potrebné vybrať nástroj na implementáciu grafových editorov. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu React Flow. Na základe môjho prieskumu išlo o jediné riešenie, ktoré podporovalo už spomenuté technológie a zároveň poskytovalo dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít. Veľkou výhodou bola aj kvalitná dokumentácia doplnená sadou interaktívnych príkladov, ktoré výrazne uľahčovali oboznámenie sa s dostupnými možnosťami.
@@ -186,7 +186,7 @@ Po spomínaných zmenách sa nám pomerne jednoducho podarilo implementovať aj 
         \includegraphics[width=\linewidth]{images-optimized/hasse-new.jpg}
         \caption{Nová verzia}
     \end{subfigure}
-    \caption{Porovnanie nového a pôvodného rozhrania Henkinovej-Hintikkovej hry.}
+    \caption{Porovnanie pôvodného a nového rozhrania Henkinovej-Hintikkovej hry.}
     \label{obr:hasse_compare}
 \end{figure}
 
