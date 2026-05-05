@@ -1,3 +1,43 @@
-\chapter{Testovanie}
+\chapter{Testovanie (WIP)}
 \label{kap:testovanie}
-TODO
+Študenti mali možnosť využívať niektoré funkcionality už od začiatku výučby. Išlo najmä o grafové editory, maticový editor a databázový editor, ktoré boli v tom čase už z veľkej časti dokončené. Ostatné nástroje sme postupne pridávali v priebehu semestra. Predvoleným editorom bol však väčšinou množinový (textový) pohľad. Na podrobnejšie otestovanie nových editorov sme sa preto rozhodli na jednom z posledných cvičení študentom pri vhodných interpretáciách naopak predvoliť orientovaný graf a editor interpretácií funkcií rozborom prípadov. Tie niekedy slúžili len na vizualizáciu, inokedy bolo pomocu nich potrebné aj upravovať samotnú interpretáciu. Medzi jednotlivými pohľadmi mohli študenti však aj naďalej ľubovoľne prepínať.
+
+Po vypracovaní cvičenia mali študenti možnosť vyplniť krátky dotazník zameraný na získanie spätnej väzby k použiteľnosti pridaných editorov. Celkovo ho vyplnilo 49 študentov. Jeho hlavná časť bola zameraná na ohodnotenie použiteľnosti navrhnutých riešení prostredníctvom 10 výrokov prevzatých zo štandardného dotazníka System Usability Scale (SUS) \cite{sus}. Pri každom výroku študenti vyjadrovali mieru súhlasu na škále od 1 (rozhodne nesúhlasím) do 5 (rozhodne súhlasím). Na základe odpovedí sa následne vypočítava skóre v rozsahu od 0 do 100, pričom vyššia hodnota znamená lepšiu použiteľnosť. Nám vyšlo priemerné skóre 63, čo naznačuje, že študenti pri používaní nových riešení identifikovali určité nedostatky, na ktorých by bolo vhodné ešte zapracovať. Histogram na obrázku \ref{fig:histogram-skore} zobrazuje početnosť jednotlivých SUS skóre.
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            width=\textwidth,
+            height=7cm,
+            xmin=30, xmax=100,
+            ymin=0, ymax=8,
+            xtick distance=5,
+            ytick distance=2,
+            ymajorgrids=true,
+            grid style={black!40},
+            axis line style={black!70},
+            tick style={black!70},
+            xlabel={Skóre},
+            ylabel={Početnosť},
+            area style,
+            axis on top=false,
+        ]
+        \addplot+[
+            ybar interval,
+            fill=teal!50,
+            draw=teal!80!black,
+        ] plot coordinates {
+            (30,2) (35,1) (40,1) (45,5) (50,4)
+            (55,8) (60,6) (65,7) (70,2) (75,4)
+            (80,2) (85,4) (90,2) (95,1) (100,0)
+        };
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Histogram jednotlivých SUS skóre.}
+    \label{fig:histogram-skore}
+\end{figure}
+
+Najhoršie dopadla otázka zameraná na to, či si študent myslí, že by sa musel naučiť veľa vecí, kým by vedel s novými editormi začať pracovať. S výrokom dokopy skôr súhlasilo 11 študentov, 23 skôr nesúhlasilo a 15 odpovedalo neutrálne. Naopak najlepší výsledok sme zaznamenali pri otázke, či podľa študenta boli jednotlivé funkcie nových editorov dobre integrované. S výrokom dokopy skôr súhlasilo 33 študentov, 4 skôr nesúhlasili a 12 odpovedalo neutrálne. Odpovede na ostatné podobné otázky sa niesli v podobnom duchu. Tento rozdiel sme si vysvetlili tak, že študenti nemali často problém s tým, ako jednotlivé editory fungujú, ale skôr s pochopením alebo objavením ich jednotlivých možností. Tento problém sme sa snažili ďalej zmierniť pridaním lepších vysvetliviek k ovládacím prvkom a zrozumiteľnejšou komunikáciou niektorých stavov editorov.
+
+Na konci dotazníka mohli študenti uviesť konkrétne problémy, na ktoré narazili, ako aj prípadné návrhy na ich zlepšenie. Často sa opakovala pripomienka na nadmerné množstvo vnorených rolovateľných prvkov v rámci celej aplikácie Logického pracovného zošita. Je to spôsobené najmä tým, že vertikálne rolovanie je možné nie len medzi samotnými aplikáciami, ale aj v rámci ich obsahu. Grafové editory k tomuto navyše pridali ďalší element reagujúci na rolovanie, keďže pri umiestení kurzora nad zobranie grafu je možné jeho obsah približovať alebo odďalovať. Pri hľadaní vhodného riešenia nás oslovila spätná väzba jedného študenta. V nej navrhol aby bolo rolovanie v grafoch možné len v prípade, ak je zároveň stlačené pridružené tlačidlo (napr. \texttt{Ctrl}). Všetky grafové pohľady sme doplnili o túto funkcionalitu.
