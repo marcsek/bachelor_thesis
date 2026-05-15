@@ -174,21 +174,21 @@ Keďže hra implementuje väčšinu svojej logiky v selektoroch, zmeny zahŕňal
 Po spomínaných zmenách sa nám pomerne jednoducho podarilo implementovať aj samotné znáhodnenie. Následne sme sa hru rozhodli doplniť o ďalšie vylepšenia. Jedným z nich bolo zjednotenie spôsobu výpisu matematických výrazov v dialógu hry. Pôvodná verzia kombinovala používanie Unicode znakov s prehľadnejším zápisom pomocou KaTeX-u, pričom tieto zápisy boli generované naprieč viacerými zdrojovými súbormi. Všetka logika generovania zápisov bola preto presunutá do súboru \texttt{messageBubbleFactories.ts}, ktorý obsahuje funkcie na generovanie rôznych typov výrazov výhradne vo formáte KaTeX, využívaných jednotlivými komponentmi hry. Okrem toho bolo pridaných viacero menších vylepšení používateľského rozhrania, ako aj samotného dialógu hry. Porovnanie rozhrania novej verzie s predchádzajúcou na krátkej časti hry možno vidieť na obrázku \ref{obr:hasse_compare}.
 
 \begin{figure}[h]
+  \centering
+  \begin{subfigure}{0.9\textwidth}
     \centering
-    \begin{subfigure}{0.9\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{\imgdir/hasse-old.jpg}
-        \caption{Pôvodná verzia}
-        \vspace{0.4cm}
-    \end{subfigure}
-    \hfill
-    \begin{subfigure}{0.9\textwidth}
-        \centering
-        \includegraphics[width=\linewidth]{images-optimized/hasse-new.jpg}
-        \caption{Nová verzia}
-    \end{subfigure}
-    \caption{Porovnanie pôvodného a nového rozhrania Henkinovej-Hintikkovej hry.}
-    \label{obr:hasse_compare}
+    \includegraphics[width=\linewidth]{\imgdir/hasse-old.jpg}
+    \caption{Pôvodná verzia}
+    \vspace{0.4cm}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}{0.9\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{images-optimized/hasse-new.jpg}
+    \caption{Nová verzia}
+  \end{subfigure}
+  \caption{Porovnanie pôvodného a nového rozhrania Henkinovej-Hintikkovej hry.}
+  \label{obr:hasse_compare}
 \end{figure}
 
 %To sťažovalo ich prípadnú zmenu, keďže by vyžadovala úpravy daného výrazu naprieč viacerými súbormi.
