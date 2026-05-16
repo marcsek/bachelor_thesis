@@ -2,26 +2,35 @@
 
 \label{kap:vychodiska} % id kapitoly pre prikaz ref
 
-Táto kapitola slúži na oboznámenie čitateľa s pojmami a konceptmi používanými v~ďalších častiach práce. Jednotlivé pojmy do potrebnej miery vysvetlíme a pri grafových reprezentáciách aj stručne naznačíme motiváciu za ich výberom, čo má pomôcť k~lepšiemu pochopeniu ich potenciálnych prínosov.
+Táto kapitola slúži na oboznámenie čitateľa s pojmami a konceptmi používanými v~ďalších častiach práce. Jednotlivé pojmy do potrebnej miery vysvetlíme a pri grafových reprezentáciách aj stručne naznačíme motiváciu za ich výberom, s cieľom pomôcť k~lepšiemu pochopeniu ich potenciálnych prínosov.
 
 \section{Logika prvého rádu}
 \label{sec:fol}
-Táto podkapitola vychádza najmä z prednášok a poznámok k predmetu Logika pre informatikov \cite{lpi}.
 
-Logika prvého rádu je rodina formálnych jazykov, ktoré hovoria o objektoch a ich vlastnostiach. Symboly konkrétneho jazyka $\mathcal{L}$ logiky prvého rádu tvoria \textit{indivíduové premenné} (napr. $x$, $y$, $z$), \textit{logické symboly} ($\neg$, $\lor$, $\land$, $\rightarrow$, $\doteq$, $\exists$, $\forall$), \textit{pomocné symboly} (ľavá zátvorka, pravá zátvorka a čiarka) a \textit{mimologické symboly}, tie sa ďalej delia na \textit{indivíduové konštanty} (napr. Alice, FMFI), \textit{funkčné symboly} (napr. $f$, $g$) a \textit{predikátové symboly} (napr. $matka$, $spieva$). Indivíduové premenné, logické symboly a pomocné symboly sú rovnaké naprieč všetkými jazykmi logiky prvého rádu, čo však jednotlivé jazyky odlišuje sú použité mimologické symboly.
+Keďže sa vyvíjaná aplikácia zaoberá sémantikou logiky prvého rádu, v tejto kapitole zhrnieme kľúčové pojmy z tejto oblasti. Vychádzame najmä z prednášok a poznámok k predmetu Logika pre informatikov \cite{lpi}, Švejdarovej učebnice \cite{svejdar} a prvej kapitoly knihy \textit{Handbook of Mathematical Logic} \cite{barwise}.
 
-Predikátové symboly používame na označenie vlastností alebo vzťahov. V konkrétnom jazyku $\mathcal{L}$ vždy majú (spolu s funkčnými symbolmi) pevne zvolený počet argumentov, ktorý určuje ich \textit{arita}, niekedy označovaná horným indexom. Predikátové symboly s~aritou 1 (unárne) zvyknú označovať nejakú vlastnosť alebo stav (napr. ${zviera}^1, {svieti}^1$), zatiaľ čo predikátové symboly s aritou 2 a viac ($n$-árne pre $n \geq 2$) opisujú určitý vzťah svojich argumentov (napr. ${stavia}^2$, ${ukazuje}^3$).
+\subsection{Syntax}
+Logika prvého rádu je rodina formálnych jazykov, ktoré hovoria o objektoch a ich vlastnostiach. Symboly konkrétneho jazyka $\mathcal{L}$ logiky prvého rádu tvoria \textit{indivíduové premenné} (napr. $x$, $y$, $z$) z nekonečnej spočítateľnej množiny $\mathcal{V}_\mathcal{L}$, \textit{logické symboly} ($\neg$, $\lor$, $\land$, $\rightarrow$, $\doteq$, $\exists$, $\forall$), \textit{pomocné symboly} (ľavá zátvorka, pravá zátvorka a čiarka) a \textit{mimologické symboly}, tie sa ďalej delia na \textit{indivíduové konštanty} zo spočítateľnej množiny $\mathcal{C}_\mathcal{L}$, \textit{funkčné symboly} zo spočítateľnej množiny $\mathcal{F}_\mathcal{L}$ a \textit{predikátové symboly} zo spočítateľnej množiny $\mathcal{P}_\mathcal{L}$. Indivíduové premenné, logické symboly a pomocné symboly sú rovnaké naprieč všetkými jazykmi logiky prvého rádu, čo však jednotlivé jazyky odlišuje sú použité mimologické symboly.
 
-Ďalší zadefinujeme pojem \textit{term}. Každá indivíduová premenná a indivíduová konštanta jazyka $\mathcal{L}$ je term. Taktiež ak $f$ predstavuje funkčný symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy, tak aj postupnosť symbolov $f(t_1, \dots, t_n)$ je term.
+Predikátové symboly používame na označenie vlastností alebo vzťahov. V konkrétnom jazyku $\mathcal{L}$ vždy majú (spolu s funkčnými symbolmi) pevne zvolený počet argumentov, ktorý určuje ich \textit{arita}, niekedy označovaná horným indexom. Predikátové symboly s~aritou 1 (unárne) zvyknú označovať nejakú vlastnosť alebo stav (napr. $\text{zviera}^1, {svieti}^1$), zatiaľ čo predikátové symboly s aritou 2 a viac ($n$-árne pre $n \geq 2$) opisujú určitý vzťah svojich argumentov (napr. ${stavia}^2$, ${ukazuje}^3$).
 
-Ďalej každá postupnosť symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy predstavuje \textit{rovnostný atóm} a každá postupnosť symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy predstavuje \textit{predikátový atóm}. Všetky rovnostné a predikátové atómy súhrnne nazývame \textit{atomickými formulami}.
+Indivíduové konštanty odkazujú na konkrétny objekt. Často sa používajú na vyjadrenie mena alebo názvu objektu (napr. Alica, Bratislava). Konkrétny objekt môže byť označený viacerými alebo žiadnou indivíduovou konštantou, no každá indíviduová konštanta musí označovať práve jeden objekt.
+
+Funkčné symboly používame na jednoznačné priradenie argumentov ku konkrétnemu objektu. Napríklad funkčný symbol ${hlavne\_mesto}^1$ by mohol každému vstupnému objektu (štátu) priraďovať ďalší objekt (jeho hlavné mesto). Nutnou podmienok je, aby boli všade definované, teda aby každej $n$-tici vstupných argumentov priraďovali konkrétny objekt, kde $n$ je arita funkčného symbolu.
+
+Zo symbolov jazyka vieme vytvárať postupnosti, pričom niektoré z nich označujeme ako \textit{termy}. Medzi termy patria všetky indivíduové premenné a indivíduové konštanty. Okrem toho môžno termy konštruovať aj pomocou funkčných symbolov a ich argumentov. Presnejšie, ak $f$ predstavuje funkčný symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy, potom aj postupnosť symbolov $f(t_1, \dots, t_n)$ je term.
+
+Najjednoduchšie tvrdenia v logike prvého rádu predstavujú \textit{atomické formuly}. Medzi atomické formuly patria \textit{rovnostné atómy}, teda postupnosti symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy, a \textit{predikátové atómy}, teda postupnosti symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy.
+
+%Ďalej každá postupnosť symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy predstavuje \textit{rovnostný atóm} a každá postupnosť symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy predstavuje \textit{predikátový atóm}. Všetky rovnostné a predikátové atómy súhrnne nazývame \textit{atomickými formulami}.
 
 Nakoniec množinu všetkých \textit{formúl} jazyka $\mathcal{L}$ definujeme takto: Každá atomická formula je zároveň aj formula. Ak $A$ je formula, tak aj postupnosť symbolov $\neg A$ je formula. Ak $A$ aj $B$ sú formuly, tak aj postupnosti symbolov $(A \land B)$, $(A \lor B)$, $(A \rightarrow B)$ sú formuly. A napokom ak $x$ je indivíduová premenná a $A$ je formula, tak aj postupnosti symbolov $\exists x A$ a $\forall x A$ sú formuly.
 
+\subsection{Sémantika}
+Prvým dôležitým pojmom týkajúcim sa sémantiky logiky prvého rádu je \textit{štruktúra}, ktorá sa vždy viaže na nejaký konkrétny jazyk. Je ňou dvojica $\mathcal{M} = (D, i)$, kde $D$ je ľubovoľnú neprázdna množina (doména) a $i$ je zobrazenie (interpretačná funkcia). Úlohou interpretačnej funkcie je každej indivíduovej konštante priradiť prvok z $D$, každému funkčnému symbolu priradiť funkciu z $D^n$ do $D$ a každému predikátovému symbolu priradiť podmnožinu množiny $D^n$, kde $n$ v oboch prípadoch označuje aritu daného symbolu. Štruktúry sú dôležitou súčasťou skúmania vlastností jazyka logiky prvého rádu, keďže poskytujú jeho presný matematický model.
 
-Prvým dôležitým pojmom týkajúcim sa sémantiky logiky prvého rádu je \textit{štruktúra}, ktorá sa vždy viaže na nejaký konkrétny jazyk. Označujeme ju dvojicou $\mathcal{M} = (D, i)$, kde $D$ predstavuje ľubovoľnú neprázdnu množinu (doména) a $i$ je zobrazenie (interpretačná funkcia). Úlohou interpretačnej funkcie je každej indivíduovej konštante priradiť prvok z $D$, každému funkčnému symbolu priradiť funkciu $f:D^n \rightarrow D$ a každému predikátovému symbolu priradiť podmnožinu množiny $D^n$, kde $n$ v oboch prípadoch označuje aritu daného symbolu. Štruktúry sú dôležitou súčasťou skúmania vlastností jazyka logiky prvého rádu, keďže poskytujú jeho presný matematický model.
-
-Tiež zadefinujeme niektoré ďalšie pojmy. \textit{Ohodnotenie indivíduových premenných} je ľubovoľná funkcia $e: \mathcal{V}_\mathcal{L} \rightarrow D$, kde $\mathcal{V}_\mathcal{L}$ je množina indivíduových premenných. Potom \textit{hodnota termu} $t$ v štruktúre $\mathcal{M}$ pri ohodnotení premenných $e$ je prvok z $D$ označovaný $t^\mathcal{M}[e]$ definovaný nasledovne:
+Ako sme už ukázali, pomocou štruktúr vieme dať význam mimologickým symbolom. Premenným dávame význam prostredníctvom
+\textit{ohodnotenia indivíduových premenných}, teda ľubovoľnej funkcie $e: \mathcal{V}_\mathcal{L} \rightarrow D$, ktorá každej premennej priraďuje konkrétny prvok domény. Potom \textit{hodnota termu} $t$ v štruktúre $\mathcal{M}$ pri ohodnotení premenných $e$ je prvok z $D$ označovaný $t^\mathcal{M}[e]$ definovaný nasledovne:
 \[
     \begin{aligned}
         x^{\mathcal{M}}[e]                                & = e(x), \\
@@ -99,7 +108,7 @@ Na obrázku \ref{obr:hasse_demo} možno vidieť príklad Hasseho diagramu pre č
 Bipartitný graf je taký graf $G$, ktorého vrcholy možno rozdeliť do dvoch disjunktných podmnožín $U$ a $V$ tak, že
 $U \cap V = \emptyset$ a zároveň každá hrana spája jeden vrchol z $U$ s ďalším vrcholom z $V$ (alebo naopak). Sú nápomocné pri hľadaní a skúmaní vzťahov (relácií a zobrazení) medzi entitami dvoch rôznych tried, ako napríklad medzi študentmi a učiteľmi, autormi a publikáciami alebo receptami a ingredienciami. Pri menšom množstve dát a vhodnom rozložení vrcholov umožňujú prehľadnú vizualizáciu prítomných vzťahov. Ukážku diagramu konkrétneho bipartitného grafu pre zobrazenie $f: \{1, 2, 3\} \rightarrow \{4, 5\}$, kde $f(1) = 4, f(2) = 5$ a $f(3) = 5$, so znázorneným rozdelením prvkov do množín $U$ a $V$, ktoré si v tomto prípade možno predstaviť ako definičný obor a obor hodnôt zobrazenia, je vidieť na obrázku \ref{obr:bipartite_demo}.
 
-\begin{figure}
+\begin{figure}[h]
     \centerline{\includegraphics[width=0.5\textwidth]{images/bipartite-demo.png}}
     %popis obrazku
     \caption[Príklad vyobrazenia bipartitného grafu.]{Príklad vyobrazenia bipartitného grafu.}
