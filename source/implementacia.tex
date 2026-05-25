@@ -5,13 +5,15 @@ V tejto kapitole sa zameriame na vybrané časti implementácie. Tie majú pribl
 \section{Výber technológií}
 Nová verzia prieskumníka štruktúr je plne implementovaná v jazyku TypeScript. Používateľské rozhranie je vytvorené pomocou knižnice React a na správu globálneho stavu sa používa knižnica Redux (všetky sú opísané v podkapitole \ref{sec:technologie}). Prirodzene sme sa teda rozhodli pokračovať v používaní týchto technológií aj pri tvorbe našich rozšírení. TypeScript sa ukázal ako veľmi nápomocný aj počas oboznamovania sa s existujúcou implementáciou, keďže vďaka definovaným typom bolo výrazne jednoduchšie porozumieť očakávaným tvarom objektov alebo argumentov funkcií.
 
-Tiež bolo potrebné vybrať nástroj na implementáciu grafových editorov. V kontexte už spomenutých technológií sme ako najvhodnejšie riešenie zvolili knižnicu React Flow. Na základe môjho prieskumu išlo o jediné riešenie, ktoré podporovalo už spomenuté technológie a zároveň poskytovalo dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít. Veľkou výhodou bola aj kvalitná dokumentácia doplnená sadou interaktívnych príkladov, ktoré výrazne uľahčovali oboznámenie sa s dostupnými možnosťami.
+Tiež bolo potrebné vybrať nástroj na implementáciu grafových editorov. Jednou z možností bola knižnica React Diagrams \cite{reactdiagrams}, ktorú na implementáciu grafového zobrazenia použil vo svojej bakalárskej práci Miroslav Baluch \cite{baluch2020}. Napriek pomerne širokým možnostiam tejto knižnice sme sa ju však rozhodli nepoužiť, keďže už nie je aktívne vyvíjaná ani udržiavaná. 
+
+Vzhľadom na spomenuté technológie sme mali ďalej na výber medzi knižnicami React Flow \cite{reactflow} a Reagraph \cite{reagraph}. Obe sú v súčasnosti populárne a pravidelne aktualizované, avšak knižnica Reagraph na rozdiel od React Flow ponúka len veľmi obmedzené možnosti prispôsobenia vrcholov a hrán, ktoré by nepostačovali na implementáciu požadovanej funkcionality. Ako najvhodnejšie riešenie sme preto napokon zvolili knižnicu React Flow, keďže podporovala už spomenuté technológie a zároveň poskytovalo dostatočné množstvo konfigurácie na implementáciu všetkých navrhnutých funkcionalít. Veľkou výhodou bola aj kvalitná dokumentácia doplnená sadou interaktívnych príkladov, ktoré výrazne uľahčovali oboznámenie sa s dostupnými možnosťami.
 
 \section{Integrácia nových editorov interpretácií}
 V tejto podkapitole priblížime spôsob, akým sme nové editory interpretácií navrhnuté v podkapitolách \ref{sec:plan-graph-editors} až \ref{sec:case_tree} zakomponovali do už existujúcej aplikácie.
 
 \subsection{Organizácia}
-Súborovú štruktúru pôvodnej aplikácie sme v zásade nemenili. Držali sme sa stanovenej konvencie, podľa ktorej je každá funkcionalita organizovaná vo vlastnom podpriečinku \texttt{src/features}. Zdrojové súbory pre jednotlivé nástroje preto ukladáme do samostatných podpriečinkov pomenovaných podľa daného nástroja (napr. \texttt{graphView}). Obsah týchto priečinkov je rôzny, no každý obsahuje aspoň hlavný React komponent pre daný nástroj (napr. \texttt{MatrixView}) a súbor definujúci jeho Redux stav (napr. \texttt{databaseViewSlice}). V rámci stavu sú spravidla implementované reducery a potrebné selektory.
+Súborovú štruktúru pôvodnej aplikácie sme v zásade nemenili. Držali sme sa stanovenej konvencie, podľa ktorej je každá funkcionalita organizovaná vo vlastnom podpriečinku \texttt{src/features}. Zdrojové súbory pre jednotlivé nástroje preto ukladáme do samostatných podpriečinkov pomenovaných podľa daného nástroja (napr. \texttt{graphView}). Obsah týchto priečinkov je rôzny, no každý obsahuje aspoň hlavný React komponent pre daný nástroj (napr. \texttt{MatrixView}) a súbor definujúci jeho Redux stav (napr. \texttt{databaseViewSlice.ts}). V rámci stavu sú spravidla implementované reducery a potrebné selektory.
 
 \subsection{Integrácia komponentov editorov}
 \label{sec:editor_integration}
@@ -21,8 +23,19 @@ Tento problém rieši nový komponent \texttt{InterpretationEditor}. Ten zaobaľ
 
 \texttt{DrawerEditor} integruje spoločné rozhranie editorov pozostávajúce z ďalších troch častí. Jednou z nich je komponent panela nástrojov \texttt{EditorToolbar}. Ten implementuje rozhranie filtrovania. Ďalším je \texttt{EditorError}, predstavujúci chybový panel. Treťou časťou je samotný komponent editora, ktorý je určený na základe získaného typu.
 
+\begin{lstlisting}[float,language=JavaScript,caption={Extra reducer používaný pri aktualizácii databázového editora.},label=prog:extra_red]
+extraReducers(builder) {
+  builder.addCase(updateInterpretationPredicates, (state, action) => {
+    if (action.meta.source === "databaseView") return;
+
+    const { key, value } = action.payload;
+    syncInterpretation(key, "predicate", value, state);
+  });
+}
+\end{lstlisting}
+
 \subsection{Synchronizácia stavu}
-Jednotlivé editory reprezentujú interpretácie symbolov vo svojom stave rôznym spôsobom. To však predstavuje problém, keďže zmeny stavu jednotlivých editorov je potrebné synchronizovať, a to ideálne automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov.
+Jednotlivé editory reprezentujú interpretácie symbolov vo svojom stave rôznym spôsobom. To však predstavuje problém, keďže zmeny stavu jednotlivých editorov je potrebné synchronizovať, a to ideálne automaticky. Teda každá zmena vykonaná v jednom editore by sa mala okamžite premietnuť aj do stavu ostatných editorov.
 
 %Pri synchronizácii stavu jednotlivých editorov je potrebné, aby prebiehala automaticky. Teda každá zmena vykonaná v jednom editore sa musí okamžite premietnuť aj do stavu ostatných editorov. Jednotlivé editory však reprezentujú interpretácie symbolov vo svojom stave rôznym spôsobom, čo predstavuje problém.
 
@@ -41,17 +54,6 @@ Druhou je reagovať na tieto akcie vo svojom vlastnom reduceri a na základe inf
 
 Ukážka takéhoto reducera (\ref{prog:extra_red}) demonštruje spracovanie zmeny interpretácie predikátu v databázovom editore. Reducer je definovaný v rámci funkcie \texttt{extraReducers}, ktorá dostáva ako argument objekt \texttt{builder}. Pomocou metódy \texttt{addCase} sa určí akcia (prvý argument), pri ktorej sa má príslušný reducer zavolať (druhý argument). V tele reducera sa najprv prostredníctvom atribútu \texttt{meta.source} kontroluje pôvod akcie. Ten sa vždy nastavuje pri jej vyvolaní. Je to dôležité najmä z toho dôvodu, aby databázový editor zbytočne nespracovával akcie, ktoré sám vyvolal. Následne sa volá funkcia \texttt{syncInterpretation}, implementujúca logiku prevodu interpretácie do podoby používanej daným editorom.
 
-
-\begin{lstlisting}[float,language=JavaScript,caption={Extra reducer používaný pri aktualizácii databázového editora.},label=prog:extra_red]
-extraReducers(builder) {
-  builder.addCase(updateInterpretationPredicates, (state, action) => {
-    if (action.meta.source === "databaseView") return;
-
-    const { key, value } = action.payload;
-    syncInterpretation(key, "predicate", value, state);
-  });
-}
-\end{lstlisting}
 
 \section{Implementácia grafových editorov}
 Táto podkapitola približuje jednotlivé časti implementácie grafových editorov. Postupne prejdeme štruktúrou stavu, spôsobom jeho využitia a nakoniec sa pozrieme na integráciu komponentov knižnice React Flow.
@@ -84,7 +86,7 @@ Napríklad úlohou selektora \texttt{selectNodes} je pre konkrétnu reprezentác
 
 Podobne funguje aj selektor \texttt{selectEdges}, ktorého úlohou je vrátiť zoznam hrán priamo použiteľný pri zobrazení grafu. Napríklad pri Hasseho diagrame je v tomto selektore potrebné odstrániť nadbytočné hrany (podľa pravidiel opísaných v sekcii \ref{sec:reprezentacie-hasse}), keďže v jeho stave sú explicitne uložené všetky hrany reprezentujúce interpretáciu.
 
-Aktualizácia stavu prebieha prostredníctvom reducerov a k nim prislúchajúcich akcií. Zmeny týkajúce sa stavu vrcholov a hrán sú reprezentované akciami \texttt{nodesChanged} a \texttt{edgesChanged}. Zmena môže zahŕňať napríklad posunutie vrcholu alebo označenie hrany. Pri vytvorení novej hrany je knižnicou ReactFlow vyvolaná akcia \texttt{nodesConnected}, ktorej súčasťou sú aj identifikátory oboch vrcholov. Akcia \texttt{leftoverDeleted} slúži na odstránenie chybného vrcholu. Vyvoláva sa pri kliknutí na tlačidlo koša príslušného vrchola, popísaného v sekcii venovanej návrhu vrcholov \ref{sec:basic_graph}.
+Aktualizácia stavu prebieha prostredníctvom reducerov a k nim prislúchajúcich akcií. Zmeny týkajúce sa stavu vrcholov a hrán sú reprezentované akciami \texttt{nodesChanged} a \texttt{edgesChanged}. Zmena môže zahŕňať napríklad posunutie vrcholu alebo označenie hrany. Pri vytvorení novej hrany je knižnicou React Flow vyvolaná akcia \texttt{nodesConnected}, ktorej súčasťou sú aj identifikátory oboch vrcholov. Akcia \texttt{leftoverDeleted} slúži na odstránenie chybného vrcholu. Vyvoláva sa pri kliknutí na tlačidlo koša príslušného vrchola, popísaného v sekcii venovanej návrhu vrcholov \ref{sec:basic_graph}.
 
 Dôležitou akciou je aj \texttt{syncGraphView}, slúžiaca na inicializáciu stavu všetkých grafových reprezentácií všetkých binárnych predikátov a unárnych funkcií. Používa sa najmä pri synchronizácii grafových editorov so samotnou štruktúrou.
 
@@ -93,9 +95,9 @@ Dôležitou akciou je aj \texttt{syncGraphView}, slúžiaca na inicializáciu st
 \subsection{Komponenty}
 Hlavný komponent, ktorý obaľuje komponenty konkrétnych reprezentácií je \texttt{GraphView}. Jeho úlohou je na základe poskytnutého typu grafu vykresliť komponent aktuálne zvolenej reprezentácie. Zobrazenie každej reprezentácie je implementované v rámci jej vlastného komponentu, konkrétne ide o \texttt{OrientedGraph}, \texttt{BipartiteGraph} a \texttt{HasseDiagram}. Tieto komponenty následne obaľujú komponent \texttt{ReactFlow} poskytovaný knižnicou, ktorý sa využíva na vykreslenie samotného rozhrania grafu.
 
-Úlohou jednotlivých komponentov je získavať potrebné dáta na vykreslenie grafu zo stavu príslušnej reprezentácie, ako sú napríklad vrcholy a hrany, prostredníctvom vyššie spomínaných selektorov. Zároveň sa v nich definuje konfigurácia komponentu \texttt{ReactFlow}, špecifická pre daný typ grafu. Príkladom možnosti, ktorú knižnica pri konfigurácii ponúka, je funkcia \texttt{isValidConnection}. Po jej špecifikovaní ju knižnica volá pri každom pokuse o vytvorenie novej hrany, čo poskytuje možnosť implementovania vlastnej validačnej logiky pre vytváranie hrán. Táto funkcionalita sa využíva napríklad v komponente \texttt{HasseDiagram}, kde sa kontroluje, či by pridaním hrany ostali zachované všetky podmienky čiastočného usporiadania.
+Úlohou jednotlivých komponentov je získavať potrebné dáta na vykreslenie grafu zo stavu príslušnej reprezentácie, ako sú napríklad vrcholy a hrany, prostredníctvom vyššie spomínaných selektorov. Zároveň sa v nich definuje konfigurácia komponentu \texttt{React Flow}, špecifická pre daný typ grafu. Príkladom možnosti, ktorú knižnica pri konfigurácii ponúka, je funkcia \texttt{isValidConnection}. Po jej špecifikovaní ju knižnica volá pri každom pokuse o vytvorenie novej hrany, čo poskytuje možnosť implementovania vlastnej validačnej logiky pre vytváranie hrán. Táto funkcionalita sa využíva napríklad v komponente \texttt{HasseDiagram}, kde sa kontroluje, či by pridaním hrany ostali zachované všetky podmienky čiastočného usporiadania.
 
-V rámci konfigurácie je tiež potrebné špecifikovať komponenty, ktoré bude ReactFlow používať na vykresľovanie vrcholov a hrán. V našom prípade sme na to zadefinovali komponenty \texttt{PredicateNode} a \texttt{DirectEdge}, ktoré definujú konkrétne zobrazenie a používateľské rozhranie vrcholov a hrán grafu. Pomocou komponentu \texttt{PredicateNode} je implementovaná napríklad funkcionalita vytvárania hrán alebo zobrazovania panela s farbami unárnych predikátov, ktoré sme navrhli v časti \ref{sec:basic_graph}.
+V rámci konfigurácie je tiež potrebné špecifikovať komponenty, ktoré bude React Flow používať na vykresľovanie vrcholov a hrán. V našom prípade sme na to zadefinovali komponenty \texttt{PredicateNode} a \texttt{DirectEdge}, ktoré definujú konkrétne zobrazenie a používateľské rozhranie vrcholov a hrán grafu. Pomocou komponentu \texttt{PredicateNode} je implementovaná napríklad funkcionalita vytvárania hrán alebo zobrazovania panela s farbami unárnych predikátov, ktoré sme navrhli v časti \ref{sec:basic_graph}.
 
 %Menšie komponenty \texttt{PredicateNode} a \texttt{DirectEdge} predstavujú konkrétne vrcholy a hrany rozhrania grafu. O ich vykresľovanie sa stará samotná knižnica a taktiež je ich potrebné definovať v rámci konfigurácie. Pomocou komponentu \texttt{PredicateNode} je implementovaná napríklad funkcionalita vytvárania hrán alebo zobrazovania panela s farbami unárnych predikátov. Obe sú bližšie popísané v rámci časti venovanej návrhu orientovaného grafu \ref{sec:basic_graph}.
 

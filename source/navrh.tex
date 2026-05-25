@@ -139,7 +139,7 @@ Posledné dva varianty zobrazenia vrcholov na obrázku \ref{obr:vrch_navrh_1} sa
     \label{obr:error_vrch}
 \end{figure}
 
-Dôležitou funkcionalitou grafu je aj spôsob vytvárania hrán. Na rozdiel od predošlej implementácie grafového zobrazenia (\ref{sec:graph-explorer}) sme sa rozhodli nerozdeľovať ovládanie na dva režimy (pohybový a editovací). To si však vyžaduje, aby bola do vrcholu naraz zakomponovaná možnosť jeho presúvania, ako aj tvorby novej hrany. Žiadne z riešení ponúkaných knižnicou nám nevyhovovalo, preto sme sa rozhodli pre vlastný prístup, pri ktorom je vrchol rozdelený na dve časti -- jednu určenú na vytváranie hrán a druhú na jeho presúvanie. Vytváranie hrany iniciujeme umiestením kurzora nad určitú oblasť po obvode vrcholu. Používateľovi je táto oblasť naznačená jej stmavením a zmenou typu kurzora. Následným potiahnutím z tejto oblasti nad iný vrchol a pustením sa proces vytvárania ukončí. Používateľ sa však môže pokúsiť vytvoriť aj neplatnú hranu, napríklad duplicitnú. Počas vytvárania sa preto hrana zobrazuje červenou alebo zelenou farbou podľa toho, či je jej vytvorenie validné. Posúvanie vrcholu je umožnené na zvyšnej ploche, teda okolo jeho stredu.
+Dôležitou funkcionalitou grafu je aj spôsob vytvárania hrán. Na rozdiel od predošlej implementácie grafového zobrazenia (\ref{sec:graph-explorer}) sme sa rozhodli nerozdeľovať ovládanie na dva režimy (pohybový a editovací). To si však vyžaduje, aby bola do vrcholu naraz zakomponovaná možnosť jeho presúvania, ako aj tvorby novej hrany. Žiadne z riešení ponúkaných knižnicou nám nevyhovovalo, preto sme sa rozhodli pre vlastný prístup, pri ktorom je vrchol rozdelený na dve časti -- jednu určenú na vytváranie hrán a druhú na jeho presúvanie. Vytváranie hrany iniciujeme umiestením kurzora nad určitú oblasť po obvode vrcholu. Používateľovi je táto oblasť naznačená jej stmavením a zmenou typu kurzora. Následným potiahnutím z tejto oblasti nad iný vrchol a pustením sa proces vytvárania ukončí. Používateľ sa však môže pokúsiť vytvoriť aj neplatnú hranu, ako napríklad duplicitnú. Počas vytvárania sa preto hrana zobrazuje červenou alebo zelenou farbou podľa toho, či je jej vytvorenie validné. Časť vrcholu určená na posúvanie sa nachádza na zvyšnej ploche, teda okolo jeho stredu.
 
 %Použitie týchto vrcholov na grafovú reprezentáciu konkrétneho binárneho predikátu znázorňuje obrázok \ref{obr:basic_navrh_1}. Hrany sú reprezentované šípkami, kde smer šípky upresňuje vzťah medzi prvkami. V pravej časti obrázka sa nachádza zoznam unárnych predikátov spolu s ich príslušnými farbami. Medzi predikátmi, ktoré sa majú zobraziť, je užívateľovi umožnené filtrovať zaškrtnutím k nemu prislúchajúceho políčka.
 
@@ -178,7 +178,7 @@ Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali z
     \label{obr:hasse_navrh_1}
 \end{figure}
 
-Môj návrh je zobrazený na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s orientovanými hranami smerujúcimi nahor. Zelenou prerušovanou čiarou je používateľovi naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by bola hrana zvýraznená červenou farbou a používateľovi by sa zobrazila už spomínaná varovná správa.
+Môj návrh je zobrazený na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s orientovanými hranami smerujúcimi nahor. Podobne ako v orientovanom grafe je používateľovi zelenou prerušovanou čiarou naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by bola hrana zvýraznená červenou farbou a používateľovi by sa zobrazila už spomínaná varovná správa.
 
 
 \subsection{Bipartitný graf}
@@ -283,9 +283,9 @@ Zámerom editora interpretácií funkcií rozborom prípadov je umožniť defino
 
 Jednotlivé prípady predstavujú rôzne špecifické podmienky. Napríklad prvá sa vzťahuje iba na argument $x$, zatiaľ čo v druhej sa zohľadňuje aj $y$. Aby bola definícia úplná, je potrebné špecifikovať aj prípad, keď nie je splnená žiadna z uvedených podmienok. V príklade je tento prípad označený ako „inak“.
 
-Keďže editor by mal fungovať pre ľubovoľnú aritu funkcie, bolo v prvom rade potrebné zvoliť vhodnú dátovú reprezentáciu takejto štruktúry. Rozhodli sme sa pre špeciálny strom, ktorý sme nazvali \textit{strom rozboru prípadov}. Ilustračný príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzly stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument je vnútorný uzol, teda vždy musí mať aspoň jedného potomka, pričom hrany z takéhoto uzla vyjadrujú podmienky na daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
+Keďže editor by mal fungovať pre ľubovoľnú aritu funkcie, bolo v prvom rade potrebné zvoliť vhodnú dátovú reprezentáciu takejto štruktúry. Rozhodli sme sa pre špecifický strom, ktorý sme nazvali \textit{strom rozboru prípadov}. Ilustračný príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzly stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument je vnútorný uzol, teda vždy musí mať aspoň jedného potomka, pričom hrany z takéhoto uzla vyjadrujú podmienky na daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
 
-Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla. Taktiež z každého uzla musí vychádzať práve jedna takáto hrana.
+Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla. Podmienkou je, aby z každého uzla vychádzala práve jedna tohto typu.
 
 \begin{figure}[tbhp]
     \centerline{\includegraphics[width=0.5\textwidth]{images/case-tree.png}}
@@ -295,7 +295,7 @@ Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok v
     \label{obr:case_tree}
 \end{figure}
 
-Strom rozboru prípadov nám umožňuje jednoznačne reprezentovať interpretáciu funkčných symbolov, a to aj pomocou relatívne malého množstva dát. V porovnaní s ostatnými editormi to predstavuje veľkú výhodu, keďže tie vyžadujú explicitné definovanie celej interpretácie.
+Strom rozboru prípadov nám umožňuje jednoznačne reprezentovať interpretácie funkčných symbolov, a to aj pomocou relatívne malého množstva dát. V porovnaní s ostatnými editormi to predstavuje veľkú výhodu, keďže tie vyžadujú explicitné definovanie celej interpretácie.
 
 Ďalej bolo potrebné pre editor navrhnúť vhodné používateľské rozhranie, ktoré dovolí tvorbu stromu rozboru prípadov. Počas jeho vývoja sme prešli viacerými rôznymi návrhmi. Pre poskytnutie lepšej predstavy o tom, čo viedlo k finálnemu návrhu, sú ďalej jednotlivé verzie v krátkosti popísané.
 
@@ -313,7 +313,7 @@ Na tejto reprezentácii nám však nevyhovovalo používateľské rozhranie, pre
 \end{figure}
 
 \paragraph{Druhý návrh}
-Druhý návrh je realizovaný tak, aby veľmi priamočiaro zodpovedal stromu rozboru prípadov. Konkrétny príklad možno vidieť na obrázku \ref{obr:interval_2}. Uzly reprezentujúce argumenty funkcie sú znázornené kľúčovým slovom „switch“ spolu s textovým vstupom na označenie argumentu. Pre každý takýto uzol sa následne definujú podmienky, ktoré sú znázornené kľúčovým slovom „case“ s príslušným textovým vstupom pre jej hodnotu. Podmienka znázornená slovom „default“ označuje všetky ostatné prvky domény a pridáva sa automaticky, keďže vždy musí mať určenú hodnotu. Presunutím kurzora na konkrétnu podmienku sa zobrazí menu. V ňom je pomocou tlačidla s ikonou koša možné danú podmienku vymazať, tlačidlo s ikonou plus slúži na pridanie novej podmienky. Po jeho stlačení je ešte potrebné určiť, či podmienka bude obsahovať priamo hodnotu, alebo ďalší argument funkcie.
+Druhý návrh je realizovaný tak, aby veľmi priamočiaro zodpovedal stromu rozboru prípadov. Konkrétny príklad možno vidieť na obrázku \ref{obr:interval_2}. Uzly reprezentujúce argumenty funkcie sú znázornené kľúčovým slovom „switch“ spolu s textovým vstupom na označenie argumentu. Pre každý takýto uzol sa následne definujú podmienky, ktoré sú znázornené kľúčovým slovom „case“ s príslušným textovým vstupom pre jej hodnotu. Podmienka znázornená kľúčovým slovom „default“ označuje všetky ostatné prvky domény a pridáva sa automaticky, keďže vždy musí mať určenú hodnotu. Presunutím kurzora na konkrétnu podmienku sa zobrazí menu. V ňom je pomocou tlačidla s ikonou koša možné danú podmienku vymazať, tlačidlo s ikonou plus slúži na pridanie novej podmienky. Po jeho stlačení je ešte potrebné určiť, či podmienka bude obsahovať priamo hodnotu, alebo ďalší argument funkcie.
 
 V tejto verzii bola tiež pridaná validácia jednotlivých vstupov. Napríklad sa kontroluje, či používateľ nezadal viac podmienok s rovnakou hodnotou, alebo či nebol ten istý argument použitý už v niektorom rodičovskom uzle.
 
@@ -373,7 +373,7 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 \label{sec:new_state}
 V pôvodnej implementácii je stav organizovaný do viacerých logických celkov, ktoré zodpovedajú jednotlivým častiam aplikácie. Medzi ne patria napríklad \texttt{LanguageSlice} a \texttt{StructureSlice}, predstavujúce jazyk, resp. štruktúru. Všetky časti stavu sú spojené do centrálneho stavu aplikácie (\texttt{RootState}).
 
-Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Triedny diagram nových časti stavu možno vidieť na obrázku \ref{obr:diagram-nahlad}. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrh aj diagramom znázorňujúcim jeho dátový model.
+Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Triedny diagram nových časti stavu možno vidieť na obrázku \ref{obr:diagram-nahlad}. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrhy aj diagramom znázorňujúcim ich dátový model.
 
 %S výnimkou dopytov (\texttt{QuerySlice}) má každý stav podobu slovníka, keďže ukladané dáta sú vždy viazané na konkrétny predikát alebo funkciu. Jednotlivé záznamy obsahujú stav príslušného rozšírenia. V diagrame sú to typy končiace slovom \texttt{Entry}. 
 
@@ -409,9 +409,9 @@ V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vho
 \end{figure}
 
 \subsection{Grafové editory}
-V časti stavu pre grafové editory sa ukladajú dáta jednotlivých grafových reprezentácií. Návrh dátového modelu je znázornený na obrázku \ref{obr:graph_diagram}. Každému binárnemu predikátu a unárnej funkcií zodpovedá jeden záznam typu (\texttt{GraphStateEntry}) v slovníkovom type \texttt{GraphSlice}, ktorý je jednoznačne identifikovaný kombináciou názvu a typu príslušného symbolu.
+V časti stavu pre grafové editory sa ukladajú dáta jednotlivých grafových reprezentácií. Návrh dátového modelu je znázornený na obrázku \ref{obr:graph_diagram}. Každému binárnemu predikátu a unárnej funkcií zodpovedá jeden záznam (\texttt{GraphStateEntry}) v slovníkovom type \texttt{GraphSlice}, ktorý je jednoznačne identifikovaný kombináciou názvu a typu príslušného symbolu.
 
-Každý objekt typu \texttt{GraphStateEntry} obsahuje typ príslušného symbolu (atribút \texttt{tupleType}) a stav (\texttt{GraphState}) pre jednotlivé typy grafov. Tento stav zahŕňa zoznam vrcholov (\texttt{Node}) a hrán (\texttt{Edge}). Hrana je navyše asociovaná s dvojicou vrcholov, pričom jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}). Vrcholy obsahujú svoju pozíciu v zobrazení (atribúty \texttt{positionX} a \texttt{positionY}) a unikátny identifikátor (atribút \texttt{id}) používaný na jednoznačné priradenie počiatočného a koncového vrcholu hrany s konkrétnou inštanciou objektu typu \texttt{Node}. Vrchol bipartitného grafu (\texttt{BipartiteNode}) rozširuje \texttt{Node} o atribút \texttt{partition}, ktorý určuje jeho príslušnosť k jednej z dvoch skupín.
+Každý objekt typu \texttt{GraphStateEntry} obsahuje typ príslušného symbolu (atribút \texttt{tupleType}) a stav (\texttt{GraphState}) pre jednotlivé typy grafov. Tento stav zahŕňa zoznam vrcholov (\texttt{Node}) a hrán (\texttt{Edge}). Hrana je navyše asociovaná s dvojicou vrcholov, pričom jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}). Vrcholy obsahujú svoju pozíciu v zobrazení grafu (atribúty \texttt{positionX} a \texttt{positionY}) a unikátny identifikátor (atribút \texttt{id}) používaný na jednoznačné priradenie počiatočného a koncového vrcholu hrany s konkrétnou inštanciou objektu typu \texttt{Node}. Vrchol bipartitného grafu (\texttt{BipartiteNode}) rozširuje \texttt{Node} o atribút \texttt{partition}, ktorý určuje jeho príslušnosť k jednej z dvoch skupín.
 
 \subsection{Maticový a databázový editor}
 Rovnako ako pri grafových editoroch, aj v maticovom a databázovom editore je záznam o ich stave jednoznačne identifikovaný pomocou názvu a typu predikátového alebo funkčného symbolu. V prípade databázového editora je stav ukladaný ako zoznam hodnôt zadaných do textových vstupov pre jednotlivé $n$-tice. Naopak maticový editor pre každú $n$-ticu zaznamenáva buď stav zaškrtávacieho políčka, alebo hodnotu textového vstupu, v závislosti od typu reprezentácie.
