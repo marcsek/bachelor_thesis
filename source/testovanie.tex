@@ -44,10 +44,20 @@ Najhoršie dopadla otázka zameraná na to, či si študent myslí, že by sa mu
 
 Na konci dotazníka mohli študenti uviesť konkrétne problémy, na ktoré narazili, ako aj prípadné návrhy na ich zlepšenie. Často sa opakovala pripomienka na nadmerné množstvo vnorených rolovateľných prvkov v rámci celej aplikácie Logického pracovného zošita. Je to spôsobené najmä tým, že vertikálne možno rolovať nie len celý hárok, ale aj obsah vložených aplikácií. Grafové editory k tomuto navyše pridali ďalší element reagujúci na rolovanie, keďže pri umiestení kurzora nad zobrazenie grafu je možné jeho obsah zväčšovať alebo zmenšovať. Pri hľadaní vhodného riešenia nás oslovila spätná väzba jedného študenta. V nej navrhol, aby bolo rolovanie v grafoch možné len v prípade, ak je zároveň stlačené pridružené tlačidlo (napr. \texttt{Ctrl}). Všetky grafové pohľady sme doplnili o takéto správanie.
 
-Niektorí študenti mali problém aj s tým, že pri pridávaní viacerých nových prvkov domény sa im prislúchajúce vrcholy v zobrazení orientovaného grafu vzájomne prekrývali, čo pôsobilo mätúco. Tento problém sme vyriešili náhodným rozmiestnením nových vrcholov. Na podnet jedného študenta sme sa tiež rozhodli upraviť editor interpretácií funkcií rozborom prípadov tak, aby pri určovaní podmienky bolo možné zadávať viacero prvkov, nielen jeden konkrétny. Vďaka tomu je tvorba podmienok v určitých situáciách jednoduchšia, keďže nie je potrebné definovať samostatný prípad pre každú hodnotu podmienky.
+Niektorí študenti mali problém aj s tým, že pri pridávaní viacerých nových prvkov domény sa im prislúchajúce vrcholy v zobrazení orientovaného grafu vzájomne prekrývali, čo pôsobilo mätúco. Tento problém sme vyriešili náhodným rozmiestnením nových vrcholov.
 
-\paragraph{Zhrnutie} 
-Študenti pri testovaní aplikácie odhalili určité nedostatky našich riešení. Nešlo však o zásadné problémy, ktoré by sa týkali základných princípov ich fungovania, ale skôr o menšie nepríjemnosti. Jednotlivé problémy sa nám aj vďaka prínosnej spätnej väzbe od študentov podarilo pomerne jednoducho vyriešiť. Zároveň sme sa zamerali na zrozumiteľnejšiu komunikáciu niektorých stavov grafových editorov a editora interpretácií funkcií rozborom prípadov, čo by malo prispieť k lepšiemu používateľskému zážitku, najmä u nových používateľov.  
+Na podnet jedného študenta sme sa tiež rozhodli upraviť editor interpretácií funkcií rozborom prípadov tak, aby pri určovaní podmienky bolo možné zadávať viacero prvkov, nielen jeden konkrétny. Vďaka tomu je tvorba podmienok v určitých situáciách jednoduchšia, keďže nie je potrebné definovať samostatný prípad pre každú hodnotu podmienky. Novú verziu editora interpretácií funkcií rozborom prípadov možno vidieť na obrázku \ref{obr:reworked-case-tree}. Editor sme navyše vylepšili aj pridaním správy „exhausted on $\langle\textit{argument funkcie}\rangle$“, ktorá značí, že pre daný argument už boli špecifikované podmienky na rovnosť s každým prvkom domény. Ak však ešte neboli, používateľ teraz môže umiestnením kurzora nad text „is any other“ vo všeobecnej podmienke pre daný argument zistiť, ktoré prvky sú týmto označením myslené.
+
+\begin{figure}[tbhp]
+    \centerline{\includegraphics[width=0.92\textwidth]{images/reworked-case-tree.png}}
+    %popis obrazku
+    \caption[Nová verzia editora interpretácií funkcií rozborom prípadov.]{Nová verzia editora interpretácií funkcií rozborom prípadov.}
+    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
+    \label{obr:reworked-case-tree}
+\end{figure}
+
+\paragraph{Zhrnutie}
+Študenti pri testovaní aplikácie odhalili určité nedostatky našich riešení. Nešlo však o zásadné problémy, ktoré by sa týkali základných princípov ich fungovania, ale skôr o menšie nepríjemnosti. Jednotlivé problémy sa nám aj vďaka prínosnej spätnej väzbe od študentov podarilo pomerne jednoducho vyriešiť. Zároveň sme sa zamerali na zrozumiteľnejšiu komunikáciu niektorých stavov grafových editorov a editora interpretácií funkcií rozborom prípadov, čo by malo prispieť k lepšiemu používateľskému zážitku, najmä u nových používateľov.
 
 
 % \begin{figure}

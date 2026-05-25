@@ -124,7 +124,7 @@ Prístup, ktorý som pri návrhu vrcholov zvolil, možno vidieť na obrázku \re
     \label{obr:vrch_navrh_1}
 \end{figure}
 
-Pri takomto prístupe sme však narazili na problém s prístupnosťou. Môj pôvodný výber totiž obsahoval aj také kombinácie farieb, ktoré by pre ľudí s poruchami farebného videnia neboli dostatočne rozlíšiteľné. Pri výbere vhodnej palety aj pre takéto prípady sme sa inšpirovali článkom Qualitative Color Schemes \cite{tol2021}. Ten obsahuje niekoľko príkladov vhodných farebných paliet spolu s návodom, ako s nimi zaobchádzať.
+Pri takomto riešení sme však narazili na problém s prístupnosťou. Môj pôvodný výber totiž obsahoval aj také kombinácie farieb, ktoré by pre ľudí s poruchami farebného videnia neboli dostatočne rozlíšiteľné. Pri výbere vhodnej palety aj pre takéto prípady sme sa inšpirovali článkom Qualitative Color Schemes \cite{tol2021}. Ten obsahuje niekoľko príkladov vhodných farebných paliet spolu s návodom, ako s nimi zaobchádzať.
 
 Posledné dva varianty zobrazenia vrcholov na obrázku \ref{obr:vrch_navrh_1} sa aktivujú iba v prípade, keď používateľ prejde kurzorom na zaškrtávacie tlačidlo unárneho predikátu. Ak by zaškrtnutie tohto tlačidla znamenalo pridanie vrcholu do zobrazenia, objaví sa jeho čiastočne priehľadná verzia (\subref{obr:graph_node_3}). Ak by naopak zaškrtnutie viedlo k skrytiu daného vrcholu, je nahradený jeho vyšrafovanou verziou (\subref{obr:graph_node_4}). Cieľom je používateľovi jasnejšie naznačiť, aký vplyv bude mať jeho voľba na výsledné zobrazenie grafu.
 
@@ -191,7 +191,7 @@ Prvý návrh editora bipartitného grafu možno vidieť na obrázku \ref{obr:bip
 
 
 Na uvedenom riešení nám však nevyhovoval odlišný vizuál vrcholov v porovnaní s ostatnými grafovými editormi.
-Navyše, možnosť samostatného výberu vrcholov oboch skupín sme v kombinácii s existujúcimi možnosťami filtrovania nepovažovali za vhodnú, keďže pre používateľa by už mohlo začať byť náročné pochopiť, ako jednotlivé filtre ovplyvnili výsledné zobrazenie. Rozhodli sme sa preto náš návrh ešte upraviť a dopracovať do druhej, finálnej verzie, ktorá je vyobrazená na obrázku \ref{obr:bipartite_navrh}(\subref{obr:bipartite_navrh_2}).
+Navyše, možnosť samostatného výberu vrcholov oboch skupín sme v kombinácii s existujúcimi možnosťami filtrovania nepovažovali za vhodnú, keďže pre používateľa by mohlo byť náročné pochopiť, ako jednotlivé filtre ovplyvnili výsledné zobrazenie. Rozhodli sme sa preto náš návrh ešte upraviť a dopracovať do druhej, finálnej verzie, ktorá je vyobrazená na obrázku \ref{obr:bipartite_navrh}(\subref{obr:bipartite_navrh_2}).
 
 Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru orientovaného grafu. Príslušnosť vrcholov do skupiny je naznačená pomocou dvoch kontajnerov s rozdielnou farbou a názvom danej skupiny. Tiež sme  odstránili tlačidlá na pridávanie ďalších prvkov do skupiny. V dôsledku toho obe časti vždy obsahujú rovnakú podmnožinu domény, ovládanú iba pomocou filtrov. Týmito úpravami sa nám podarilo dosiahnuť konzistentnejšie správanie naprieč grafovými editormi. Všetky ostatné funkcie sme ponechali.
 
@@ -283,7 +283,7 @@ Zámerom editora interpretácií funkcií rozborom prípadov je umožniť defino
 
 Jednotlivé prípady predstavujú rôzne špecifické podmienky. Napríklad prvá sa vzťahuje iba na argument $x$, zatiaľ čo v druhej sa zohľadňuje aj $y$. Aby bola definícia úplná, je potrebné špecifikovať aj prípad, keď nie je splnená žiadna z uvedených podmienok. V príklade je tento prípad označený ako „inak“.
 
-Keďže editor by mal fungovať pre ľubovoľnú aritu funkcie, bolo v prvom rade potrebné zvoliť vhodnú dátovú reprezentáciu takejto štruktúry. Rozhodli sme sa pre špecifický strom, ktorý sme nazvali \textit{strom rozboru prípadov}. Ilustračný príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzly stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument je vnútorný uzol, teda vždy musí mať aspoň jedného potomka, pričom hrany z takéhoto uzla vyjadrujú podmienky na daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
+Keďže editor by mal fungovať pre ľubovoľnú aritu funkcie, bolo v prvom rade potrebné zvoliť vhodnú dátovú reprezentáciu takejto štruktúry. Rozhodli sme sa pre špecifický typ stromu, ktorý sme nazvali \textit{strom rozboru prípadov}. Ilustračný príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzly stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument je vnútorný uzol, teda vždy musí mať aspoň jedného potomka, pričom hrany z takéhoto uzla vyjadrujú podmienky na daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
 
 Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla. Podmienkou je, aby z každého uzla vychádzala práve jedna tohto typu.
 
@@ -313,7 +313,7 @@ Na tejto reprezentácii nám však nevyhovovalo používateľské rozhranie, pre
 \end{figure}
 
 \paragraph{Druhý návrh}
-Druhý návrh je realizovaný tak, aby veľmi priamočiaro zodpovedal stromu rozboru prípadov. Konkrétny príklad možno vidieť na obrázku \ref{obr:interval_2}. Uzly reprezentujúce argumenty funkcie sú znázornené kľúčovým slovom „switch“ spolu s textovým vstupom na označenie argumentu. Pre každý takýto uzol sa následne definujú podmienky, ktoré sú znázornené kľúčovým slovom „case“ s príslušným textovým vstupom pre jej hodnotu. Podmienka znázornená kľúčovým slovom „default“ označuje všetky ostatné prvky domény a pridáva sa automaticky, keďže vždy musí mať určenú hodnotu. Presunutím kurzora na konkrétnu podmienku sa zobrazí menu. V ňom je pomocou tlačidla s ikonou koša možné danú podmienku vymazať, tlačidlo s ikonou plus slúži na pridanie novej podmienky. Po jeho stlačení je ešte potrebné určiť, či podmienka bude obsahovať priamo hodnotu, alebo ďalší argument funkcie.
+Druhý návrh je realizovaný tak, aby veľmi priamočiaro zodpovedal stromu rozboru prípadov. Konkrétny príklad možno vidieť na obrázku \ref{obr:interval_2}. Uzly reprezentujúce argumenty funkcie sú znázornené kľúčovým slovom „switch“ spolu s textovým vstupom na označenie argumentu. Pre každý takýto uzol sa následne definujú podmienky, ktoré sú znázornené kľúčovým slovom „case“ s príslušným textovým vstupom pre jej hodnotu. Podmienka znázornená kľúčovým slovom „default“ označuje všetky ostatné prvky domény a pridáva sa automaticky, keďže vždy musí mať určenú hodnotu. Presunutím kurzora na konkrétnu podmienku sa zobrazí menu. V ňom je pomocou tlačidla s ikonou koša možné danú podmienku vymazať, tlačidlo s ikonou + slúži na pridanie novej podmienky. Po jeho stlačení je ešte potrebné určiť, či podmienka bude obsahovať priamo hodnotu, alebo ďalší argument funkcie.
 
 V tejto verzii bola tiež pridaná validácia jednotlivých vstupov. Napríklad sa kontroluje, či používateľ nezadal viac podmienok s rovnakou hodnotou, alebo či nebol ten istý argument použitý už v niektorom rodičovskom uzle.
 
@@ -349,7 +349,7 @@ Komponent dopytov neslúži ako editor, ale reprezentuje samostatnú časť apli
 
 V kontexte aplikácie má komponent štandardné rozhranie. Na vrchu sa nachádza jeho názov, pod ním sa definujú dopyty. Tlačidlom „Pridať dopyt“ v dolnej časti je možné pridávať nové, prázdne dopyty. Návrh rozhrania konkrétneho dopytu je na obrázku zobrazený pod nadpisom „Dopyty“.
 
-Na definovanie dopytu je najprv potrebné určiť voľné premenné, podľa ktorých sa budú generovať ohodnotenia. Tie sa zadávajú do prvého textového vstupu zľava a musia byť oddelené čiarkou. Druhý textový vstup hneď vedľa slúži na definovanie otvorenej formuly, ktorú chceme vyhodnotiť. Oba vstupy sú validované. Pri premenných sa kontroluje správny formát, ako aj to, či množina deklarovaných premenných je práve množinou voľných premenných danej formuly. Ak nie, používateľovi sa pod vstupom zobrazí chybová správa s informáciou o konkrétnych premenných, ktoré podmienku nespĺňajú. Pri formulách sa kontroluje ich správny zápis, teda napríklad to, či všetky použité mimologické symboly patria do definovaného jazyka a či sa používajú so správnym počtom argumentov.
+Na definovanie dopytu je najprv potrebné deklarovať voľné premenné, podľa ktorých sa budú generovať ohodnotenia. Tie sa zadávajú do prvého textového vstupu zľava a musia byť oddelené čiarkou. Druhý textový vstup hneď vedľa slúži na definovanie otvorenej formuly, ktorú chceme vyhodnotiť. Oba vstupy sú validované. Pri premenných sa kontroluje správny formát, ako aj to, či množina deklarovaných premenných je práve množinou voľných premenných danej formuly. Ak nie, používateľovi sa pod vstupom zobrazí chybová správa s informáciou o konkrétnych premenných, ktoré podmienku nespĺňajú. Pri formulách sa kontroluje ich správny zápis, teda napríklad to, či všetky použité mimologické symboly patria do definovaného jazyka a či sa používajú so správnym počtom argumentov.
 
 %Validácia formuly využíva už existujúce riešenie používané v aplikácii. Bolo ho však potrebné doplniť tak, aby zohľadňovalo aj používateľom definované premenné.
 
@@ -373,7 +373,7 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 \label{sec:new_state}
 V pôvodnej implementácii je stav organizovaný do viacerých logických celkov, ktoré zodpovedajú jednotlivým častiam aplikácie. Medzi ne patria napríklad \texttt{LanguageSlice} a \texttt{StructureSlice}, predstavujúce jazyk, resp. štruktúru. Všetky časti stavu sú spojené do centrálneho stavu aplikácie (\texttt{RootState}).
 
-Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Triedny diagram nových časti stavu možno vidieť na obrázku \ref{obr:diagram-nahlad}. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrhy aj diagramom znázorňujúcim ich dátový model.
+Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Triedny diagram nových častí stavu možno vidieť na obrázku \ref{obr:diagram-nahlad}. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrhy aj diagramom znázorňujúcim ich dátový model.
 
 %S výnimkou dopytov (\texttt{QuerySlice}) má každý stav podobu slovníka, keďže ukladané dáta sú vždy viazané na konkrétny predikát alebo funkciu. Jednotlivé záznamy obsahujú stav príslušného rozšírenia. V diagrame sú to typy končiace slovom \texttt{Entry}. 
 
@@ -401,7 +401,7 @@ Rozhodli sme sa preto zaviesť novú časť stavu určenú na ukladanie obsahu v
 V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vhodnou štruktúrovanou formou. Napríklad v prípade interpretácií predikátov ide o zoznam jednotlivých $n$-tíc prvkov domény, kde $n$ je arita predikátu.
 
 \begin{figure}[tbhp]
-    \centerline{\includegraphics[width=0.70\textwidth]{images/graph-diagram.png}}
+    \centerline{\includegraphics[width=0.75\textwidth]{images/graph-diagram.png}}
     %popis obrazku
     \caption[Triedny diagram pre graf.]{Triedny diagram pre grafové editory.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
