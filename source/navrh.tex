@@ -128,14 +128,23 @@ Pri takomto riešení sme však narazili na problém s prístupnosťou. Môj pô
 
 Posledné dva varianty zobrazenia vrcholov na obrázku \ref{obr:vrch_navrh_1} sa aktivujú iba v prípade, keď používateľ prejde kurzorom na zaškrtávacie tlačidlo unárneho predikátu. Ak by zaškrtnutie tohto tlačidla znamenalo pridanie vrcholu do zobrazenia, objaví sa jeho čiastočne priehľadná verzia (\subref{obr:graph_node_3}). Ak by naopak zaškrtnutie viedlo k skrytiu daného vrcholu, je nahradený jeho vyšrafovanou verziou (\subref{obr:graph_node_4}). Cieľom je používateľovi jasnejšie naznačiť, aký vplyv bude mať jeho voľba na výsledné zobrazenie grafu.
 
-
-Ďalej sme sa rozhodli pomocou vrcholov vyjadriť aj určité chybové stavy. Tie môžu nastať v dvoch prípadoch. Jedným z nich je situácia, keď interpretácia obsahuje prvok, ktorý nepatrí do domény. Vrchol reprezentujúci takýto prvok je zobrazený v pravej časti obrázka \ref{obr:error_vrch}. Okrem vizuálnej informácie v podobe červeného orámovania a nápisu poskytuje aj možnosť chybný prvok odstrániť kliknutím na tlačidlo koša, čím sa interpretácia opraví. Druhý prípad nastáva pri interpretáciách funkčných symbolov. Vtedy je vrcholom v ľavej časti obrázka reprezentovaný prvok, ktorý nemá priradenú hodnotu alebo ich má priradených viac.
+Ďalej sme sa rozhodli pomocou vrcholov vyjadriť aj určité chybové stavy. Tie môžu nastať v dvoch prípadoch. Jedným z nich je situácia, keď interpretácia obsahuje prvok, ktorý nepatrí do domény. Vrchol reprezentujúci takýto prvok je zobrazený na obrázku \ref{obr:error_vrch}(\subref{obr:error_node_2}). Okrem vizuálnej informácie v podobe červeného orámovania a nápisu poskytuje aj možnosť chybný prvok odstrániť kliknutím na tlačidlo koša, čím sa interpretácia opraví. Druhý prípad nastáva pri interpretáciách funkčných symbolov. Vtedy je vrcholom na obrázku \ref{obr:error_vrch}(\subref{obr:error_node_1}) reprezentovaný prvok, ktorý nemá priradenú hodnotu alebo ich má priradených viac.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.5\textwidth]{images/error-nodes.png}}
-    %popis obrazku
+    \centering
+    \begin{subfigure}[t]{0.23\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{\imgdir/error-node-2.png}
+        \subcaption{}
+        \label{obr:error_node_2}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.228\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{\imgdir/error-node-1.png}
+        \subcaption{}
+        \label{obr:error_node_1}
+    \end{subfigure}
     \caption[Návrh vizuálu chybových vrcholov.]{Návrh vizuálu chybových vrcholov.}
-    %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:error_vrch}
 \end{figure}
 
@@ -285,7 +294,7 @@ Jednotlivé prípady predstavujú rôzne špecifické podmienky. Napríklad prv�
 
 Keďže editor by mal fungovať pre ľubovoľnú aritu funkcie, bolo v prvom rade potrebné zvoliť vhodnú dátovú reprezentáciu takejto štruktúry. Rozhodli sme sa pre špecifický typ stromu, ktorý sme nazvali \textit{strom rozboru prípadov}. Ilustračný príklad možno vidieť na obrázku \ref{obr:case_tree}. Uzly stromu buď predstavujú argumenty funkcie (označené modrou), alebo konkrétne hodnoty (označené zelenou). Uzol reprezentujúci argument je vnútorný uzol, teda vždy musí mať aspoň jedného potomka, pričom hrany z takéhoto uzla vyjadrujú podmienky na daný argument. Naopak, uzly reprezentujúce hodnoty sú vždy listy stromu.
 
-Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla. Podmienkou je, aby z každého uzla vychádzala práve jedna tohto typu.
+Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok vedúcich k výslednej hodnote. Hrany označené hviezdičkou predstavujú všetky ostatné prípady, teda si ich možno predstaviť aj ako zvyšné prvky domény, ktoré neurčujú žiadnu konkrétnu podmienku vychádzajúcu z daného uzla. Podmienkou je, aby z každého uzla vychádzala práve jedna hrana tohto typu.
 
 \begin{figure}[tbhp]
     \centerline{\includegraphics[width=0.5\textwidth]{images/case-tree.png}}
@@ -373,7 +382,7 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 \label{sec:new_state}
 V pôvodnej implementácii je stav organizovaný do viacerých logických celkov, ktoré zodpovedajú jednotlivým častiam aplikácie. Medzi ne patria napríklad \texttt{LanguageSlice} a \texttt{StructureSlice}, predstavujúce jazyk, resp. štruktúru. Všetky časti stavu sú spojené do centrálneho stavu aplikácie (\texttt{RootState}).
 
-Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Triedny diagram nových častí stavu možno vidieť na obrázku \ref{obr:diagram-nahlad}. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrhy aj diagramom znázorňujúcim ich dátový model.
+Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Triedny diagram vybraných nových súčastí stavu spolu s novými typmi atribútov \texttt{StructureSlice} a \texttt{LanguageSlice} možno vidieť na obrázku \ref{obr:diagram-nahlad}. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrhy aj diagramom znázorňujúcim ich dátový model.
 
 %S výnimkou dopytov (\texttt{QuerySlice}) má každý stav podobu slovníka, keďže ukladané dáta sú vždy viazané na konkrétny predikát alebo funkciu. Jednotlivé záznamy obsahujú stav príslušného rozšírenia. V diagrame sú to typy končiace slovom \texttt{Entry}. 
 
@@ -383,20 +392,20 @@ Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikác
 \begin{figure}
     \centerline{\includegraphics[width=1\textwidth]{images/diagram-overview.png}}
     %popis obrazku
-    \caption[Triedny diagram nových častí stavu.]{Triedny diagram nových častí stavu.}
+    \caption[Triedny diagram nových súčastí stavu.]{Triedny diagram nových súčastí stavu.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:diagram-nahlad}
 \end{figure}
 
 \subsection{Spoločné rozhranie editorov}
-Čast stavu spoločného rozhrania editorov je potrebná na ukladanie informácií o aktuálne otvorenom editore a jednotlivých nastaveniach filtrovania pre každý predikát a funkciu. Konkrétne sa jedná o stav zaškrtávacieho tlačidla domény, názvy zaškrtnutých unárnych predikátov ako aj zoznam prvkov domény označených v komponente filtra domény. Záznam o tomto stave je jednoznačne identifikovaný kombináciou príslušného symbolu a jeho typu.
+Čast stavu spoločného rozhrania editorov (\texttt{EditorToolbarSlice}) je potrebná na ukladanie informácií o aktuálne otvorenom editore a jednotlivých nastaveniach filtrovania pre každý predikát a funkciu. Konkrétne sa jedná o stav zaškrtávacieho tlačidla domény, názvy zaškrtnutých unárnych predikátov ako aj zoznam prvkov domény označených v komponente filtra domény. Záznam o tomto stave je jednoznačne identifikovaný kombináciou príslušného symbolu a jeho typu.
 
 \subsection{Textový pohľad}
 V pôvodnej implementácií časti stavu pre jazyk a štruktúru uchovávajú väčšinu svojich dát výhradne v textovej podobe. Teda napríklad pri štruktúre je interpretácia konkrétneho predikátu reprezentovaná ako text, ktorý používateľ zadal do príslušného textového vstupu.
 
 Tento spôsob reprezentácie by bol však pri implementácii našich rozšírení veľmi nepraktický a neefektívny, keďže by si vyžadoval neustále premieňanie medzi textovou a štruktúrovanou formou interpretácie používanou v jednotlivých editoroch. Na druhej strane, pre správne fungovanie textových vstupov je potrebné, aby bol aj naďalej ukladaný ich presný obsah, keďže používateľ môže zadať aj syntakticky nesprávne vstupy, ktoré sa nedajú priamo previesť do štruktúrovanej formy.
 
-Rozhodli sme sa preto zaviesť novú časť stavu určenú na ukladanie obsahu všetkých textových vstupov spomínaných častí aplikácie. Každý takýto vstup je reprezentovaný pomocou záznamu, ktorý obsahuje okrem samotného textového reťazca aj informáciu o type reprezentovaných dát (napr. či ide o indivíduové konštanty alebo interpretáciu funkčného symbolu). Jednotlivé záznamy sú unikátne identifikované typom reprezentovaných dát a v prípade interpretácií konštánt, predikátov a funkcií aj ich názvom.
+Rozhodli sme sa preto zaviesť novú časť stavu (\texttt{TextViewSlice}) určenú na ukladanie obsahu všetkých textových vstupov spomínaných častí aplikácie. Každý takýto vstup je reprezentovaný pomocou záznamu, ktorý obsahuje okrem samotného textového reťazca aj informáciu o type reprezentovaných dát (napr. či ide o indivíduové konštanty alebo interpretáciu funkčného symbolu). Jednotlivé záznamy sú unikátne identifikované typom reprezentovaných dát a v prípade interpretácií konštánt, predikátov a funkcií aj ich názvom.
 
 V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vhodnou štruktúrovanou formou. Napríklad v prípade interpretácií predikátov ide o zoznam jednotlivých $n$-tíc prvkov domény, kde $n$ je arita predikátu.
 
@@ -409,6 +418,7 @@ V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vho
 \end{figure}
 
 \subsection{Grafové editory}
+\label{plan:state-graphs}
 V časti stavu pre grafové editory sa ukladajú dáta jednotlivých grafových reprezentácií. Návrh dátového modelu je znázornený na obrázku \ref{obr:graph_diagram}. Každému binárnemu predikátu a unárnej funkcií zodpovedá jeden záznam (\texttt{GraphStateEntry}) v slovníkovom type \texttt{GraphSlice}, ktorý je jednoznačne identifikovaný kombináciou názvu a typu príslušného symbolu.
 
 Každý objekt typu \texttt{GraphStateEntry} obsahuje typ príslušného symbolu (atribút \texttt{tupleType}) a stav (\texttt{GraphState}) pre jednotlivé typy grafov. Tento stav zahŕňa zoznam vrcholov (\texttt{Node}) a hrán (\texttt{Edge}). Hrana je navyše asociovaná s dvojicou vrcholov, pričom jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}). Vrcholy obsahujú svoju pozíciu v zobrazení grafu (atribúty \texttt{positionX} a \texttt{positionY}) a unikátny identifikátor (atribút \texttt{id}) používaný na jednoznačné priradenie počiatočného a koncového vrcholu hrany s konkrétnou inštanciou objektu typu \texttt{Node}. Vrchol bipartitného grafu (\texttt{BipartiteNode}) rozširuje \texttt{Node} o atribút \texttt{partition}, ktorý určuje jeho príslušnosť k jednej z dvoch skupín.
@@ -419,18 +429,23 @@ Rovnako ako pri grafových editoroch, aj v maticovom a databázovom editore je z
 \begin{figure}[tbh]
     \centerline{\includegraphics[width=0.6\textwidth]{images/tree-diagram.png}}
     %popis obrazku
-    \caption[Triedny diagram pre editor interpretácií funkcií.]{Triedny diagram pre editor interpretácií funkcií.}
+    \caption[Triedny diagram pre editor interpretácií funkcií.]{Triedny diagram pre editor interpretácií funkcií rozborom prípadov.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:tree_diagram}
 \end{figure}
 
 \subsection{Editor interpretácií funkcií rozborom prípadov}
-Stav editora interpretácií funkcií rozborom prípadov je podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Návrh dátového modelu editora možno vidieť na obrázku \ref{obr:tree_diagram}. Každému funkčnému symbolu zodpovedá jeden záznam (\texttt{CaseTreeEntry}) v slovníkovom type \texttt{CaseTreeSlice}, ktorý je jednoznačne identifikovaný názvom symbolu.
+Stav editora interpretácií funkcií rozborom prípadov je podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Rozdielom však je, že používame iba uzol predstavujúci argument funkcie. Informáciu, ktorú niesol uzol predstavujúci hodnotu sme presunuli do hrán stromu. Návrh dátového modelu editora možno vidieť na obrázku \ref{obr:tree_diagram}. Každému funkčnému symbolu zodpovedá jeden záznam (\texttt{CaseTreeEntry}) v slovníkovom type \texttt{CaseTreeSlice}, ktorý je jednoznačne identifikovaný príslušným symbolom.
 
-V objekte typu \texttt{CaseTreeEntry} sú uložené jednotlivé uzly (\texttt{CaseTreeNode}) spolu s identifikátorom koreňového uzla (atribút \texttt{rootId}). Každý uzol je tvorený argumentom (atribút \texttt{argument}), ktorý reprezentuje, a zoznamom z neho vychádzajúcich hrán (\texttt{CaseTreeCase}). Hrany predstavujú jednotlivé podmienky kladené na argument príslušného uzla. Preto obsahujú hodnotu (atribút \texttt{match}), s ktorom sa má príslušný argument porovnať, a odkaz na druhý uzol. Odkaz je abstraktný objekt typu \texttt{CaseTreeBranch}. Špecializujú ho dva typy odkazov. Jedným z nich je referenčný odkaz (\texttt{ReferenceBranch}), ktorý si uchováva identifikátor druhého uzla, teda ďalšej inštancie \texttt{CaseTreeNode}. Druhým je hodnotový odkaz (\texttt{ValueBranch}), ten priamo ukladá samotnú hodnotu. Hrana predstavujúca všetky ostatné podmienky (\texttt{default}) je tiež objekt typu \texttt{CaseTreeBranch}.
+V objekte typu \texttt{CaseTreeEntry} sú uložené jednotlivé uzly (\texttt{CaseTreeNode}) spolu s identifikátorom koreňového uzla (atribút \texttt{rootId}). Každý uzol je tvorený argumentom (atribút \texttt{argument}), ktorý reprezentuje, unikátnym identifikátorom (atribút \texttt{id}), zoznamom z neho vychádzajúcich podmienkových hrán (\texttt{CaseTreeCase}) a hranou označujúcou všetky ostatné prípady (\texttt{CaseTreeEdge}). Abstraktný objekt typu \texttt{CaseTreeEdge} špecializujú dva typy hrán. Jednou z nich je referenčná hrana (\texttt{ReferenceEdge}), ktorá si uchováva identifikátor druhého uzla, teda ďalšej inštancie \texttt{CaseTreeNode}. Druhou je hodnotová hrana (\texttt{ValueEdge}), tá priamo ukladá samotnú hodnotu.
+
+Podmienkové hrany (\texttt{CaseTreeCase}) predstavujú jednotlivé podmienky kladené na argument príslušného uzla. Preto obsahujú hodnotu (atribút \texttt{match}), s ktorou sa má príslušný argument porovnať a aj samotnú hranu (\texttt{CaseTreeEdge}). 
+
+%Hrany musia tiež obsahovať odkaz na druhý uzol alebo hodnotu, ktorú ma funkcia pri splnení podmienok nadobúdať.
+
 
 %Abstraktný typ \texttt{CaseTreeBranch} špecializujú dva typy hrán. Jednou z nich je referenčná hrana (\texttt{ReferenceBranch}), ktorá si uchováva identifikátor druhého uzla, teda ďalšej inštancie \texttt{CaseTreeNode}. Druhou je hodnotová hrana (\texttt{ValueBranch}), tá priamo ukladá samotnú hodnotu. Obe si uchovávajú aj hodnotu podmienky (atribút \texttt{match}), s ktorou sa argument porovnáva.
 
 
 \subsection{Dopyty}
-Časť stavu pre dopyty obsahuje zoznam jednotlivých dopytov. Každý dopyt sa skladá z textovej reprezentácie zoznamu voľných premenných a otvorenej formuly.
+Časť stavu pre dopyty (\texttt{QuerySlice}) obsahuje zoznam jednotlivých dopytov. Každý dopyt sa skladá z textovej reprezentácie zoznamu voľných premenných a otvorenej formuly.
