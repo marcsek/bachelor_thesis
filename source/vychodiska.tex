@@ -16,15 +16,15 @@ Predikátové symboly používame na označenie vlastností alebo vzťahov. V ko
 
 Indivíduové konštanty odkazujú na konkrétny objekt. Často sa používajú na vyjadrenie mena alebo názvu objektu (napr. Alica, Bratislava). Konkrétny objekt môže byť označený viacerými alebo žiadnou indivíduovou konštantou, no každá indivíduová konštanta musí označovať práve jeden objekt.
 
-Funkčné symboly používame na jednoznačné priradenie vstupných argumentov ku konkrétnemu objektu. Napríklad funkčný symbol ${hlavne\_mesto}^1$ by mohol každému vstupnému objektu (štátu) priraďovať ďalší objekt (jeho hlavné mesto). Nutnou podmienkou je, aby boli všade definované, teda aby každej $n$-tici vstupných argumentov priraďovali konkrétny objekt, kde $n$ je arita funkčného symbolu.
+Funkčné symboly používame na označenie zobrazení, teda vzťahov $n$-tíc objektov k jednoznačne určeným objektom. Napríklad funkčný symbol ${hlavne\_mesto}^1$ by mohol každému vstupnému objektu (štátu) priraďovať ďalší objekt (jeho hlavné mesto).
 
-Zo symbolov jazyka vieme vytvárať postupnosti, pričom niektoré z nich označujeme ako \textit{termy}. Medzi termy patria všetky indivíduové premenné a indivíduové konštanty. Okrem toho možno termy konštruovať aj pomocou funkčných symbolov a ich argumentov. Presnejšie, ak $f$ predstavuje funkčný symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy, potom aj postupnosť symbolov $f(t_1, \dots, t_n)$ je term.
+Zo symbolov jazyka vieme vytvárať postupnosti, pričom tie z nich, ktoré označujú objekty, nazývame \textit{termy}. Medzi termy patria všetky indivíduové premenné a indivíduové konštanty. Okrem toho možno termy konštruovať aj pomocou funkčných symbolov a ich argumentov. Presnejšie, ak $f$ predstavuje funkčný symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy, potom aj postupnosť symbolov $f(t_1, \dots, t_n)$ je term.
 
-Najjednoduchšie tvrdenia v logike prvého rádu predstavujú \textit{atomické formuly}. Medzi atomické formuly patria \textit{rovnostné atómy}, teda postupnosti symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy, a \textit{predikátové atómy}, teda postupnosti symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy.
+Najjednoduchšie postupnosti symbolov v logike prvého rádu, ktorým priraďujeme pravdivostné hodnoty, sú \textit{atomické formuly}. Medzi atomické formuly patria \textit{rovnostné atómy}, teda postupnosti symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy, a \textit{predikátové atómy}, teda postupnosti symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy.
 
 %Ďalej každá postupnosť symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy predstavuje \textit{rovnostný atóm} a každá postupnosť symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy predstavuje \textit{predikátový atóm}. Všetky rovnostné a predikátové atómy súhrnne nazývame \textit{atomickými formulami}.
 
-Nakoniec množinu všetkých \textit{formúl} (tvrdení) jazyka $\mathcal{L}$ definujeme takto: Každá atomická formula je zároveň aj formula. Ak $A$ je formula, tak aj postupnosť symbolov $\neg A$ je formula. Ak $A$ aj $B$ sú formuly, tak aj postupnosti symbolov $(A \land B)$, $(A \lor B)$, $(A \rightarrow B)$ sú formuly. A napokom ak $x$ je indivíduová premenná a $A$ je formula, tak aj postupnosti symbolov $\exists x A$ a $\forall x A$ sú formuly.
+Nakoniec množinu všetkých \textit{formúl} jazyka $\mathcal{L}$ definujeme takto: Každá atomická formula je zároveň aj formula. Ak $A$ je formula, tak aj postupnosť symbolov $\neg A$ je formula. Ak $A$ aj $B$ sú formuly, tak aj postupnosti symbolov $(A \land B)$, $(A \lor B)$, $(A \rightarrow B)$ sú formuly. A napokom ak $x$ je indivíduová premenná a $A$ je formula, tak aj postupnosti symbolov $\exists x A$ a $\forall x A$ sú formuly.
 
 \subsection{Sémantika}
 Prvým dôležitým pojmom týkajúcim sa sémantiky logiky prvého rádu je \textit{štruktúra}, ktorá sa vždy viaže na nejaký konkrétny jazyk. Je ňou dvojica $\mathcal{M} = (D, i)$, kde $D$ je ľubovoľnú neprázdna množina (doména) a $i$ je zobrazenie (interpretačná funkcia). Úlohou interpretačnej funkcie je každej indivíduovej konštante priradiť prvok z $D$, každému funkčnému symbolu priradiť funkciu z $D^n$ do $D$ a každému predikátovému symbolu priradiť podmnožinu množiny $D^n$, kde $n$ v oboch prípadoch označuje aritu daného symbolu. Štruktúry sú dôležitou súčasťou skúmania vlastností jazyka logiky prvého rádu, keďže poskytujú jeho presný matematický model.
@@ -63,7 +63,7 @@ V tejto podkapitole sú uvedené typy grafov použité v tejto práci spolu s kr
 
 
 \subsection{Orientovaný graf}
-Orientovaný graf $G$ je daný neprázdnou konečnou množinou vrcholov $V$ a množinou usporiadaných dvojíc $E \subseteq V \times V$, resp. hrán.
+Orientovaný graf $G$ pozostáva z konečnej neprázdnej množiny vrcholov $V$ a množiny usporiadaných dvojíc $E \subseteq V \times V$, resp. hrán.
 %pričom každá hrana $(x, y) \in E$ začína vo vrchole $x$ a končí vo vrchole $y$. 
 V diagramoch sú vrcholy väčšinou znázornené ako kruhy, prípadne spolu s ich príslušným označením. Hrany sú zas vyobrazené pomocou šípok, ktorých smer určuje poradie vrcholov hrany (šípka vždy ukazuje na druhý vrchol v poradí). Grafy majú mnohoraké využitie pri modelovaní vzťahov, ktoré vyžadujú zachovať nejaký smer, postupnosť úkonov alebo vyjadriť určitú hierarchiu. Príklad bežného diagramu jednoduchého orientovaného grafu možno vidieť na obrázku \ref{obr:dir_demo}, kde $V = \{1, 2, 3, 4\}$ a $E = \left\{(1, 1), (1, 2), (2, 3), (3, 1), (2, 4), (4, 2)\right\}$.
 
