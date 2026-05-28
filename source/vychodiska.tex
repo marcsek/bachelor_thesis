@@ -14,7 +14,7 @@ Logika prvého rádu je rodina formálnych jazykov, ktoré hovoria o objektoch a
 
 Predikátové symboly používame na označenie vlastností alebo vzťahov. V konkrétnom jazyku $\mathcal{L}$ vždy majú (spolu s funkčnými symbolmi) pevne zvolený počet argumentov, ktorý určuje ich \textit{arita}, niekedy označovaná horným indexom. Predikátové symboly s~aritou 1 (unárne) zvyknú označovať nejakú vlastnosť alebo stav (napr. ${zviera}^1, {svieti}^1$), zatiaľ čo predikátové symboly s aritou 2 a viac ($n$-árne pre $n \geq 2$) opisujú určitý vzťah svojich argumentov (napr. ${nesie}^2$, ${medzi}^3$).
 
-Indivíduové konštanty odkazujú na konkrétny objekt. Často sa používajú na vyjadrenie mena alebo názvu objektu (napr. Alica, Bratislava). Konkrétny objekt môže byť označený viacerými alebo žiadnou indivíduovou konštantou, no každá indivíduová konštanta musí označovať práve jeden objekt.
+Indivíduové konštanty označujú konkrétny objekt. Často sa používajú na vyjadrenie mena alebo názvu objektu (napr. Alica, Bratislava). Konkrétny objekt môže byť označený viacerými alebo žiadnou indivíduovou konštantou, no každá indivíduová konštanta musí označovať práve jeden objekt.
 
 Funkčné symboly používame na označenie zobrazení, teda vzťahov $n$-tíc objektov k jednoznačne určeným objektom. Napríklad funkčný symbol ${hlavne\_mesto}^1$ by mohol každému vstupnému objektu (štátu) priraďovať ďalší objekt (jeho hlavné mesto).
 
@@ -59,11 +59,11 @@ pre všetky premenné $x$, všetky formuly $A, B$, všetky termy $t_1, \dots, t_
 \section{Grafové reprezentácie}
 \label{sec:reprezentacie}
 
-V tejto podkapitole sú uvedené typy grafov použité v tejto práci spolu s krátkym vysvetlením možností ich použitia. Niektoré definície vychádzajú z Grimaldiho učebnice diskrétnej matematiky \cite{grimaldi1985discrete}.
+V tejto podkapitole sú uvedené typy grafov použité v tejto práci spolu s krátkym vysvetlením možností ich použitia. Niektoré definície vychádzajú z učebníc diskrétnej matematiky \cite{grimaldi1985discrete,kvasnivcka2008algebra}.
 
 
 \subsection{Orientovaný graf}
-Orientovaný graf $G$ pozostáva z konečnej neprázdnej množiny vrcholov $V$ a množiny usporiadaných dvojíc $E \subseteq V \times V$, resp. hrán.
+Orientovaný graf $G$ je definovaný pomocou konečnej neprázdnej množiny vrcholov $V$ a množiny usporiadaných dvojíc $E \subseteq V \times V$, resp. hrán.
 %pričom každá hrana $(x, y) \in E$ začína vo vrchole $x$ a končí vo vrchole $y$. 
 V diagramoch sú vrcholy väčšinou znázornené ako kruhy, prípadne spolu s ich príslušným označením. Hrany sú zas vyobrazené pomocou šípok, ktorých smer určuje poradie vrcholov hrany (šípka vždy ukazuje na druhý vrchol v poradí). Grafy majú mnohoraké využitie pri modelovaní vzťahov, ktoré vyžadujú zachovať nejaký smer, postupnosť úkonov alebo vyjadriť určitú hierarchiu. Príklad bežného diagramu jednoduchého orientovaného grafu možno vidieť na obrázku \ref{obr:dir_demo}, kde $V = \{1, 2, 3, 4\}$ a $E = \left\{(1, 1), (1, 2), (2, 3), (3, 1), (2, 4), (4, 2)\right\}$.
 
@@ -108,7 +108,7 @@ Na obrázku \ref{obr:hasse_demo} možno vidieť príklad Hasseho diagramu pre č
 %Tieto pravidlá umožňujú prehľadnejšie znázornenie jednotlivých vzťahov vyskytujúcich sa v usporiadaní.
 
 \subsection{Bipartitný graf}
-Bipartitný graf je taký graf $G$, ktorého vrcholy možno rozdeliť do dvoch disjunktných podmnožín $U$ a $V$ tak, že
+Bipartitný graf je taký graf $G$, ktorého vrcholy možno rozdeliť do dvoch podmnožín $U$ a $V$ tak, že
 $U \cap V = \emptyset$ a zároveň každá hrana spája jeden vrchol z $U$ s ďalším vrcholom z $V$ (alebo naopak). Sú nápomocné pri hľadaní a skúmaní vzťahov (relácií a zobrazení) medzi entitami dvoch rôznych tried, ako napríklad medzi študentmi a učiteľmi, autormi a publikáciami alebo receptami a ingredienciami. Pri menšom množstve dát a vhodnom rozložení vrcholov umožňujú prehľadnú vizualizáciu prítomných vzťahov. Ukážku diagramu konkrétneho bipartitného grafu pre zobrazenie $f: \{1, 2, 3\} \rightarrow \{4, 5\}$, kde $f(1) = 4, f(2) = 5$ a $f(3) = 5$, so znázorneným rozdelením prvkov do množín $U$ a $V$, ktoré si v tomto prípade možno predstaviť ako definičný obor a obor hodnôt zobrazenia, je vidieť na obrázku \ref{obr:bipartite_demo}.
 
 \begin{figure}[tbhp]
@@ -151,9 +151,11 @@ Knižnica tiež poskytuje niektorú rozšírenú funkcionalitu, akou je napríkl
 konfigurovateľný panel s nástrojmi.
 
 \subsection{Redux}
-Redux \cite{redux} je knižnica na správu stavu JavaScriptových aplikácií, často používaná spolu s knižnicou React na zjednodušenie tvorby komplexných používateľských rozhraní. \emph{Stav aplikácie} je reprezentovaný iba ako obyčajný objekt (plain object), ktorý predstavuje centrálne miesto pre ukladanie a čítanie dát, čím výrazne uľahčuje ich zdieľanie naprieč komponentmi.
+Redux \cite{redux} je knižnica zameraná na prácu s globálnym stavom JavaScriptových aplikácií, často používaná spolu s knižnicou React na zjednodušenie tvorby komplexných používateľských rozhraní. \emph{Stav aplikácie} je reprezentovaný iba ako obyčajný objekt (plain object), ktorý predstavuje centrálne miesto pre ukladanie a čítanie dát.
 
-Stav v Reduxe nie je možné meniť priamo. Namiesto toho sa zmeny vykonávajú pomocou akcií a reducerov. \emph{Akcie} sú objekty popisujúce konkrétnu udalosť v aplikácii. V prípade potreby môžu obsahovať aj doplňujúce údaje (payload). Tieto akcie ďalej spracúvajú \emph{reducery}. To sú funkcie, ktoré na základe aktuálneho stavu a prijatej akcie určia nový stav aplikácie. Pre ich správne fungovanie je dôležité dbať na to, aby nemali vedľajšie efekty, teda aby reducer pre rovnaký stav a rovnakú akciu vždy vrátil rovnaký výsledok. Nemali by sa preto používať napríklad na generovanie náhodných hodnôt ani na komunikáciu s vonkajším svetom. Aplikácia môže obsahovať viacero reducerov, čo umožňuje rozdeliť logiku na menšie, nezávislé časti.
+%, čím výrazne uľahčuje ich zdieľanie naprieč komponentmi.
 
-Na získavanie konkrétnych dát zo stavu sa používajú \emph{selektory}. Ide o funkcie, ktoré na základe súčasného globálneho stavu vyberajú alebo odvodzujú potrebné údaje, čím zjednodušujú a sprehľadňujú prácu s dátami.
+Stav v Reduxe nie je možné meniť priamo. Namiesto toho sa zmeny vykonávajú pomocou reducerov a k nim prislúchajúcich akcií. \emph{Akcia} je objekt predstavujúci konkrétnu udalosť v aplikácii. V prípade potreby môže obsahovať aj doplňujúce údaje (payload). Tieto akcie ďalej spracúvajú \emph{reducery}. To sú funkcie, ktoré podľa aktuálneho stavu a prijatej akcie určia nový stav aplikácie. Pre ich správne fungovanie je dôležité dbať na to, aby nemali vedľajšie efekty, teda aby reducer pre rovnaký stav a rovnakú akciu vždy vrátil rovnaký výsledok. Nemali by sa preto používať napríklad na generovanie náhodných hodnôt ani na komunikáciu s vonkajším svetom. Aplikácia môže obsahovať viacero reducerov, čo umožňuje rozdeliť logiku na menšie, nezávislé časti.
+
+V Reduxe konkrétne dáta zo stavu získavame pomocou \emph{selektorov}. Ide o funkcie, ktoré na základe súčasného globálneho stavu vyberajú alebo odvodzujú potrebné údaje, čím zjednodušujú a sprehľadňujú prácu s dátami.
 
