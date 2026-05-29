@@ -151,11 +151,11 @@ Knižnica tiež poskytuje niektorú rozšírenú funkcionalitu, akou je napríkl
 konfigurovateľný panel s nástrojmi.
 
 \subsection{Redux}
-Redux \cite{redux} je knižnica zameraná na prácu s globálnym stavom JavaScriptových aplikácií, často používaná spolu s knižnicou React na zjednodušenie tvorby komplexných používateľských rozhraní. \emph{Stav aplikácie} je reprezentovaný iba ako obyčajný objekt (plain object), ktorý predstavuje centrálne miesto pre ukladanie a čítanie dát.
+Redux \cite{redux} je knižnica zameraná na prácu s globálnym stavom JavaScriptových aplikácií. Často sa používa spolu s knižnicou React na zjednodušenie tvorby komplexných používateľských rozhraní. \emph{Stav aplikácie} je reprezentovaný iba ako obyčajný objekt (plain object), ktorý predstavuje centrálne miesto pre ukladanie a čítanie dát.
 
 %, čím výrazne uľahčuje ich zdieľanie naprieč komponentmi.
 
-Stav v Reduxe nie je možné meniť priamo. Namiesto toho sa zmeny vykonávajú pomocou reducerov a k nim prislúchajúcich akcií. \emph{Akcia} je objekt predstavujúci konkrétnu udalosť v aplikácii. V prípade potreby môže obsahovať aj doplňujúce údaje (payload). Tieto akcie ďalej spracúvajú \emph{reducery}. To sú funkcie, ktoré podľa aktuálneho stavu a prijatej akcie určia nový stav aplikácie. Pre ich správne fungovanie je dôležité dbať na to, aby nemali vedľajšie efekty, teda aby reducer pre rovnaký stav a rovnakú akciu vždy vrátil rovnaký výsledok. Nemali by sa preto používať napríklad na generovanie náhodných hodnôt ani na komunikáciu s vonkajším svetom. Aplikácia môže obsahovať viacero reducerov, čo umožňuje rozdeliť logiku na menšie, nezávislé časti.
+Stav v Reduxe nie je možné meniť priamo. Namiesto toho sa zmeny vykonávajú pomocou reducerov a k nim prislúchajúcich akcií. \emph{Akcia} je objekt predstavujúci konkrétnu udalosť. V prípade potreby môže obsahovať aj doplňujúce údaje (payload). Tieto akcie ďalej spracúvajú \emph{reducery}. To sú funkcie, ktoré podľa aktuálneho stavu a prijatej akcie určia nový stav aplikácie. Pre ich správne fungovanie je dôležité dbať na to, aby nemali vedľajšie efekty, teda aby reducer pre rovnaký stav a rovnakú akciu vždy vrátil rovnaký výsledok. Nemali by sa preto používať napríklad na generovanie náhodných hodnôt ani na komunikáciu s vonkajším svetom. Aplikácia môže obsahovať viacero reducerov, čo umožňuje rozdeliť logiku na menšie, nezávislé časti.
 
 V Reduxe konkrétne dáta zo stavu získavame pomocou \emph{selektorov}. Ide o funkcie, ktoré na základe súčasného globálneho stavu vyberajú alebo odvodzujú potrebné údaje, čím zjednodušujú a sprehľadňujú prácu s dátami.
 
