@@ -1,5 +1,5 @@
 \chapter{Návrh}
-V tejto kapitole najprv zadefinujeme požiadavky kladené na výslednú aplikáciu. Následne predstavíme návrh jednotlivých riešení spolu s vysvetlením, ako sme k nim dospeli. V závere sa zameriame na návrh stavu nových častí aplikácie a jeho zakomponovanie do už existujúceho riešenia.
+V tejto kapitole najprv zadefinujeme požiadavky kladené na výslednú aplikáciu. Následne predstavíme návrh jednotlivých riešení spolu s vysvetlením, ako sme k nim dospeli. V~závere sa zameriame na návrh stavu nových častí aplikácie a jeho zakomponovanie do už existujúceho riešenia.
 
 %V tejto kapitole najprv zadefinujeme požiadavky, ktoré od výslednej aplikácie očakávame. Následne sa pozrieme na návrh jednotlivých grafových ale aj iných editor a vylepšení. V závere priblížime, ako sme všetky navrhnuté riešenia zakomponovali do už existujúceho stavu aplikácie.
 
@@ -7,7 +7,7 @@ V tejto kapitole najprv zadefinujeme požiadavky kladené na výslednú aplikác
 
 \section{Požiadavky}
 
-Požiadavky na rozšírenie aplikácie sa postupne vyvíjali a rozširovali, čo viedlo k pridaniu pomerne veľkého množstva novej funkcionality nad rámec grafových editorov. V tejto podkapitole opíšeme všetky požiadavky a vysvetlíme dôvod ich zaradenia.
+Požiadavky na rozšírenie aplikácie sa postupne vyvíjali a rozširovali, čo viedlo k pridaniu pomerne veľkého množstva novej funkcionality nad rámec grafových editorov. V~tejto podkapitole opíšeme všetky požiadavky a vysvetlíme dôvod ich zaradenia.
 
 \subsection{Zámer rozšírenia aplikácie}
 Hlavným cieľom tejto práce je zlepšiť použiteľnosť existujúcej aplikácie Prieskumník štruktúr, používanej na predmete Logika pre informatikov. Ako bolo už bližšie spomenuté v podkapitole \ref{sec:explorer} venovanej práve tomuto nástroju, reimplementovaná verzia poskytuje iba veľmi obmedzený spôsob vizualizácie a manipulácie s interpretáciami predikátových a funkčných symbolov.
@@ -17,7 +17,7 @@ Primárnym zlepšením v tejto oblasti má byť rozšírenie nástroja o grafov�
 Aplikáciu by sme však radi posunuli ďalej aj v iných smeroch, či už integráciou ďalších editorov, pridaním novej funkcionality alebo vylepšením tej existujúcej.
 
 \subsection{Požiadavky na grafové editory}
-Každý z grafov by mal z hľadiska funkčnosti slúžiť ako plnohodnotná alternatíva k už existujúcemu množinovému pohľadu. Musí teda zobrazovať jednotlivé usporiadané dvojice, resp. vzťahy, ktoré konkrétna interpretácia opisuje a prvky domény, medzi ktorými tieto vzťahy vznikajú. Vzťahy sa tiež musia dať vytvárať a mazať.
+Každý z grafov by mal z hľadiska funkčnosti slúžiť ako plnohodnotná alternatíva k~už existujúcemu množinovému pohľadu. Musí teda zobrazovať jednotlivé usporiadané dvojice, resp. vzťahy, ktoré konkrétna interpretácia opisuje a prvky domény, medzi ktorými tieto vzťahy vznikajú. Vzťahy sa tiež musia dať vytvárať a mazať.
 
 Vyobrazenie grafov by malo byť prispôsobené konkrétnym vlastnostiam každej reprezentácie. Bipartitný graf musí jasne znázorňovať rozdelenie prvkov do dvoch skupín, pričom vytváranie nových hrán je dovolené iba z jednej z nich. Hasseho diagram by zas mal poskytnúť možnosť automatického vytvorenia hierarchie typickej pre túto reprezentáciu. Tiež by sa malo dbať na to, aby používateľ mohol vytvárať iba vzťahy spĺňajúce podmienky čiastočného usporiadania (bližšie opísané v sekcii \ref{sec:reprezentacie-hasse}).
 
@@ -28,7 +28,7 @@ Počas vývoja aplikácie sme sa rozhodli popri grafových editoroch pridať aj 
 
 \textbf{Maticový a databázový editor:} Jednou z pridaných požiadaviek je reimplementácia maticového a databázového editora z pôvodnej verzie Prieskumníka štruktúr, ktoré vznikli v rámci práce Milana Cifru \cite{cifra2018}. Ich účel je podobný ako pri grafových reprezentáciách, no okrem poskytnutia alternatívneho pohľadu dokážu reprezentovať aj iné než iba binárne predikáty a unárne funkcie. Pri týchto editoroch sa taktiež vyžaduje možnosť zobrazovať unárne predikáty a využívať ich na filtrovanie.
 
-\textbf{Editor interpretácií funkcií rozborom prípadov:} Ďalšie vylepšenie má za cieľ uľahčiť tvorbu interpretácií funkčných symbolov. To býva často zdĺhavé, keďže doposiaľ spomínané riešenia vyžadujú explicitné definovanie všetkých prípadov. Dá sa to však vylepšiť nástrojom, ktorý umožní definovať podmienky na argumenty funkcie spolu s príslušnými hodnotami, ktoré má funkcia pri ich splnení nadobúdať. Požiadavkou je preto vytvorenie nástroja založeného na takomto princípe.
+\textbf{Editor interpretácií funkcií rozborom prípadov:} Ďalšie vylepšenie má za cieľ uľahčiť tvorbu interpretácií funkčných symbolov. To býva často zdĺhavé, keďže doposiaľ spomínané riešenia vyžadujú explicitné definovanie všetkých prípadov. Dá sa to však vylepšiť nástrojom, ktorý umožní definovať podmienky na argumenty funkcie spolu s~príslušnými hodnotami, ktoré má funkcia pri ich splnení nadobúdať. Požiadavkou je preto vytvorenie nástroja založeného na takomto princípe.
 
 \textbf{Dopyty:} Toto rozšírenie na rozdiel od ostatných neslúži na tvorbu interpretácií. Malo by predstavovať samostatnú sekciu aplikácie určenú na definovanie otvorených formúl a následné získanie všetkých ohodnotení, pri ktorých sú tieto formuly splnené. Výsledok takéhoto dopytu by sa mal vhodne zobraziť v podobe tabuľky.
 
@@ -52,9 +52,9 @@ Na obrázku \ref{obr:rozhranie} možno vidieť návrh rozhrania, do ktorého sú
 \textbf{Panel unárnych predikátov:} Tento komponent tvorí najdôležitejšiu časť spoločného rozhrania. Ústredným prvkom je horizontálny zoznam zaškrtávacích tlačidiel reprezentujúcich jednotlivé unárne predikáty, pričom každému z nich je priradená vlastná farba. Ako aj neskôr v návrhu grafových editorov \ref{sec:plan-graph-editors} a tabuľkových editorov \ref{sec:plan-table-editors} uvidíme, kompatibilné editory túto farbu rôzne využívajú pri ich vizualizácii. Tlačidlo s dvoma fajkami, umiestnené naľavo, slúži na hromadné zaškrtnutie všetkých unárnych predikátov. Úplne vľavo sa nachádza zaškrtávacie tlačidlo označené písmenom „$D$“, tzv. doménové, ktorého funkcia je podrobnejšie vysvetlená v časti \ref{sec:plan-editors-ui-filters} venovanej filtrovaniu.
 
 \textbf{Filter prvkov domény:}
-Tlačidlo na rozbalenie filtrov je umiestnené napravo od panela unárnych predikátov. Po jeho stlačení sa zobrazí komponent (na obrázku úplne vpravo) so zaškrtávacími tlačidlami reprezentujúcimi prvky domény. Pri každom prvku sú zároveň vo forme krúžkov zobrazené farby unárnych predikátov, do ktorých interpretácií patrí. Odškrtnutím konkrétneho prvku indikujeme, že sa nemá nachádzať v zobrazení editora.
+Tlačidlo na rozbalenie filtrov je umiestnené napravo od panela unárnych predikátov. Po jeho stlačení sa zobrazí komponent (na obrázku úplne vpravo) so zaškrtávacími tlačidlami reprezentujúcimi prvky domény. Pri každom prvku sú zároveň vo forme krúžkov zobrazené farby unárnych predikátov, do ktorých interpretácií patrí. Odškrtnutím konkrétneho prvku indikujeme, že sa nemá nachádzať v~zobrazení editora.
 
-\textbf{Chybový panel:} Tento komponent sa zobrazí iba v prípade, že v interpretácii nastala chyba. V ľavej časti je vypísaná chybová správa. Ak sa navyše jedná o chybu, ktorú je možné automaticky opraviť, na pravej strane zároveň pribudne tlačidlo na jej opravu.
+\textbf{Chybový panel:} Tento komponent sa zobrazí iba v prípade, že v interpretácii nastala chyba. V ľavej časti je vypísaná chybová správa. Ak navyše ide o chybu, ktorú je možné automaticky opraviť, na pravej strane zároveň pribudne tlačidlo na jej opravu.
 
 \textbf{Zobrazenie editora:} Do tejto časti je vložený komponent zvoleného editora.
 
@@ -177,7 +177,7 @@ Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali z
     \label{obr:hasse_error}
 \end{figure}
 
-Ďalšou požiadavkou bolo automatické usporiadanie vrcholov do hierarchickej štruktúry typickej pre túto reprezentáciu. Rozhodli sme sa však, že nebudeme používateľa akokoľvek obmedzovať za účelom dodržiavania tejto hierarchie. Namiesto toho mu poskytneme dobrý základ rozmiestnenia vrcholov, ktorý si môže ďalej prispôsobiť podľa vlastných predstáv. Samotné rozloženie preto prebieha iba pri prvom otvorení grafu alebo na vyžiadanie používateľa stlačením tlačidla na paneli nástrojov.
+Ďalšou požiadavkou bolo automatické usporiadanie vrcholov do hierarchickej štruktúry typickej pre túto reprezentáciu. Rozhodli sme sa však, že nebudeme používateľa akokoľvek obmedzovať za účelom dodržiavania tejto hierarchie. Namiesto toho mu poskytneme dobrý základ rozmiestnenia vrcholov, ktorý si môže ďalej prispôsobiť podľa vlastných predstáv. Samotné rozloženie preto prebieha iba pri prvom otvorení grafu, alebo na vyžiadanie používateľa stlačením tlačidla na paneli nástrojov.
 
 \begin{figure}
     \centerline{\includegraphics[width=0.85\textwidth]{images/hasse.png}}
@@ -187,19 +187,19 @@ Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali z
     \label{obr:hasse_navrh_1}
 \end{figure}
 
-Môj návrh je zobrazený na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s orientovanými hranami smerujúcimi nahor. Podobne ako v orientovanom grafe je používateľovi zelenou prerušovanou čiarou naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by bola hrana zvýraznená červenou farbou a používateľovi by sa zobrazila už spomínaná varovná správa.
+Môj návrh je zobrazený na obrázku \ref{obr:hasse_navrh_1}. Viditeľná je jasná hierarchia vrcholov s~orientovanými hranami smerujúcimi nahor. Podobne ako v orientovanom grafe je používateľovi zelenou prerušovanou čiarou naznačená korektnosť hrany, ktorú sa práve snaží pridať (tu je hrana v poriadku). V opačnom prípade by bola hrana zvýraznená červenou farbou a používateľovi by sa zobrazila už spomínaná varovná správa.
 
 
 \subsection{Bipartitný graf}
 \label{bsec:bipartite_graph_navrh}
-Špecifickým pre bipartitný graf je, že na rozdiel od orientovaného grafu a Hasseho diagramu každému prvku domény vždy prislúchajú dva vrcholy. Po jednom sa nachádzajú v skupine reprezentujúcej obor a koobor binárnej relácie alebo zobrazenia interpretujúceho predikátový, resp. funkčný symbol. Je to tak kvôli tomu, že obor aj koobor v prípade prvorádových štruktúr predstavuje doména štruktúry.
+Špecifickým pre bipartitný graf je, že na rozdiel od orientovaného grafu a Hasseho diagramu každému prvku domény vždy prislúchajú dva vrcholy. Po jednom sa nachádzajú v skupine reprezentujúcej obor a koobor binárnej relácie alebo zobrazenia interpretujúceho predikátový, resp. funkčný symbol. Je to tak kvôli tomu, že obor aj koobor v~prípade prvorádových štruktúr predstavuje doména štruktúry.
 
 Prvý návrh editora bipartitného grafu možno vidieť na obrázku \ref{obr:bipartite_navrh_1}. Hrany reprezentujú šípky smerujúce zľava doprava, pričom ide o jediný smer, v ktorom sa dajú vytvárať. Vrcholy sú rozdelené do dvoch stĺpcov, čo je naznačené aj ich rozdielnou farbou. Každý stĺpec reprezentuje ľubovoľnú podmnožinu prvkov danej domény. Používateľovi je tiež umožnené meniť poradie vrcholov, ale iba v rámci príslušnej skupiny, presúvanie medzi skupinami nie je dovolené. Posledný, menej výrazný vrchol sa líši od ostatných, pretože slúži ako tlačidlo na pridávanie ďalších prvkov do príslušného stĺpca. Vytváranie hrán sa realizuje potiahnutím z krúžku počiatočného na krúžok koncového vrcholu.
 
 %V tomto prípade je takéto riešenie v poriadku (na rozdiel od orientovaného grafu), keďže smerovanie hrany je vždy jednoznačné, a preto nebude spôsobovať zbytočné prelínanie s počiatočným alebo koncovým vrcholom.
 
 
-Na uvedenom riešení nám však nevyhovoval odlišný vizuál vrcholov v porovnaní s ostatnými grafovými editormi.
+Na uvedenom riešení nám však nevyhovoval odlišný vizuál vrcholov v porovnaní s~ostatnými grafovými editormi.
 Navyše, možnosť samostatného výberu vrcholov oboch skupín sme v kombinácii s existujúcimi možnosťami filtrovania nepovažovali za vhodnú, keďže pre používateľa by mohlo byť náročné pochopiť, ako jednotlivé filtre ovplyvnili výsledné zobrazenie. Rozhodli sme sa preto náš návrh ešte upraviť a dopracovať do druhej, finálnej verzie, ktorá je vyobrazená na obrázku \ref{obr:bipartite_navrh_2}.
 
 Jednou zo zmien je zjednotenie funkcionality a vizuálu vrcholov podľa vzoru orientovaného grafu. Príslušnosť vrcholov do skupiny je naznačená pomocou dvoch kontajnerov s rozdielnou farbou a názvom danej skupiny. Tiež sme  odstránili tlačidlá na pridávanie ďalších prvkov do skupiny. V dôsledku toho obe časti vždy obsahujú rovnakú podmnožinu domény, ovládanú iba pomocou filtrov. Týmito úpravami sa nám podarilo dosiahnuť konzistentnejšie správanie naprieč grafovými editormi. Všetky ostatné funkcie sme ponechali.
@@ -304,7 +304,7 @@ Každá cesta od koreňa k listu teda určuje konkrétnu kombináciu podmienok v
     \label{obr:case_tree}
 \end{figure}
 
-Strom rozboru prípadov nám umožňuje jednoznačne reprezentovať interpretácie funkčných symbolov, a to aj pomocou relatívne malého množstva dát. V porovnaní s ostatnými editormi to predstavuje veľkú výhodu, keďže tie vyžadujú explicitné definovanie celej interpretácie.
+Strom rozboru prípadov nám umožňuje jednoznačne reprezentovať interpretácie funkčných symbolov, a to aj pomocou relatívne malého množstva dát. V porovnaní s~ostatnými editormi to predstavuje veľkú výhodu, keďže tie vyžadujú explicitné definovanie celej interpretácie.
 
 Ďalej bolo potrebné pre editor navrhnúť vhodné používateľské rozhranie, ktoré dovolí tvorbu stromu rozboru prípadov. Počas jeho vývoja sme prešli viacerými rôznymi návrhmi. Pre poskytnutie lepšej predstavy o tom, čo viedlo k finálnemu návrhu, sú ďalej jednotlivé verzie v krátkosti popísané.
 
@@ -328,7 +328,7 @@ V tejto verzii bola tiež pridaná validácia jednotlivých vstupov. Napríklad 
 
 Dôvod, prečo sme nezostali pri tejto reprezentácii, bol najmä ten, že jej vizuálna podoba nezodpovedala matematickej definícii. Napriek tomu nám však poskytla veľmi dobrý základ, z ktorého sme mohli vychádzať pri ďalšom návrhu.
 
-\begin{figure}[tbhp]
+\begin{figure}[t!]
     \centerline{\includegraphics[width=0.9\textwidth]{images/interval2.png}}
     %popis obrazku
     \caption[Druhý návrh pre Editor interpretácií funkcií rozborom prípadov.]{Druhý návrh pre Editor interpretácií funkcií rozborom prípadov.}
@@ -336,20 +336,21 @@ Dôvod, prečo sme nezostali pri tejto reprezentácii, bol najmä ten, že jej v
     \label{obr:interval_2}
 \end{figure}
 
-\paragraph{Tretí návrh}
-Pri finálnom návrhu (obr. \ref{obr:interval_3}) sme sa snažili, aby čo najvernejšie zodpovedal matematickému zápisu. Spôsob rozdelenia jednotlivých prípadov na riadky je podobný ako pri prvom návrhu. Rozdiel je však v tom, že tlačidlo na bližšiu špecifikáciu podmienky sa nachádza na pravej strane príslušného riadka. Po jeho stlačení sa zobrazí výber argumentov funkcie, ktoré sa v podmienke ešte nevyskytujú. Po výbere sa automaticky pridá nová podmienka s predvyplneným textovým vstupom podľa zvoleného argumentu. Pridanie novej podmienky sa realizuje prostredníctvom menej výrazných, čiastočne priehľadných riadkov. Tie sa v kontexte stromu nachádzajú všade tam, kde je možné pridať ďalšiu podmienku k uzlu reprezentujúcemu argument, pretože ešte neboli vytvorené podmienky na rovnosť so všetkými prvkami domény. Jednotlivé vstupy sú taktiež validované, podobne ako pri druhom návrhu.
-
-%Tie sa v kontexte stromu nachádzajú všade tam, kde je ešte možné pridať ďalšiu podmienku k uzlu reprezentujúcemu argument. Ide teda o miesta, kde ešte neboli vytvorené podmienky na rovnosť so všetkými prvkami domény okrem posledného.
-
-Pri takomto spôsobe reprezentácie stromu je však často potrebné zobrazovať jeden uzol reprezentujúci argument naprieč viacerými riadkami. Preto sme sa rozhodli povoliť úpravu tohto argumentu iba v tom riadku, v ktorom sa vyskytuje po prvýkrát. V ostatných riadkoch je príslušný textový vstup deaktivovaný.
-
-\begin{figure}[tbhp]
+\begin{figure}[b!]
     \centerline{\includegraphics[width=0.9\textwidth]{images/interval3.png}}
     %popis obrazku
     \caption[Tretí návrh pre Editor interpretácií funkcií rozborom prípadov.]{Tretí návrh pre Editor interpretácií funkcií rozborom prípadov.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:interval_3}
 \end{figure}
+
+\paragraph{Tretí návrh}
+Pri finálnom návrhu (obr. \ref{obr:interval_3}) sme sa snažili, aby čo najvernejšie zodpovedal matematickému zápisu. Spôsob rozdelenia jednotlivých prípadov na riadky je podobný ako pri prvom návrhu. Rozdiel je však v tom, že tlačidlo na bližšiu špecifikáciu podmienky sa nachádza na pravej strane príslušného riadka. Po jeho stlačení sa zobrazí výber argumentov funkcie, ktoré sa v podmienke ešte nevyskytujú. Po výbere sa automaticky pridá nová podmienka s predvyplneným textovým vstupom podľa zvoleného argumentu. Pridanie novej podmienky sa realizuje prostredníctvom menej výrazných, čiastočne priehľadných riadkov. Tie sa v kontexte stromu nachádzajú všade tam, kde je možné pridať ďalšiu podmienku k uzlu reprezentujúcemu argument, pretože ešte neboli vytvorené podmienky na rovnosť so všetkými prvkami domény. Jednotlivé vstupy sú taktiež validované, podobne ako pri druhom návrhu.
+
+%Tie sa v kontexte stromu nachádzajú všade tam, kde je ešte možné pridať ďalšiu podmienku k uzlu reprezentujúcemu argument. Ide teda o miesta, kde ešte neboli vytvorené podmienky na rovnosť so všetkými prvkami domény okrem posledného.
+
+Pri takomto spôsobe reprezentácie stromu je však často potrebné zobrazovať jeden uzol reprezentujúci argument naprieč viacerými riadkami. Preto sme sa rozhodli povoliť úpravu tohto argumentu iba v tom riadku, v ktorom sa vyskytuje po prvýkrát. V~ostatných riadkoch je príslušný textový vstup deaktivovaný.
+
 
 \section{Dopyty}
 \label{sec:plan-queries}
@@ -364,7 +365,7 @@ Na definovanie dopytu je najprv potrebné deklarovať voľné premenné, podľa 
 
 Ak sú oba vstupy vyplnené správne, používateľ môže stlačiť tlačidlo „Vyhodnotiť“ úplne napravo. Tým sa dopyt vyhodnotí, teda sa vygenerujú všetky ohodnotenia, ktoré spĺňajú danú otvorenú formulu. Následne sa zobrazí počet výsledkov spolu s ich zoznamom. Každý riadok predstavuje jedno ohodnotenie a stĺpce zodpovedajú jednotlivým voľným premenným. Zoznam je navyše stránkovaný, takže aj pri väčšom množstve ohodnotení sa zobrazí iba obmedzený počet výsledkov. Prechádzanie strán zoznamu je umožnené tlačidlami na jeho spodku.
 
-Problém, ktorý môže nastať je, ak používateľ po vyhodnotení dopytu nejakým spôsobom upraví štruktúru. To totiž často znamená, že vygenerované ohodnotenia už nie sú aktuálne.
+Problém, ktorý môže nastať je, ak používateľ po vyhodnotení dopytu upraví štruktúru. To totiž často znamená, že vygenerované ohodnotenia už nie sú aktuálne.
 
 Jedným z riešení bolo pri každej zmene štruktúry všetky existujúce výsledky skryť. Na ich opätovné zobrazenie by bolo potrebné opäť stlačiť tlačidlo na vyhodnotenie. Tento variant nám však úplne nevyhovoval, pretože sme chceli, aby boli výsledky stále k dispozícii. Pre používateľa môžu byť totiž nápomocné, najmä počas úprav samotnej štruktúry. Zároveň sme nechceli vyhodnotenie dopytu spúšťať automaticky po každej zmene, keďže pri väčšom množstve súčasne otvorených dopytov s veľkým počtom ohodnotení by takýto prístup mohol výrazne zhoršiť výkon aplikácie. Navyše by si používateľ ani nemusel uvedomiť, že sa výsledok dopytu zmenil.
 
@@ -382,7 +383,7 @@ Nakoniec sme sa rozhodli zvoliť prístup, pri ktorom sa výsledky po upravení 
 \label{sec:new_state}
 V pôvodnej implementácii je stav organizovaný do viacerých logických celkov, ktoré zodpovedajú jednotlivým častiam aplikácie. Medzi ne patria napríklad pôvodné súčasti stavu \texttt{LanguageSlice} a \texttt{StructureSlice}, predstavujúce jazyk, resp. štruktúru. Všetky časti stavu sú spojené do centrálneho stavu aplikácie (\texttt{RootState}).
 
-Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s jeho existujúcimi časťami. Triedny diagram vybraných súčastí stavu možno vidieť na obrázku \ref{obr:diagram-nahlad}. Nové a zmenené typy sú zvýraznené. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrhy aj diagramom znázorňujúcim ich dátový model.
+Stavy našich rozšírení sú tiež integrované do centrálneho stavu aplikácie spolu s~jeho existujúcimi časťami. Triedny diagram vybraných súčastí stavu možno vidieť na obrázku \ref{obr:diagram-nahlad}. Nové a zmenené typy sú zvýraznené. V nasledujúcich sekciách sa venujeme podrobnejšiemu návrhu stavu jednotlivých rozšírení. Tam, kde je to vhodné, dopĺňame návrhy aj diagramom znázorňujúcim ich dátový model.
 
 %S výnimkou dopytov (\texttt{QuerySlice}) má každý stav podobu slovníka, keďže ukladané dáta sú vždy viazané na konkrétny predikát alebo funkciu. Jednotlivé záznamy obsahujú stav príslušného rozšírenia. V diagrame sú to typy končiace slovom \texttt{Entry}. 
 
@@ -407,9 +408,9 @@ Rozhodli sme sa preto zaviesť novú časť stavu (\texttt{TextViewSlice}) urče
 V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vhodnou štruktúrovanou formou. Napríklad v prípade interpretácií predikátov ide o zoznam jednotlivých $n$-tíc prvkov domény, kde $n$ je arita predikátu.
 
 \subsection{Spoločné rozhranie editorov}
-Časť stavu spoločného rozhrania editorov (\texttt{EditorToolbarSlice}) je potrebná na ukladanie informácií o aktuálne otvorenom editore a jednotlivých nastaveniach filtrovania pre každý predikát a funkciu. Konkrétne sa jedná o stav zaškrtávacieho tlačidla domény, názvy zaškrtnutých unárnych predikátov ako aj zoznam prvkov domény označených v komponente filtra domény. Záznam o tomto stave pre každý predikát a funkciu je uložený v slovníku, ktorého kľúče sú kombinácia príslušného symbolu a jeho typu.
+Časť stavu spoločného rozhrania editorov (\texttt{EditorToolbarSlice}) je potrebná na ukladanie informácií o aktuálne otvorenom editore a jednotlivých nastaveniach filtrovania pre každý predikát a funkciu. Konkrétne sa jedná o stav zaškrtávacieho tlačidla domény, názvy zaškrtnutých unárnych predikátov ako aj zoznam prvkov domény označených v~komponente filtra domény. Záznam o tomto stave pre každý predikát a funkciu je uložený v slovníku, ktorého kľúče sú kombinácia príslušného symbolu a jeho typu.
 
-\begin{figure}[tbhp]
+\begin{figure}[b!]
     \centerline{\includegraphics[width=0.75\textwidth]{images/graph-diagram.png}}
     %popis obrazku
     \caption[Triedny diagram pre grafové editory.]{Triedny diagram pre grafové editory.}
@@ -421,21 +422,22 @@ V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vho
 \label{plan:state-graphs}
 V časti stavu pre grafové editory sa ukladajú dáta jednotlivých grafových reprezentácií. Návrh dátového modelu je znázornený na obrázku \ref{obr:graph_diagram}. Každému binárnemu predikátu a unárnej funkcii zodpovedá jeden záznam (\texttt{GraphStateEntry}) v slovníkovom type \texttt{GraphSlice}, ktorého kľúčom je kombinácia príslušného symbolu a jeho typu.
 
-Každý objekt typu \texttt{GraphStateEntry} obsahuje typ príslušného symbolu (atribút \texttt{tupleType}) a stav (\texttt{GraphState}) pre jednotlivé typy grafov. Tento stav zahŕňa zoznam vrcholov (\texttt{Node}) a hrán (\texttt{Edge}). Hrana je navyše asociovaná s dvojicou vrcholov, pričom jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}). Vrcholy obsahujú svoju pozíciu v zobrazení grafu (atribúty \texttt{positionX} a \texttt{positionY}) a unikátny identifikátor (atribút \texttt{id}) používaný na jednoznačné priradenie počiatočného a koncového vrcholu hrany s konkrétnou inštanciou objektu typu \texttt{Node}. Vrchol bipartitného grafu (\texttt{BipartiteNode}) rozširuje \texttt{Node} o atribút \texttt{partition}, ktorý určuje jeho príslušnosť k jednej z dvoch skupín.
+Každý objekt typu \texttt{GraphStateEntry} obsahuje typ príslušného symbolu (atribút \texttt{tupleType}) a stav (\texttt{GraphState}) pre jednotlivé typy grafov. Tento stav zahŕňa zoznam vrcholov (\texttt{Node}) a hrán (\texttt{Edge}). Hrana je navyše asociovaná s dvojicou vrcholov, pričom jeden je počiatočný (\texttt{source}) a druhý koncový (\texttt{target}). Vrcholy obsahujú svoju pozíciu v zobrazení grafu (atribúty \texttt{positionX} a \texttt{positionY}) a unikátny identifikátor (atribút \texttt{id}) používaný na jednoznačné priradenie počiatočného a koncového vrcholu hrany s konkrétnou inštanciou objektu typu \texttt{Node}. Vrchol bipartitného grafu (\texttt{BipartiteNode}) rozširuje \texttt{Node} o atribút \texttt{partition}, ktorý určuje jeho príslušnosť k~jednej z dvoch skupín.
 
 \subsection{Maticový a databázový editor}
 Rovnako ako pri grafových editoroch, aj v maticovom a databázovom editore je záznam o ich stave uložený v slovníku, ktorého kľúče sú kombinácia názvu a typu príslušného predikátu alebo funkcie. V prípade databázového editora je stav ukladaný ako zoznam hodnôt zadaných do textových vstupov pre jednotlivé $n$-tice. Naopak maticový editor pre každú $n$-ticu zaznamenáva buď stav zaškrtávacieho políčka, alebo hodnotu textového vstupu, v závislosti od typu reprezentácie.
 
-\begin{figure}[tbh]
+
+\subsection{Editor interpretácií funkcií rozborom prípadov}
+Stav editora interpretácií funkcií rozborom prípadov je podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Rozdielom však je, že používame iba uzol predstavujúci argument funkcie. Informáciu, ktorú niesol uzol predstavujúci hodnotu sme presunuli do hrán stromu, ktoré sú reprezentované samotnými objektmi. 
+
+\begin{figure}[t!]
     \centerline{\includegraphics[width=0.75\textwidth]{images/tree-diagram.png}}
     %popis obrazku
     \caption[Triedny diagram pre editor interpretácií funkcií.]{Triedny diagram pre editor interpretácií funkcií rozborom prípadov.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
     \label{obr:tree_diagram}
 \end{figure}
-
-\subsection{Editor interpretácií funkcií rozborom prípadov}
-Stav editora interpretácií funkcií rozborom prípadov je podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Rozdielom však je, že používame iba uzol predstavujúci argument funkcie. Informáciu, ktorú niesol uzol predstavujúci hodnotu sme presunuli do hrán stromu, ktoré sú reprezentované samotnými objektmi. 
 
 Návrh dátového modelu editora je na obrázku \ref{obr:tree_diagram}. Každému funkčnému symbolu zodpovedá jeden záznam (\texttt{CaseTreeEntry}) v slovníkovom type \texttt{CaseTreeSlice}, ktorého kľúčom je tento funkčný symbol. V objekte typu \texttt{CaseTreeEntry} sú uložené jednotlivé uzly (\texttt{CaseTreeNode}) spolu s identifikátorom koreňového uzla (atribút \texttt{rootId}). Každý uzol je tvorený argumentom (atribút \texttt{argument}), ktorý reprezentuje, unikátnym identifikátorom (atribút \texttt{id}), zoznamom z neho vychádzajúcich podmienkových hrán (\texttt{CaseTreeCase}) a hranou označujúcou všetky ostatné prípady (\texttt{CaseTreeEdge}). Abstraktný objekt typu \texttt{CaseTreeEdge} špecializujú dva typy hrán. Jednou z nich je referenčná hrana (\texttt{ReferenceEdge}), ktorá si uchováva identifikátor druhého uzla, teda ďalšej inštancie \texttt{CaseTreeNode}. Druhou je hodnotová hrana (\texttt{ValueEdge}), tá priamo ukladá samotnú hodnotu.
 

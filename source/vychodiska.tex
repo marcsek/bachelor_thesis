@@ -14,17 +14,17 @@ Logika prvého rádu je rodina formálnych jazykov, ktoré hovoria o objektoch a
 
 Predikátové symboly používame na označenie vlastností alebo vzťahov. V konkrétnom jazyku $\mathcal{L}$ vždy majú (spolu s funkčnými symbolmi) pevne zvolený počet argumentov, ktorý určuje ich \textit{arita}, niekedy označovaná horným indexom. Predikátové symboly s~aritou 1 (unárne) zvyknú označovať nejakú vlastnosť alebo stav (napr. ${zviera}^1, {svieti}^1$), zatiaľ čo predikátové symboly s aritou 2 a viac ($n$-árne pre $n \geq 2$) opisujú určitý vzťah svojich argumentov (napr. ${nesie}^2$, ${medzi}^3$).
 
-Indivíduové konštanty označujú konkrétny objekt. Často sa používajú na vyjadrenie mena alebo názvu objektu (napr. Alica, Bratislava). Konkrétny objekt môže byť označený viacerými alebo žiadnou indivíduovou konštantou, no každá indivíduová konštanta musí označovať práve jeden objekt.
+Indivíduové konštanty označujú konkrétny objekt (napr. Alica, Bratislava). Konkrétny objekt môže byť označený viacerými alebo žiadnou indivíduovou konštantou, no každá indivíduová konštanta musí označovať práve jeden objekt.
 
-Funkčné symboly používame na označenie zobrazení, teda vzťahov $n$-tíc objektov k jednoznačne určeným objektom. Napríklad funkčný symbol ${hlavne\_mesto}^1$ by mohol každému vstupnému objektu (štátu) priraďovať ďalší objekt (jeho hlavné mesto).
+Funkčné symboly používame na označenie zobrazení, teda vzťahov $n$-tíc objektov k~jednoznačne určeným objektom. Napríklad funkčný symbol ${hlavne\_mesto}^1$ by mohol každému vstupnému objektu (štátu) priraďovať ďalší objekt (jeho hlavné mesto).
 
 Zo symbolov jazyka vieme vytvárať postupnosti, pričom tie z nich, ktoré označujú objekty, nazývame \textit{termy}. Medzi termy patria všetky indivíduové premenné a indivíduové konštanty. Okrem toho možno termy konštruovať aj pomocou funkčných symbolov a ich argumentov. Presnejšie, ak $f$ predstavuje funkčný symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy, potom aj postupnosť symbolov $f(t_1, \dots, t_n)$ je term.
 
-Najjednoduchšie postupnosti symbolov v logike prvého rádu, ktorým priraďujeme pravdivostné hodnoty, sú \textit{atomické formuly}. Medzi atomické formuly patria \textit{rovnostné atómy}, teda postupnosti symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy, a \textit{predikátové atómy}, teda postupnosti symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy.
+Najjednoduchšie postupnosti symbolov v logike prvého rádu, ktorým priraďujeme pravdivostné hodnoty, sú \textit{atomické formuly}. Medzi atomické formuly patria \textit{rovnostné atómy}, teda postupnosti symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy, a \textit{predikátové atómy}, teda postupnosti symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a~$t_1, \dots, t_n$ sú termy.
 
 %Ďalej každá postupnosť symbolov $t_1 \doteq t_2$, kde $t_1$ a $t_2$ sú termy predstavuje \textit{rovnostný atóm} a každá postupnosť symbolov $P(t_1, \dots, t_n)$, kde $P$ je predikátový symbol s aritou $n$ a $t_1, \dots, t_n$ sú termy predstavuje \textit{predikátový atóm}. Všetky rovnostné a predikátové atómy súhrnne nazývame \textit{atomickými formulami}.
 
-Nakoniec množinu všetkých \textit{formúl} jazyka $\mathcal{L}$ definujeme takto: Každá atomická formula je zároveň aj formula. Ak $A$ je formula, tak aj postupnosť symbolov $\neg A$ je formula. Ak $A$ aj $B$ sú formuly, tak aj postupnosti symbolov $(A \land B)$, $(A \lor B)$, $(A \rightarrow B)$ sú formuly. A napokom ak $x$ je indivíduová premenná a $A$ je formula, tak aj postupnosti symbolov $\exists x A$ a $\forall x A$ sú formuly.
+Nakoniec množinu všetkých \textit{formúl} jazyka $\mathcal{L}$ definujeme takto: Každá atomická formula je zároveň aj formula. Ak $A$ je formula, tak aj postupnosť symbolov $\neg A$ je formula. Ak $A$ aj $B$ sú formuly, tak aj postupnosti symbolov $(A \land B)$, $(A \lor B)$, $(A \rightarrow B)$ sú formuly. A napokon ak $x$ je indivíduová premenná a $A$ je formula, tak aj postupnosti symbolov $\exists x A$ a $\forall x A$ sú formuly.
 
 \subsection{Sémantika}
 Prvým dôležitým pojmom týkajúcim sa sémantiky logiky prvého rádu je \textit{štruktúra}, ktorá sa vždy viaže na nejaký konkrétny jazyk. Je ňou dvojica $\mathcal{M} = (D, i)$, kde $D$ je ľubovoľnú neprázdna množina (doména) a $i$ je zobrazenie (interpretačná funkcia). Úlohou interpretačnej funkcie je každej indivíduovej konštante priradiť prvok z $D$, každému funkčnému symbolu priradiť funkciu z $D^n$ do $D$ a každému predikátovému symbolu priradiť podmnožinu množiny $D^n$, kde $n$ v oboch prípadoch označuje aritu daného symbolu. Štruktúry sú dôležitou súčasťou skúmania vlastností jazyka logiky prvého rádu, keďže poskytujú jeho presný matematický model.
@@ -39,7 +39,7 @@ Ako sme už ukázali, pomocou štruktúr vieme dať význam mimologickým symbol
         i(f)\left(t_1^{\mathcal{M}}[e], \ldots, t_n^{\mathcal{M}}[e]\right),
     \end{aligned}
 \]
-pre všetky premenné $x$, všetky konštanty $a$, všetky funkčné symboly $f$ s aritou $n$ a všetky termy $t_1, \dots, t_n$.
+pre všetky premenné $x$, všetky konštanty $a$, všetky funkčné symboly $f$ s aritou $n$ a~všetky termy $t_1, \dots, t_n$.
 
 Relácia $\mathcal{M} \models X[e]$ (čítame \textit{štruktúra }$\mathcal{M}$ \textit{spĺňa formulu} $X$ \textit{pri ohodnotení} $e$) je definovaná induktívne takto:
 \[
@@ -129,7 +129,7 @@ React \cite{react} je v súčasnosti jedna z najpopulárnejších JavaScriptový
 
 Základnú stavebnú jednotku tvorí komponent, čo je JavaScriptová funkcia, ktorá produkuje určitý strom elementov jazyka HTML, ďalej označovaný ako markup. Každý takýto komponent potom predstavuje konkrétnu časť používateľského rozhrania s vlastnou funkcionalitou a vzhľadom.
 
-Vo väčšine prípadov sa markup komponentov zapisuje vo forme JavaScript XML (JSX), čo je syntaktické rozšírenie jazyka JavaScript. JSX je veľmi podobný značkovaciemu jazyku HTML, no umožňuje používanie vlastných značiek, ako aj jednoduchšiu manipuláciu s dynamickým obsahom. Toto je pre React kľúčové, keďže je tým umožnené skladať viaceré reaktívne komponenty do hierarchie, ktorá vytvára celú aplikáciu.
+Markup komponentov sa zapisuje vo forme JavaScript XML (JSX), ktoré predstavuje rozšírenie jazyka JavaScript. JSX je veľmi podobný značkovaciemu jazyku HTML, no umožňuje používanie vlastných značiek, ako aj jednoduchšiu manipuláciu s dynamickým obsahom. Toto je pre React kľúčové, keďže je tým umožnené skladať viaceré reaktívne komponenty do hierarchie, ktorá vytvára celú aplikáciu.
 
 %Ďalšou dôležitou súčasťou React-u je tzv. \verb'state', alebo stav komponentu. Zmena tohoto stavu spôsobuje, že sa celý komponent spracuje nanovo, už ale s aktuálnou hodnotou stavu. Na jeho základnú reprezentáciu sa používa špeciálna funkcia \verb|useState()|. Tejto funkcii môžeme dať ako parameter počiatočnú hodnotu stavu, ona nám vráti dvojicu aktuálnej hodnoty stavu, ako aj funkciu na zmenu tohoto stavu. Táto a s ňou aj iné funkcie poskytnuté React-om predstavujú tzv. \verb'hook', čo je funkcia ktorou sa vieme napojiť na niektoré vnútorné mechanizmy nášho komponentu.
 
@@ -138,7 +138,7 @@ Vo väčšine prípadov sa markup komponentov zapisuje vo forme JavaScript XML (
 \subsection{TypeScript}
 TypeScript \cite{typescript} je programovací jazyk s podporou pre statické typy s konfigurovateľnou mierou typovej kontroly. Funguje ako syntaktické rozšírenie JavaScriptu, ktoré sa pri kompilácii naspäť zmení na čistý JavaScript. Práve táto vlastnosť zabezpečuje jeho širokú kompatibilitu s už existujúcim ekosystémom.
 
-Statické typovanie pomáha odhaľovať chyby už v skorých fázach vývoja, zlepšuje čitateľnosť aj udržateľnosť kódu a vývojárskym prostrediam umožňuje integráciu bohatšej funkcionality, ako napríklad pokročilejšie automatické dopĺňanie na základe kontextu alebo vyhľadávanie definícií. Svojimi prínosmi teda dokáže priamo aj nepriamo uľahčiť a spríjemniť prácu programátora.
+Statické typovanie pomáha odhaľovať chyby už v skorých fázach vývoja, zlepšuje udržateľnosť kódu a vývojárskym prostrediam umožňuje integráciu bohatšej funkcionality, ako napríklad pokročilejšie automatické dopĺňanie na základe kontextu alebo vyhľadávanie definícií. Svojimi prínosmi teda dokáže priamo aj nepriamo uľahčiť a spríjemniť prácu programátora.
 
 Jazyk poskytuje možnosť definovať rozhrania pomocou kľúčového slova \verb|interface|, ktoré upresňujú zamýšľaný tvar objektov. Kľúčové slovo \verb|type| zas umožňuje vytváranie typových aliasov, či už primitívnych alebo komplexných typov. Okrem samotných typov podporuje typovú inferenciu, čo pomáha s prehľadnosťou programu, keďže často nie je potrebné typ premenných definovať manuálne.
 
