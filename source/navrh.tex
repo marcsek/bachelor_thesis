@@ -180,7 +180,7 @@ Pri vytváraní nových hrán sa preto kontroluje, či by ich pridaním ostali z
 Ďalšou požiadavkou bolo automatické usporiadanie vrcholov do hierarchickej štruktúry typickej pre túto reprezentáciu. Rozhodli sme sa však, že nebudeme používateľa akokoľvek obmedzovať za účelom dodržiavania tejto hierarchie. Namiesto toho mu poskytneme dobrý základ rozmiestnenia vrcholov, ktorý si môže ďalej prispôsobiť podľa vlastných predstáv. Samotné rozloženie preto prebieha iba pri prvom otvorení grafu, alebo na vyžiadanie používateľa stlačením tlačidla na paneli nástrojov.
 
 \begin{figure}
-    \centerline{\includegraphics[width=0.85\textwidth]{images/hasse.png}}
+    \centerline{\includegraphics[width=0.85\textwidth]{images/hasse.jpg}}
     %popis obrazku
     \caption[Návrh vizuálu pre Hasseho diagram.]{Návrh vizuálu pre Hasseho diagram.}
     %id obrazku, pomocou ktoreho sa budeme na obrazok odvolavat
@@ -403,7 +403,7 @@ V pôvodnej implementácií časti stavu pre jazyk a štruktúru uchovávajú v�
 
 Tento spôsob reprezentácie by bol však pri implementácii našich rozšírení veľmi nepraktický a neefektívny, keďže by si vyžadoval neustále premieňanie medzi textovou a štruktúrovanou formou interpretácie používanou v jednotlivých editoroch. Na druhej strane, pre správne fungovanie textových vstupov je potrebné, aby bol aj naďalej ukladaný ich presný obsah, keďže používateľ môže zadať aj syntakticky nesprávne vstupy, ktoré sa nedajú priamo previesť do štruktúrovanej formy.
 
-Rozhodli sme sa preto zaviesť novú časť stavu (\texttt{TextViewSlice}) určenú na ukladanie obsahu všetkých textových vstupov spomínaných častí aplikácie. Každý takýto vstup je reprezentovaný pomocou záznamu, ktorý obsahuje okrem samotného textového reťazca aj informáciu o type reprezentovaných dát (napr. či ide o indivíduové konštanty alebo interpretáciu funkčného symbolu). Kľúče týchto záznamov tvorí typ reprezentovaných dát a v prípade interpretácií konštánt, predikátov a funkcií aj ich názov. 
+Rozhodli sme sa preto zaviesť novú časť stavu (\texttt{TextViewSlice}) určenú na ukladanie obsahu všetkých textových vstupov spomínaných častí aplikácie. Každý takýto vstup je reprezentovaný pomocou záznamu, ktorý obsahuje okrem samotného textového reťazca aj informáciu o type reprezentovaných dát (napr. či ide o indivíduové konštanty alebo interpretáciu funkčného symbolu). Kľúče týchto záznamov tvorí typ reprezentovaných dát a v prípade interpretácií konštánt, predikátov a funkcií aj ich názov.
 
 V pôvodných častiach stavu sú všetky textové reprezentácie nahradené vhodnou štruktúrovanou formou. Napríklad v prípade interpretácií predikátov ide o zoznam jednotlivých $n$-tíc prvkov domény, kde $n$ je arita predikátu.
 
@@ -429,7 +429,7 @@ Rovnako ako pri grafových editoroch, aj v maticovom a databázovom editore je z
 
 
 \subsection{Editor interpretácií funkcií rozborom prípadov}
-Stav editora interpretácií funkcií rozborom prípadov je podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Rozdielom však je, že používame iba uzol predstavujúci argument funkcie. Informáciu, ktorú niesol uzol predstavujúci hodnotu sme presunuli do hrán stromu, ktoré sú reprezentované samotnými objektmi. 
+Stav editora interpretácií funkcií rozborom prípadov je podobný stromovej štruktúre opísanej v podkapitole \ref{sec:case_tree}. Rozdielom však je, že používame iba uzol predstavujúci argument funkcie. Informáciu, ktorú niesol uzol predstavujúci hodnotu sme presunuli do hrán stromu, ktoré sú reprezentované samotnými objektmi.
 
 \begin{figure}[t!]
     \centerline{\includegraphics[width=0.75\textwidth]{images/tree-diagram.png}}
@@ -441,7 +441,7 @@ Stav editora interpretácií funkcií rozborom prípadov je podobný stromovej �
 
 Návrh dátového modelu editora je na obrázku \ref{obr:tree_diagram}. Každému funkčnému symbolu zodpovedá jeden záznam (\texttt{CaseTreeEntry}) v slovníkovom type \texttt{CaseTreeSlice}, ktorého kľúčom je tento funkčný symbol. V objekte typu \texttt{CaseTreeEntry} sú uložené jednotlivé uzly (\texttt{CaseTreeNode}) spolu s identifikátorom koreňového uzla (atribút \texttt{rootId}). Každý uzol je tvorený argumentom (atribút \texttt{argument}), ktorý reprezentuje, unikátnym identifikátorom (atribút \texttt{id}), zoznamom z neho vychádzajúcich podmienkových hrán (\texttt{CaseTreeCase}) a hranou označujúcou všetky ostatné prípady (\texttt{CaseTreeEdge}). Abstraktný objekt typu \texttt{CaseTreeEdge} špecializujú dva typy hrán. Jednou z nich je referenčná hrana (\texttt{ReferenceEdge}), ktorá si uchováva identifikátor druhého uzla, teda ďalšej inštancie \texttt{CaseTreeNode}. Druhou je hodnotová hrana (\texttt{ValueEdge}), tá priamo ukladá samotnú hodnotu.
 
-Podmienkové hrany (\texttt{CaseTreeCase}) predstavujú jednotlivé podmienky kladené na argument príslušného uzla. Preto obsahujú hodnotu (atribút \texttt{match}), s ktorou sa má príslušný argument porovnať a aj samotnú hranu (\texttt{CaseTreeEdge}). 
+Podmienkové hrany (\texttt{CaseTreeCase}) predstavujú jednotlivé podmienky kladené na argument príslušného uzla. Preto obsahujú hodnotu (atribút \texttt{match}), s ktorou sa má príslušný argument porovnať a aj samotnú hranu (\texttt{CaseTreeEdge}).
 
 %Hrany musia tiež obsahovať odkaz na druhý uzol alebo hodnotu, ktorú ma funkcia pri splnení podmienok nadobúdať.
 
